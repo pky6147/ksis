@@ -1,0 +1,46 @@
+import { Paper } from '@mui/material'
+import { DataGrid } from '@mui/x-data-grid'
+import {type CommonTableProps } from '../Types/Table'
+
+function CommonTable(props: CommonTableProps) {
+    const {columns, rows, pageSize, height, width, check} = props
+
+    const paginationModel = { page: 0, pageSize: pageSize || 5 };
+
+    return (
+      <Paper sx={{ height: height || 400, width: width || '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{ pagination: { paginationModel } }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection={check || false}
+          getRowClassName={(params) =>
+            params.row.isActive === 'N' ? 'row-inactive' : ''
+          }
+          sx={{
+              '&': {
+                  '--DataGrid-t-header-background-base': '#1e88e5 !important' // 헤더색 변경
+              },
+              '& .MuiDataGrid-columnHeaders': { 
+                  color: '#fff', // 헤더 글자색 
+                  fontSize: 20, // 글자 크기 
+                  fontWeight: 'bold', // 굵기 
+              }, 
+              '& .row-inactive': {
+                backgroundColor: '#f5f5f5',  // 회색 배경
+                color: '#999',               // 글자색
+                fontStyle: 'italic',
+              },
+              '& .MuiDataGrid-cell': {
+                fontSize: 16, // ✅ 데이터 셀 폰트 크기
+                fontWeight: 'Normal'
+              },
+          }}
+        />
+      </Paper>
+    );
+}
+
+export default CommonTable;
+
