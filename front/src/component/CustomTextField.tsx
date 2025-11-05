@@ -12,7 +12,7 @@ export default function CustomTextField(props: TextField_Type) {
                 size= "small"
                 value={value || ''}
                 label={label || ''}
-                variant={variant || 'standard'}
+                variant={variant || undefined}
                 onChange={onChange}
                 disabled={disabled || false}
                 placeholder={placeholder || ''}

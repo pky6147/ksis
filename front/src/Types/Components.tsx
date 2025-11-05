@@ -4,13 +4,13 @@ export interface TextField_Type {
     // Input
     value?: number | string;
     label?: string;
-    variant?: 'outlined' | 'filled' | 'standard'
+    variant?: 'outlined' | 'filled' | 'standard' | undefined;
     inputWidth?: string;
     disabled?: boolean;
     // required?: boolean;
     placeholder?: string;
     readOnly?: boolean;
-    type?: 'text' | 'number';
+    type?: 'text' | 'number' | 'password';
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 

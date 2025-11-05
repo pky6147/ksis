@@ -22,7 +22,7 @@ function Test() {
   })
   const handleInputChange = (key: keyof typeof testData, value: string) => {
         setTestData((prev) => ({ ...prev, [key]: value }));
-    };
+  };
 
   // Button
   const handleButtonClick = () => {
