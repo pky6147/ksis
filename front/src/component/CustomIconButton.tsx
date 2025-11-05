@@ -6,7 +6,7 @@ import {type IconButton_Type} from '../Types/Components'
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
-export default function CustomTextField(props: IconButton_Type) {
+export default function CustomIconButton(props: IconButton_Type) {
     const {width, height, fontSize, color, fontWeight, backgroundColor, border, onClick, icon} = props
 
     switch (icon) {
