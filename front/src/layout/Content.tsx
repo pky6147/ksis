@@ -2,7 +2,7 @@ import React from 'react'
 import {Box} from '@mui/material'
 import  {type LayoutProps } from '../Types/Layout';
 
-function Side({children}:LayoutProps) {
+function Content({children}:LayoutProps) {
   
   return (
     <Box
@@ -10,7 +10,7 @@ function Side({children}:LayoutProps) {
             backgroundColor: '#fff',
             height: '98vh',
             border: '3px solid #3c3c3cff', 
-            borderRadius: 3,
+            borderRadius: 3
         }}
     >
             {children}
@@ -18,4 +18,4 @@ function Side({children}:LayoutProps) {
   )
 }
 
-export default Side
+export default Content

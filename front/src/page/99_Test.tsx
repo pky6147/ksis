@@ -87,11 +87,7 @@ function Test() {
   }
 
   return (
-    <Box sx={{
-      background: '#fff',
-      width: '100vw',
-      height: '100vh',
-    }}>
+    <Box sx={{ width: '100vw', height: '100vh'}}>
       <Typography sx={{
         color: 'black', fontSize: 40
       }}>테스트 페이지</Typography>
