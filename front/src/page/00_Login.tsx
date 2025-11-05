@@ -1,11 +1,14 @@
 import {useState} from "react"
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, InputAdornment } from '@mui/material'
 import logo from '../assets/ksisLogo.png'
 import CustomButton from "../component/CustomButton"
+import CustomIconButton from '../component/CustomIconButton'
 import CustomTextField from "../component/CustomTextField"
+
 
 function Login() {
   const [loginInfo, setLoginInfo] = useState<{loginId: string, password: string}>({loginId: "", password: ""})
+  const [isVisible, setIsVisible] = useState(false)
 
   const handleInputChange = (key: keyof typeof loginInfo, value: string) => {
         setLoginInfo((prev) => ({ ...prev, [key]: value }));
@@ -14,6 +17,10 @@ function Login() {
   const handleLogin = () => {
     alert('버튼 클릭')
     console.log('loginInfo', loginInfo)
+  }
+
+  const handleShowPassword = () => {
+    setIsVisible(!isVisible);
   }
 
   return (
@@ -47,8 +54,16 @@ function Login() {
                 disabled={false}
                 readOnly={false}
                 placeholder="비밀번호"
-                type="password"
+                type={isVisible? 'text' : "password"}
                 onChange={(e) => handleInputChange('password', e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    { isVisible?
+                        (<CustomIconButton icon="invisible" width='20px' height='20px' color="gray" onClick={handleShowPassword} />) :
+                        (<CustomIconButton icon="visible"   width='20px' height='20px' color="gray" onClick={handleShowPassword} />) 
+                    }
+                  </InputAdornment>
+                }
               />
             </Box>
             <CustomButton text="로그인" onClick={handleLogin} />

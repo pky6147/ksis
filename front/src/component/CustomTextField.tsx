@@ -4,7 +4,7 @@ import {Box, TextField} from '@mui/material'
 import {type TextField_Type} from '../Types/Components'
 
 export default function CustomTextField(props: TextField_Type) {
-    const {value, label, variant, inputWidth, disabled, placeholder, readOnly, type, onChange} = props
+    const {value, label, variant, inputWidth, disabled, placeholder, readOnly, type, onChange, startAdornment, endAdornment} = props
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: '320px'}}>
             <TextField 
@@ -19,7 +19,9 @@ export default function CustomTextField(props: TextField_Type) {
                 inputProps={{ autoFocus: true }}
                 slotProps={{
                     input: {
-                      readOnly: readOnly || false
+                      readOnly: readOnly || false,
+                      startAdornment: startAdornment,
+                      endAdornment: endAdornment,
                     },
                 }}
                 type={type || 'text'}

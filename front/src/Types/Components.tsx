@@ -12,6 +12,8 @@ export interface TextField_Type {
     readOnly?: boolean;
     type?: 'text' | 'number' | 'password';
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    startAdornment?: React.ReactNode; 
+    endAdornment?: React.ReactNode;
 }
 
 export interface Button_Type {
@@ -36,7 +38,7 @@ export interface IconButton_Type {
     backgroundColor? : string;
     border? : string;
     onClick? : React.MouseEventHandler<HTMLButtonElement>,
-    icon?: 'search' | 'reset'
+    icon?: 'search' | 'reset' | 'visible' | 'invisible'
 }
 
 export interface SearchBar_Type {

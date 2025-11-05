@@ -140,8 +140,8 @@ export default function SearchBar(props: SearchBar_Type) {
                         />
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1}}>
-                        <CustomIconButton color='black' icon='search' width='30px'  height='45px' onClick={onSearch} />
-                        <CustomIconButton color='black' icon='reset'  width='30px'  height='45px' onClick={handleReset} />
+                        <CustomIconButton color='black' icon='search' width='45px'  height='45px' onClick={onSearch} />
+                        <CustomIconButton color='black' icon='reset'  width='45px'  height='45px' onClick={handleReset} />
                     </Box>
                 </Box>
             </Box>
