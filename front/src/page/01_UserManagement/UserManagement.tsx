@@ -1,18 +1,15 @@
 import { useState, useEffect } from "react"
 // Mui
 import { Box, Dialog } from '@mui/material'
-
-// Comp
-// import SearchBar from "../component/SearchBar"
-
 // Table
 import CommonTable from "../../component/CommonTable"
 import { getColumns, type UserTableRows } from '../../Types/TableHeaders/UserManageHeader'
 // Search
 import SearchHeader from "../../component/SearchHeader"
 import { getUserSearchCategory } from "../../Types/Search"
-
+// Pages
 import EditPage from "./EditPage"
+import RegPage from "./RegPage"
 
 function UserManagement() {
   // Table
@@ -21,7 +18,7 @@ function UserManagement() {
   const [selectedRow, setSelectedRow] = useState<UserTableRows | null>(null)
 
   // Dialog
-  // const [openReg, setOpenReg] = useState(false)
+  const [openReg, setOpenReg] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const [openLog, setOpenLog] = useState(false)
@@ -73,24 +70,25 @@ function UserManagement() {
   const columns = getColumns({ handleEditOpen, handleDeleteOpen, handleShowLogOpen });
 
   /**  등록 페이지  =========================================== */
-  // const handleOpenReg = () => {
-  //     setOpenReg(true)
-  // }
-  // const handleCloseReg = () => {
-  //   setSelectedRow(null)
-  //     setOpenReg(false)
-  // }
-  // const handleReg = () => {
-  //     // BoardRefresh()
-  //     handleCloseReg()
-  // }
+  const handleOpenReg = () => {
+      setOpenReg(true)
+  }
+  const handleCloseReg = () => {
+    setSelectedRow(null)
+      setOpenReg(false)
+  }
+  const handleReg = () => {
+      // BoardRefresh()
+      handleCloseReg()
+  }
 
   return (
     <Box sx={{ height: '99.5%'}}>
         <SearchHeader
-          baseRows={baseRows}
-          setFilteredRows={setFilteredRows}
-          getSearchCategory={getUserSearchCategory}
+          baseRows={baseRows}                 // 전체 데이터 원본
+          setFilteredRows={setFilteredRows}   // 필터링된 데이터 상태 setter
+          getSearchCategory={getUserSearchCategory} // 검색 카테고리 목록
+          onClick={handleOpenReg}             // 등록 버튼 클릭 시 실행할 함수
         />
 
         {/* 테이블 영역 */}
@@ -99,9 +97,9 @@ function UserManagement() {
         </Box>
 
         {/* 등록 페이지 */}
-        {/* <Dialog open={openReg} onClose={handleCloseReg} maxWidth={false}>
-            
-        </Dialog> */}
+        <Dialog open={openReg} onClose={handleCloseReg} maxWidth={false}>
+            <RegPage handleDone={handleReg} handleCancle={handleCloseReg} />
+        </Dialog>
         {/* 수정 페이지 */}
         <Dialog open={openEdit} onClose={handleCloseEdit} maxWidth={false}>
             <EditPage row={selectedRow} handleDone={handleEdit} handleCancle={handleCloseEdit} />

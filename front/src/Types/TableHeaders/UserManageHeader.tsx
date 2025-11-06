@@ -36,7 +36,7 @@ export const getColumns = ({
   { field: 'loginAt', headerName: '최근접속일',  flex: 1.5,  headerAlign: 'center',  align: 'center',
     renderCell: (params) => {
       if (!params.value) return ''; // 값 없으면 빈 문자열
-      return dayjs(params.value).format('YY.MM.DD');           
+      return dayjs(params.value).format('YY-MM-DD');           
     }
   },
   {

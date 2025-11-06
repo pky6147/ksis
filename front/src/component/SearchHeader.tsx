@@ -4,47 +4,63 @@ import SearchResultBox from "../component/SearchResultBox"
 import { type SearchCategory } from "../Types/Search"
 import { useEffect, useState } from "react"
 
-
 interface SearchHeaderProps<T> {
-  baseRows: T[];
-  setFilteredRows: React.Dispatch<React.SetStateAction<T[]>>;
-  getSearchCategory: () => SearchCategory<keyof T>[];
+  baseRows: T[]
+  setFilteredRows: React.Dispatch<React.SetStateAction<T[]>>
+  getSearchCategory: () => SearchCategory<keyof T>[]
+  onClick: () => void
 }
-
 
 export default function SearchHeader<T>({
   baseRows,
   setFilteredRows,
   getSearchCategory,
+  onClick,
 }: SearchHeaderProps<T>) {
-  const [searchList, setSearchList] = useState<SearchCategory<keyof T>[]>([]);
-  const [searchCount, setSearchCount] = useState<number | undefined>();
+  const [searchList, setSearchList] = useState<SearchCategory<keyof T | "all">[]>([])
+  const [searchCount, setSearchCount] = useState<number | undefined>()
+  const [isSearch, setIsSearch] = useState<boolean>(false)
 
   useEffect(() => {
-    // getSearchCategory는 외부 정의된 함수이므로, dependency 배열에 포함하지 않음
-    setSearchList(getSearchCategory());
-  }, []); // ✅ 빈 배열로 고정
+    const categories = getSearchCategory()
+    // ✅ "전체" 카테고리를 자동으로 추가
+    setSearchList([{ id: 0, name: "전체", value: "all" as keyof T }, ...categories])
+  }, [getSearchCategory])
 
-  // 🔹 SearchBar에서 전달된 검색 정보로 필터링만 수행
-  const handleSearch = (searchInfo: { category: keyof T; keyword: string }) => {
-    const { category, keyword } = searchInfo;
+  const handleSearch = (searchInfo: { category: keyof T | "all"; keyword: string }) => {
+    const { category, keyword } = searchInfo
     if (!keyword.trim()) {
-      setFilteredRows(baseRows);
-      setSearchCount(undefined);
-      return;
+      // 🔸 초기화: 전체 표시
+      setFilteredRows(baseRows)
+      setSearchCount(0)
+      setIsSearch(false)
+      return
     }
 
-    const filtered = baseRows.filter((row) => {
-      const value = row[category];
-      return (
-        typeof value === "string" &&
-        value.toLowerCase().includes(keyword.toLowerCase())
-      );
-    });
+    let filtered: T[] = []
 
-    setFilteredRows(filtered);
-    setSearchCount(filtered.length);
-  };
+    if (category === "all") {
+      filtered = baseRows.filter((row) =>
+        Object.values(row as Record<string, unknown>).some(
+          (value) =>
+            typeof value === "string" &&
+            value.toLowerCase().includes(keyword.toLowerCase())
+        )
+      )
+    } else {
+      filtered = baseRows.filter((row) => {
+        const value = (row as Record<string, unknown>)[category as string]
+        return (
+          typeof value === "string" &&
+          value.toLowerCase().includes(keyword.toLowerCase())
+        )
+      })
+    }
+
+    setFilteredRows(filtered)
+    setSearchCount(filtered.length)
+    setIsSearch(true)
+  }
 
   return (
     <Box
@@ -58,10 +74,13 @@ export default function SearchHeader<T>({
         borderRadius: 2,
       }}
     >
-      <SearchResultBox searchCount={searchCount} />
+      <SearchResultBox isSearch={isSearch} searchCount={searchCount} />
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-        <SearchBar<keyof T> options={searchList} onSearch={handleSearch} />
-       
+        <SearchBar<keyof T | "all">
+          options={searchList}
+          onSearch={handleSearch}
+          onClick={onClick}
+        />
       </Box>
     </Box>
   )
