@@ -7,7 +7,7 @@ import Menu from "./component/Menu";
 
 import LoginPage from './page/00_Login'
 import TestPage from './page/99_Test'
-import UserManagement from "./page/01_UserManagement";
+import UserManagement from "./page/01_UserManagement/UserManagement";
 
 function App() {
   const location = useLocation();

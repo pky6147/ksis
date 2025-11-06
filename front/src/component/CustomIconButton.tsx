@@ -7,6 +7,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import EditSquareIcon from '@mui/icons-material/EditSquare';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 export default function CustomIconButton(props: IconButton_Type) {
     const {width, height, fontSize, color, fontWeight, backgroundColor, border, onClick, icon} = props
@@ -16,9 +19,9 @@ export default function CustomIconButton(props: IconButton_Type) {
             return (
                 <IconButton 
                     sx={{
-                        width: width || '40px',
+                        width: width || '30px',
                         height: height || '30px',
-                        color: color || 'white',
+                        color: color || 'black',
                         fontWeight: fontWeight || 'bold',
                         fontSize: fontSize || '16px',
                         backgroundColor: backgroundColor || '#fff',
@@ -35,9 +38,9 @@ export default function CustomIconButton(props: IconButton_Type) {
             return (
                 <IconButton 
                     sx={{
-                        width: width || '40px',
+                        width: width || '30px',
                         height: height || '30px',
-                        color: color || 'white',
+                        color: color || 'black',
                         fontWeight: fontWeight || 'bold',
                         fontSize: fontSize || '16px',
                         backgroundColor: backgroundColor || '#fff',
@@ -54,9 +57,9 @@ export default function CustomIconButton(props: IconButton_Type) {
             return (
                 <IconButton 
                     sx={{
-                        width: width || '40px',
+                        width: width || '30px',
                         height: height || '30px',
-                        color: color || 'white',
+                        color: color || 'black',
                         fontWeight: fontWeight || 'bold',
                         fontSize: fontSize || '16px',
                         backgroundColor: backgroundColor || '#fff',
@@ -73,9 +76,9 @@ export default function CustomIconButton(props: IconButton_Type) {
             return (
                 <IconButton 
                     sx={{
-                        width: width || '40px',
+                        width: width || '30px',
                         height: height || '30px',
-                        color: color || 'white',
+                        color: color || 'black',
                         fontWeight: fontWeight || 'bold',
                         fontSize: fontSize || '16px',
                         backgroundColor: backgroundColor || '#fff',
@@ -86,6 +89,63 @@ export default function CustomIconButton(props: IconButton_Type) {
                     onClick={onClick? onClick : ()=>{}}
                 >
                     <VisibilityOff />
+                </IconButton>
+            )
+        case 'edit':
+            return (
+                <IconButton 
+                    sx={{
+                        width: width || '30px',
+                        height: height || '30px',
+                        color: color || 'black',
+                        fontWeight: fontWeight || 'bold',
+                        fontSize: fontSize || '16px',
+                        backgroundColor: backgroundColor || '#fff',
+                        border: border || '',
+                        // borderRadius: 3,
+                        // boxShadow: '0px 3px 0px black'
+                    }}
+                    onClick={onClick? onClick : ()=>{}}
+                >
+                    <EditSquareIcon />
+                </IconButton>
+            )
+        case 'delete':
+            return (
+                <IconButton 
+                    sx={{
+                        width: width || '30px',
+                        height: height || '30px',
+                        color: color || 'black',
+                        fontWeight: fontWeight || 'bold',
+                        fontSize: fontSize || '16px',
+                        backgroundColor: backgroundColor || '#fff',
+                        border: border || '',
+                        // borderRadius: 3,
+                        // boxShadow: '0px 3px 0px black'
+                    }}
+                    onClick={onClick? onClick : ()=>{}}
+                >
+                    <DeleteIcon />
+                </IconButton>
+            )
+        case 'log':
+            return (
+                <IconButton 
+                    sx={{
+                        width: width || '30px',
+                        height: height || '30px',
+                        color: color || 'black',
+                        fontWeight: fontWeight || 'bold',
+                        fontSize: fontSize || '16px',
+                        backgroundColor: backgroundColor || '#fff',
+                        border: border || '',
+                        // borderRadius: 3,
+                        // boxShadow: '0px 3px 0px black'
+                    }}
+                    onClick={onClick? onClick : ()=>{}}
+                >
+                    <ListAltIcon />
                 </IconButton>
             )
     }

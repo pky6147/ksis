@@ -38,7 +38,7 @@ export interface IconButton_Type {
     backgroundColor? : string;
     border? : string;
     onClick? : React.MouseEventHandler<HTMLButtonElement>,
-    icon?: 'search' | 'reset' | 'visible' | 'invisible'
+    icon?: 'search' | 'reset' | 'visible' | 'invisible' | 'edit' | 'delete' | 'log'
 }
 
 export interface SearchBar_Type {
