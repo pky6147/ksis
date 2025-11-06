@@ -1,7 +1,6 @@
 import { Box } from "@mui/material"
 import SearchBar from "../component/SearchBar"
 import SearchResultBox from "../component/SearchResultBox"
-import CustomButton from "../component/CustomButton"
 import { type SearchCategory } from "../Types/Search"
 import { useEffect, useState } from "react"
 
@@ -62,7 +61,7 @@ export default function SearchHeader<T>({
       <SearchResultBox searchCount={searchCount} />
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
         <SearchBar<keyof T> options={searchList} onSearch={handleSearch} />
-        <CustomButton text="등록" height="40px" />
+       
       </Box>
     </Box>
   )
