@@ -56,3 +56,7 @@ export interface SearchBar_Type {
     //Search Result
     searchCount?: number;
 }
+
+export interface SearchResultBox_Type  {
+  searchCount?: number;
+};

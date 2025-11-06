@@ -3,7 +3,7 @@ import {Button} from '@mui/material'
 
 import {type Button_Type} from '../Types/Components'
 
-export default function CustomTextField(props: Button_Type) {
+export default function CustomButton(props: Button_Type) {
     const {width, height, fontSize, color, fontWeight, backgroundColor, border, onClick, text, startIcon, endIcon} = props
     return (
         <Button 
