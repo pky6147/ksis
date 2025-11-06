@@ -36,6 +36,19 @@ function CommonTable(props: CommonTableProps) {
                 fontSize: 16, // ✅ 데이터 셀 폰트 크기
                 fontWeight: 'Normal'
               },
+              // 셀 포커스(보더) 제거
+              '& .MuiDataGrid-cell:focus': {
+                outline: 'none !important',
+              },
+              '& .MuiDataGrid-cell:focus-within': {
+                outline: 'none !important',
+              },
+              '& .MuiDataGrid-columnHeader:focus': {
+                outline: 'none !important',
+              },
+              '& .MuiDataGrid-columnHeader:focus-within': {
+                outline: 'none !important',
+    },
           }}
         />
       </Paper>

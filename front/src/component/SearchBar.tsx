@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Box, FormControl, Select, MenuItem, TextField, InputAdornment } from "@mui/material"
 import CustomIconButton from "./CustomIconButton"
-import CustomButton from "../component/CustomButton"
+import CustomButton from "./CustomButton"
 import { type SearchCategory } from "../Types/Search"
 
 interface SearchBarProps<K extends string | number | symbol> {
@@ -87,6 +87,7 @@ export default function SearchBar<K extends string | number | symbol>({
               <CustomIconButton icon="search" color="black" onClick={handleSearch} />
               <CustomIconButton icon="reset" color="black" onClick={handleReset} />
             </InputAdornment>
+            
           ),
         }}
       />
