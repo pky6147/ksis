@@ -15,6 +15,7 @@ export default function SearchResultBox(props: SearchResultBox_Type) {
         <Box
           sx={{
             display: "flex",
+            visibility: isSearch ? "visible" : "hidden", // ✅ 안 보이지만 자리 차지
             flexDirection: "column",
             justifyContent: "center",
             padding: 2,
@@ -23,8 +24,8 @@ export default function SearchResultBox(props: SearchResultBox_Type) {
             minWidth: "200px",
             height: "50px",
             borderRadius: 1,
-            transition: "all 0.2s ease",
-            opacity: isSearch ? 1 : 0.5, // 🔸 검색 전엔 살짝 흐리게
+            // transition: "all 0.2s ease",
+            // opacity: isSearch ? 1 : 0.5, // 🔸 검색 전엔 살짝 흐리게
           }}
         >
           {isSearch && (
