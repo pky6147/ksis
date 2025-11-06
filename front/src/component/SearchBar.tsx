@@ -1,12 +1,21 @@
 import { useState } from "react"
 import { Box, FormControl, Select, MenuItem, TextField, InputAdornment } from "@mui/material"
 import CustomIconButton from "./CustomIconButton"
+import { type SearchCategory } from "../Types/Search"
 
-export default function SearchBar({ options, onSearch }: {
-  options: { id: number; name: string; value: string }[]
-  onSearch?: (searchInfo: { category: string; keyword: string }) => void
-}) {
-  const [searchInfo, setSearchInfo] = useState({ category: options[0]?.value || "", keyword: "" })
+interface SearchBarProps<K extends string | number | symbol> {
+  options: SearchCategory<K>[]
+  onSearch?: (searchInfo: { category: K; keyword: string }) => void
+}
+
+export default function SearchBar<K extends string | number | symbol>({
+  options,
+  onSearch,
+}: SearchBarProps<K>) {
+  const [searchInfo, setSearchInfo] = useState<{ category: K; keyword: string }>({
+    category: options[0]?.value ?? ("" as K),
+    keyword: "",
+  })
 
   const handleChange = (key: keyof typeof searchInfo, value: string) => {
     setSearchInfo((prev) => ({ ...prev, [key]: value }))
@@ -18,20 +27,23 @@ export default function SearchBar({ options, onSearch }: {
   }
 
   const handleReset = () => {
-    setSearchInfo({ category: options[0]?.value || "", keyword: "" })
-    onSearch?.({ category: "", keyword: "" })
-  }
+    const defaultCategory = options[0]?.value ?? ("" as K);
+    setSearchInfo({ category: defaultCategory, keyword: "" });
+    onSearch?.({ category: defaultCategory, keyword: "" });
+  };
 
   return (
     <Box sx={{ display: "flex", gap: 1, alignItems: "center", backgroundColor: "lightgray", p: 2, height:"50px", borderRadius: 2 }}>
       <FormControl sx={{ width: 120 }}>
         <Select
           value={searchInfo.category}
-          onChange={(e) => handleChange("category", e.target.value)}
+          onChange={(e) => handleChange("category", String(e.target.value))}
           sx={{ backgroundColor: "white", height: "40px" }}
         >
           {options.map(opt => (
-            <MenuItem key={opt.id} value={opt.value}>{opt.name}</MenuItem>
+            <MenuItem key={opt.id} value={String(opt.value)}>
+              {opt.name}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>

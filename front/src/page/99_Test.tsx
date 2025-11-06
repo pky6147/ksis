@@ -11,7 +11,7 @@ import CommonTable from "../component/CommonTable"
 import { getTestColumns, type TestRows } from '../Types/TableHeaders/TestHeaders'
 
 // Search
-// import { getTestSearchCategory } from "../Types/Search"
+import { getTestSearchCategory } from "../Types/Search"
 
 function Test() {
   // TextField
@@ -69,7 +69,11 @@ function Test() {
       <CustomButton text="클릭" onClick={handleButtonClick} />
 
       {/* 검색 헤더 */}
-      <SearchHeader baseRows={baseRows} setFilteredRows={setFilteredRows} />
+      <SearchHeader 
+        baseRows={baseRows} 
+        setFilteredRows={setFilteredRows} 
+        getSearchCategory={getTestSearchCategory}
+      />
 
       {/* 테이블 */}
       <Box sx={{ padding: 2 }}>

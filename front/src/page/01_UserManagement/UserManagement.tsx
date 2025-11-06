@@ -9,22 +9,17 @@ import { Box, Dialog } from '@mui/material'
 import CommonTable from "../../component/CommonTable"
 import { getColumns, type UserTableRows } from '../../Types/TableHeaders/UserManageHeader'
 // Search
-// import { getUserSearchCategory } from "../Types/Search"
+import SearchHeader from "../../component/SearchHeader"
+import { getUserSearchCategory } from "../../Types/Search"
 
 import EditPage from "./EditPage"
 
 function UserManagement() {
   // Table
   const [baseRows, setBaseRows] = useState<UserTableRows[]>([])
+  const [filteredRows, setFilteredRows] = useState<UserTableRows[]>([]);
   const [selectedRow, setSelectedRow] = useState<UserTableRows | null>(null)
-  
-  // Search
-  // const [searchRows, setSearchRows] = useState<UserTableRows[]>([])
-  // const [isSearch, setIsSearch] = useState(false)
-  // const [searchList, setSearchList] = useState<{id:number, name: string, value: string}[]>([]) 
-  // const [selectedValue, setSelectedValue] = useState('loginId')
-  // const [inputValue, setInputValue] = useState("")
-  // const [searchCount, setSearchCount] = useState<number|undefined>(undefined)
+
   // Dialog
   // const [openReg, setOpenReg] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
@@ -32,13 +27,14 @@ function UserManagement() {
   const [openLog, setOpenLog] = useState(false)
 
   useEffect(()=> {
-    setBaseRows([
-      {id: 1, index: 1, loginId: 'ksis1', password: 'test1234', name: '김철수', dept: '비즈니스 사업부',     rank: '부장', loginAt: '2025-11-05', state: '승인완료'},
-      {id: 2, index: 2, loginId: 'ksis2', password: 'test5678', name: '김영희', dept: '소프트웨어 사업부',   rank: '대리', loginAt: '2025-11-06', state: '승인완료'},
-      {id: 3, index: 3, loginId: 'ksis3', password: 'test0000', name: '홍길동', dept: '경영지원부',         rank: '과장', loginAt: '2024-04-24', state: '승인대기'},
-    ])
-    
-    // setSearchList(getUserSearchCategory())
+    const data = [
+      { id: 1, index: 1, loginId: 'ksis1', password: 'test1234', name: '김철수', dept: '비즈니스 사업부', rank: '부장', loginAt: '2025-11-05', state: '승인완료' },
+      { id: 2, index: 2, loginId: 'ksis2', password: 'test5678', name: '김영희', dept: '소프트웨어 사업부', rank: '대리', loginAt: '2025-11-06', state: '승인완료' },
+      { id: 3, index: 3, loginId: 'ksis3', password: 'test0000', name: '홍길동', dept: '경영지원부', rank: '과장', loginAt: '2024-04-24', state: '승인대기' },
+    ];
+
+    setBaseRows(data)
+    setFilteredRows(data)
   }, [])
 
   /**  Table  =========================================== */
@@ -65,7 +61,7 @@ function UserManagement() {
     setSelectedRow(null)
     setOpenDelete(false)
   }
-  
+
   const handleShowLogOpen = (row: UserTableRows) => {
     setSelectedRow(row)
     setOpenLog(true)
@@ -89,63 +85,17 @@ function UserManagement() {
   //     handleCloseReg()
   // }
 
-  /**  Search  =========================================== */
-  // const handleSelectChange = (event: SelectChangeEvent<string>) => {
-  //       setSelectedValue(event.target.value)
-  //       setInputValue("") // 컬럼 바뀌면 입력 초기화 
-  // }
-
-  // const handleSearchChange = (value: string) => {
-  //   setInputValue(value)
-  // }
-
-  // const handleSearch = () => {
-  //   if (!selectedValue) return
-  //   setIsSearch(true)
-  //   const filtered = baseRows.filter((row) =>
-  //     (row[selectedValue as keyof UserTableRows] as string)
-  //       ?.toLowerCase()
-  //       .includes(inputValue.toLowerCase())
-  //   )
-  //   setSearchRows(filtered)
-  //   setSearchCount(filtered.length)
-  // }
-  
-  // // 초기화
-  // const handleReset = () => {
-  //   setSelectedValue("loginId")
-  //   setInputValue("")
-  //   setIsSearch(false)
-  //   setSearchRows(baseRows)
-  // }
-
   return (
     <Box sx={{ height: '99.5%'}}>
-        {/* <SearchBar 
-            options={searchList}
-            selectValue={selectedValue}
-            onSelectChange={handleSelectChange}
-            label="검색"
-            inputValue={inputValue}
-            onInputChange={(e) => handleSearchChange(e.target.value)}
-            onSearch={handleSearch}
-            onReset={handleReset}
-            searchCount={searchCount}
-        /> */}
+        <SearchHeader
+          baseRows={baseRows}
+          setFilteredRows={setFilteredRows}
+          getSearchCategory={getUserSearchCategory}
+        />
 
         {/* 테이블 영역 */}
         <Box sx={{padding: 2}}>
-            {/* { isSearch ? (
-                <CommonTable 
-                columns={columns}
-                rows={searchRows}
-                />
-            ) : ( */}
-                <CommonTable 
-                    columns={columns}
-                    rows={baseRows}
-                />
-            {/* )} */}
+            <CommonTable columns={columns} rows={filteredRows} /> {/* ✅ 변경 */}
         </Box>
 
         {/* 등록 페이지 */}

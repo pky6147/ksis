@@ -16,7 +16,7 @@ function CommonTable(props: CommonTableProps) {
           pageSizeOptions={[5, 10]}
           checkboxSelection={check || false}
           getRowClassName={(params) =>
-            params.row.isActive === 'N' ? 'row-inactive' : ''
+            params.row.state === '승인대기' ? 'row-inactive' : '' // User 페이지 승인대기일 때
           }
           sx={{
               '&': {
