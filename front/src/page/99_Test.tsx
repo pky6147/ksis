@@ -11,7 +11,7 @@ import CommonTable from "../component/CommonTable"
 import { getTestColumns, type TestRows } from '../Types/TableHeaders/TestHeaders'
 
 // Search
-import { getUserSearchCategory } from "../Types/Search"
+// import { getTestSearchCategory } from "../Types/Search"
 
 function Test() {
   // TextField
