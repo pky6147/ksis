@@ -58,5 +58,6 @@ export interface SearchBar_Type {
 }
 
 export interface SearchResultBox_Type  {
-  searchCount?: number;
+    isSearch?: boolean;
+    searchCount?: number;
 };

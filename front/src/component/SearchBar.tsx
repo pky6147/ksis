@@ -1,46 +1,72 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Box, FormControl, Select, MenuItem, TextField, InputAdornment } from "@mui/material"
 import CustomIconButton from "./CustomIconButton"
+import CustomButton from "../component/CustomButton"
 import { type SearchCategory } from "../Types/Search"
 
 interface SearchBarProps<K extends string | number | symbol> {
   options: SearchCategory<K>[]
   onSearch?: (searchInfo: { category: K; keyword: string }) => void
+  onClick?: () => void
 }
 
 export default function SearchBar<K extends string | number | symbol>({
   options,
   onSearch,
+  onClick,
 }: SearchBarProps<K>) {
   const [searchInfo, setSearchInfo] = useState<{ category: K; keyword: string }>({
-    category: options[0]?.value ?? ("" as K),
+    category: (options[0]?.value ?? ("" as K)),
     keyword: "",
   })
 
+  // ✅ 옵션이 바뀌면 첫 번째 카테고리(예: "전체") 자동 선택
+  useEffect(() => {
+    if (options.length > 0) {
+      setSearchInfo({
+        category: options[0].value,
+        keyword: "",
+      })
+    }
+  }, [options])
+
   const handleChange = (key: keyof typeof searchInfo, value: string) => {
-    setSearchInfo((prev) => ({ ...prev, [key]: value }))
+    setSearchInfo((prev) => ({ ...prev, [key]: value as K }))
   }
 
   const handleSearch = () => {
-    if (!searchInfo.keyword.trim()) return
     onSearch?.(searchInfo)
   }
 
   const handleReset = () => {
-    const defaultCategory = options[0]?.value ?? ("" as K);
-    setSearchInfo({ category: defaultCategory, keyword: "" });
-    onSearch?.({ category: defaultCategory, keyword: "" });
-  };
+    const defaultCategory = options[0]?.value ?? ("" as K)
+    setSearchInfo({ category: defaultCategory, keyword: "" })
+    onSearch?.({ category: defaultCategory, keyword: "" })
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleSearch()
+  }
 
   return (
-    <Box sx={{ display: "flex", gap: 1, alignItems: "center", backgroundColor: "lightgray", p: 2, height:"50px", borderRadius: 2 }}>
+    <Box
+      sx={{
+        display: "flex",
+        gap: 1,
+        alignItems: "center",
+        backgroundColor: "lightgray",
+        p: 2,
+        height: "50px",
+        borderRadius: 2,
+      }}
+    >
       <FormControl sx={{ width: 120 }}>
         <Select
-          value={searchInfo.category}
-          onChange={(e) => handleChange("category", String(e.target.value))}
+          value={String(searchInfo.category)}
+          onChange={(e) => handleChange("category", e.target.value)}
           sx={{ backgroundColor: "white", height: "40px" }}
         >
-          {options.map(opt => (
+          {options.map((opt) => (
             <MenuItem key={opt.id} value={String(opt.value)}>
               {opt.name}
             </MenuItem>
@@ -51,143 +77,21 @@ export default function SearchBar<K extends string | number | symbol>({
       <TextField
         value={searchInfo.keyword}
         onChange={(e) => handleChange("keyword", e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="검색어 입력"
         size="small"
         sx={{ backgroundColor: "white", flex: 1, borderRadius: 1 }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <CustomIconButton icon="search" color='black' onClick={handleSearch} />
-              <CustomIconButton icon="reset" color='black'  onClick={handleReset} />
+              <CustomIconButton icon="search" color="black" onClick={handleSearch} />
+              <CustomIconButton icon="reset" color="black" onClick={handleReset} />
             </InputAdornment>
           ),
         }}
       />
+
+      <CustomButton text="등록" height="40px" onClick={onClick} />
     </Box>
   )
 }
-
-
-
-
-
-
-
-// import {useState, useEffect} from 'react'
-// import {Box, TextField, FormControl, MenuItem, Select, type SelectChangeEvent} from '@mui/material'
-// import CustomIconButton from './CustomIconButton'
-
-
-// import {type SearchBar_Type} from '../Types/Components'
-
-// export default function SearchBar(props: SearchBar_Type) {
-//     const {
-//       selectValue,
-//       onSelectChange,
-//       options,
-//       label,
-//       inputValue,
-//       onInputChange,
-//       onSearch,
-//       onReset,
-      
-//     } = props
-
-//     // 내부 상태(props 기반 초기값)
-//     const [localSelect, setLocalSelect] = useState<string>(selectValue || "");
-//     const [localInput, setLocalInput] = useState<string>(inputValue || "");
-
-//     // props가 바뀌면 내부 state 동기화
-//     useEffect(() => {
-//       if (selectValue !== undefined && selectValue !== localSelect) {
-//         setLocalSelect(selectValue);
-//       }
-//     }, [selectValue]);
-
-//     useEffect(() => {
-//       if (inputValue !== undefined && inputValue !== localInput) {
-//         setLocalInput(inputValue);
-//       }
-//     }, [inputValue]);
-    
-
-//     // ✅ select 변경 시
-//     const handleSelectChange = (event: SelectChangeEvent<string>) => {
-//       const newValue = event.target.value;
-//       setLocalSelect(newValue);
-
-//       // // 선택된 항목에 따라 input 자동 업데이트 (선택적으로)
-//       // const selectedOption = options.find((opt) => opt.value === newValue);
-//       // if (selectedOption) {
-//       //   setLocalInput("");
-//       // }
-//       setLocalInput(""); //선택 변경시 input초기화
-
-//       // 외부에도 전달
-//       onSelectChange?.(event);
-//     };
-
-//     // ✅ input 변경 시
-//     const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-//       const newVal = e.target.value;
-//       setLocalInput(newVal);
-//       onInputChange?.(e);
-//     };
-
-//     // ✅ 초기화 시
-//     const handleReset = () => {
-//       setLocalSelect("");
-//       setLocalInput("");
-     
-//       onReset?.();
-//     };
-
-//     return (
-       
-//             <Box
-//                 sx={{
-//                     // display: 'flex', alignItems: 'center',
-//                     padding: 1, backgroundColor: 'gray', gap: 1,
-//                     width:'500px', borderadius:'2',
-//                 }}
-//             >
-//                 <Box sx={{ 
-//                   display: 'flex', 
-//                   alignItems: 'center',
-//                   justifyContent:'center',
-//                   padding: 1,
-//                   flexDirection: 'row', 
-                  
-//                   gap: 1}}>
-//                     <FormControl sx={{width: { xs: '100%', sm: '100px' }, height: '50px'}}>
-//                         <Select
-//                             onChange={handleSelectChange}
-//                             value={localSelect}
-//                             sx={{ height: '100%', backgroundColor: 'white', border: '1px solid'}}
-//                         >
-//                             {options.map(opt => (
-//                                 <MenuItem key={opt.id} value={opt.value}>
-//                                     {opt.name}
-//                                 </MenuItem>
-//                             ))}
-//                         </Select>
-//                     </FormControl>
-//                     <TextField 
-//                         sx={{backgroundColor: 'white', borderRadius: 1, border: '1px solid', width: '246px', minWidth: '246px' }}
-//                         size= "small"
-//                         value={localInput}
-//                         label={label || ''}
-//                         variant='standard'
-//                         onChange={handleInputChange}
-//                         placeholder={'검색어 입력'}
-//                         inputProps={{ autoFocus: true }}
-//                         type={'text'}
-//                     />
-//                     <CustomIconButton color='black' icon='search' width='45px'  height='45px' onClick={onSearch} />
-//                     <CustomIconButton color='black' icon='reset'  width='45px'  height='45px' onClick={handleReset} />
-//                 </Box>
-                
-//             </Box>
-
-//     )
-// }

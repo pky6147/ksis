@@ -1,7 +1,7 @@
 import { type TestRows } from '../Types/TableHeaders/TestHeaders'
 import { type UserTableRows } from "./TableHeaders/UserManageHeader"
 
-export type SearchCategory<K extends keyof any> = {
+export type SearchCategory<K extends string | number | symbol> = {
   id: number
   name: string
   value: K
