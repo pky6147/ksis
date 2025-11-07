@@ -68,8 +68,7 @@ export default function SearchHeader<T>({
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "white",
-        border: "1px solid #ccc",
+        // backgroundColor: "white",
         p: 2,
         borderRadius: 2,
       }}
