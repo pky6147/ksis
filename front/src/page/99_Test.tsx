@@ -61,64 +61,75 @@ function Test() {
     }
     console.log("수정:", selectedRows)
     alert(`${selectedRows[0].data1} 항목 수정 실행`)
-  }//주의! 행 클릭 해제해도, 여전히 클릭된 상태로 남아있음
-
-  const handleDeleteModeToggle = () => {
-    setIsDeleteMode((prev) => !prev)
-    setSelectedRows([]) // ✅ 삭제 모드 전환 시 선택 초기화
   }
 
-  const handleDeleteConfirm = () => {
-    if (selectedRows.length === 0) return alert("삭제할 항목을 선택하세요.")
-      //삭제로직
-    // const remaining = baseRows.filter((r) => !selectedRows.some((s) => s.id === r.id))
-    // setBaseRows(remaining)
-    // setFilteredRows(remaining)
-    // setSelectedRows([])
-    // setIsDeleteMode(false) // ✅ 삭제 후 일반 모드 복귀
-    console.log('삭제', selectedRows[0])
+  // const handleDeleteModeToggle = () => {
+  //   setIsDeleteMode((prev) => !prev)
+  //   setSelectedRows([]) // ✅ 삭제 모드 전환 시 선택 초기화
+  // }
+
+  // const handleDeleteConfirm = () => {
+  //   if (selectedRows.length === 0) return alert("삭제할 항목을 선택하세요.")
+  //     //삭제로직
+  //   // const remaining = baseRows.filter((r) => !selectedRows.some((s) => s.id === r.id))
+  //   // setBaseRows(remaining)
+  //   // setFilteredRows(remaining)
+  //   // setSelectedRows([])
+  //   // setIsDeleteMode(false) // ✅ 삭제 후 일반 모드 복귀
+  //   console.log('삭제', selectedRows[0])
+  // }
+
+  //삭제로직 분기
+  /** ✅ 삭제 버튼 클릭 시 로직 분기 */
+  const handleDelete = () => {
+    if (isDeleteMode) {
+      //삭제 ->다중선택모드 진입 [체크박스 선택 → 삭제확인 → 실제 삭제 실행]
+      if (selectedRows.length === 0) return alert("삭제할 항목을 선택하세요.")
+
+      //개발모드
+      console.log('삭제', selectedRows[0])
+
+      // //삭제로직
+      // const remaining = baseRows.filter((r) => !selectedRows.some((s) => s.id === r.id))
+      // setBaseRows(remaining)
+      // setFilteredRows(remaining)
+      // setSelectedRows([])
+      // setIsDeleteMode(false) // 모드 해제
+      // alert("선택된 항목이 삭제되었습니다.")
+    } 
+    else { // 단일행 선택 시 즉시 삭제, 없으면 다중선택 모드 진입
+
+      // 단일행 선택 → 삭제
+      if (selectedRows.length === 1) {
+        
+
+        //개발모드
+        console.log('삭제', selectedRows[0])
+      
+        // //삭제로직
+        // const idToDelete = selectedRows[0].id
+        // const remaining = baseRows.filter((r) => r.id !== idToDelete)
+        // setBaseRows(remaining)
+        // setFilteredRows(remaining)
+        // setSelectedRows([])
+        // alert("해당 행이 삭제되었습니다.")
+      }
+
+      else {
+        // 삭제 → 다중 삭제 모드 진입
+        setIsDeleteMode(true)
+        setSelectedRows([])
+        // alert("삭제할 항목을 선택하세요.")
+      }
+    }
   }
 
-  // //삭제로직 분기
-  // /** ✅ 삭제 버튼 클릭 시 로직 분기 */
-  // const handleDelete = () => {
-  //   if (isDeleteMode) {
-  //     // 다중 선택 모드 → 실제 삭제 실행
-  //     if (selectedRows.length === 0) return alert("삭제할 항목을 선택하세요.")
-  //     const remaining = baseRows.filter((r) => !selectedRows.some((s) => s.id === r.id))
-  //     setBaseRows(remaining)
-  //     setFilteredRows(remaining)
-  //     setSelectedRows([])
-  //     setIsDeleteMode(false) // 모드 해제
-  //     alert("선택된 항목이 삭제되었습니다.")
-  //   } else {
-  //     // 일반 모드 → 단일행 선택 시 즉시 삭제, 없으면 다중선택 모드 진입
-  //     if (selectedRows.length === 1) {
-  //       const idToDelete = selectedRows[0].id
-  //       const remaining = baseRows.filter((r) => r.id !== idToDelete)
-  //       setBaseRows(remaining)
-  //       setFilteredRows(remaining)
-  //       setSelectedRows([])
-  //       alert("해당 행이 삭제되었습니다.")
-  //     } else {
-  //       // 선택이 없으면 다중 삭제 모드 진입
-  //       setIsDeleteMode(true)
-  //       setSelectedRows([])
-  //       alert("삭제할 항목을 선택하세요.")
-  //     }
-  //   }
-  // }
+  const handleCancelDeleteMode = () => {
+    setIsDeleteMode(false)
+    setSelectedRows([])
+    
+}
 
-
-  // const handleDelete = () => {
-  //   if (selectedRows.length === 0) {
-  //     alert("삭제할 항목을 선택하세요.")
-  //     return
-  //   }
-  //   console.log("삭제:", selectedRows[0].id)
-  //   setBaseRows((prev) => prev.filter((r) => r.id !== selectedRows[0].id))
-  //   setFilteredRows((prev) => prev.filter((r) => r.id !== selectedRows[0].id))
-  // }
 
   const columns = getTestColumns({
     handleEdit: (row) => console.log("행 내부 수정", row),
@@ -155,22 +166,52 @@ function Test() {
       />
 
          <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-        <CustomButton
-          text="수정"
-          backgroundColor="#1976d2"
-          onClick={handleEdit}
-        />
+          {!isDeleteMode ? (
+            <>
+            <CustomButton
+              text="수정"
+              backgroundColor="#1976d2"
+              onClick={handleEdit}
+            />
+            <CustomButton
+              text="삭제"
+              backgroundColor="#432121"
+              // onClick={isDeleteMode ? handleDeleteConfirm : handleDeleteModeToggle}
+              onClick={handleDelete}
+            />
+            </>
+          ):(
+            <>
+            <CustomButton
+              text="확인"
+              backgroundColor="#432121"
+             
+              onClick={handleDelete}
+            />
+            <CustomButton
+          text="취소"
+          backgroundColor="grey"
+          onClick={handleCancelDeleteMode}
+          />
+          </>
+          )
+          }
+        
         {/* <CustomButton
-          text="삭제"
-          backgroundColor="#432121ff"
+          text={isDeleteMode ? "확인" : "삭제"}
+          backgroundColor={isDeleteMode ? "#c62828" : "#432121"}
+          // onClick={isDeleteMode ? handleDeleteConfirm : handleDeleteModeToggle}
           onClick={handleDelete}
         /> */}
-        <CustomButton
-          text={isDeleteMode ? "삭제 확인" : "삭제"}
-          backgroundColor={isDeleteMode ? "#c62828" : "#432121"}
-          onClick={isDeleteMode ? handleDeleteConfirm : handleDeleteModeToggle}
-          // onClick={{handleDelete}}
-        />
+
+        {/* {isDeleteMode && (
+          <CustomButton
+          text="취소"
+          backgroundColor="grey"
+          onClick={handleCancelDeleteMode}
+          />
+        )} */}
+
       </Box>
       {/* 테이블 */}
       <Box sx={{ padding: 2 }}>
