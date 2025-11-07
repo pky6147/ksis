@@ -5,6 +5,7 @@ export interface TextField_Type {
     value?: number | string;
     label?: string;
     variant?: 'outlined' | 'filled' | 'standard' | undefined;
+    border?: string;
     inputWidth?: string;
     disabled?: boolean;
     // required?: boolean;
@@ -61,3 +62,16 @@ export interface SearchResultBox_Type  {
     isSearch?: boolean;
     searchCount?: number;
 };
+
+export interface SelectItem {
+  value: string | number;
+  name: string;
+}
+
+export interface Select_Type {
+    value?: number | string;
+    listItem: SelectItem[],
+    inputWidth?: string;
+    border?: string;
+    onChange: (event: SelectChangeEvent<string | number>) => void;
+}
