@@ -32,10 +32,10 @@ function CommonTable(props: CommonTableProps) {
           }
           sx={{
               '&': {
-                  '--DataGrid-t-header-background-base': '#1e88e5 !important' // 헤더색 변경
+                  '--DataGrid-t-header-background-base': '#F5A623 !important' // 헤더색 변경
               },
               '& .MuiDataGrid-columnHeaders': { 
-                  color: '#fff', // 헤더 글자색 
+                  color: 'black', // 헤더 글자색 
                   fontSize: 20, // 글자 크기 
                   fontWeight: 'bold', // 굵기 
               }, 

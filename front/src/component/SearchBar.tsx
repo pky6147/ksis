@@ -8,12 +8,14 @@ interface SearchBarProps<K extends string | number | symbol> {
   options: SearchCategory<K>[]
   onSearch?: (searchInfo: { category: K; keyword: string }) => void
   onClick?: () => void
+  btnName?: string;
 }
 
 export default function SearchBar<K extends string | number | symbol>({
   options,
   onSearch,
   onClick,
+  btnName
 }: SearchBarProps<K>) {
   const [searchInfo, setSearchInfo] = useState<{ category: K; keyword: string }>({
     category: (options[0]?.value ?? ("" as K)),
@@ -92,7 +94,7 @@ export default function SearchBar<K extends string | number | symbol>({
         }}
       />
 
-      <CustomButton text="등록" height="40px" onClick={onClick} />
+      <CustomButton text={btnName} height="40px" radius={2} onClick={onClick} />
     </Box>
   )
 }

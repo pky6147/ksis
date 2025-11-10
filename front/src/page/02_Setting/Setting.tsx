@@ -3,19 +3,18 @@ import { useState, useEffect } from "react"
 import { Box, Dialog, Typography } from '@mui/material'
 // Table
 import CommonTable from "../../component/CommonTable"
-import { getColumns, type UserTableRows } from '../../Types/TableHeaders/UserManageHeader'
+import { getColumns, type SettingTableRows } from '../../Types/TableHeaders/SettingHeader'
 // Search
 import SearchHeader from "../../component/SearchHeader"
-import { getUserSearchCategory } from "../../Types/Search"
+import { getSettingSearchCategory } from "../../Types/Search"
 // Pages
-import EditPage from "./EditPage"
 import RegPage from "./RegPage"
 
-function UserManagement() {
+function Setting() {
   // Table
-  const [baseRows, setBaseRows] = useState<UserTableRows[]>([])
-  const [filteredRows, setFilteredRows] = useState<UserTableRows[]>([]);
-  const [selectedRow, setSelectedRow] = useState<UserTableRows | null>(null)
+  const [baseRows, setBaseRows] = useState<SettingTableRows[]>([])
+  const [filteredRows, setFilteredRows] = useState<SettingTableRows[]>([]);
+  const [selectedRow, setSelectedRow] = useState<SettingTableRows | null>(null)
 
   // Dialog
   const [openReg, setOpenReg] = useState(false)
@@ -25,9 +24,9 @@ function UserManagement() {
 
   useEffect(()=> {
     const data = [
-      { id: 1, index: 1, loginId: 'ksis1', password: 'test1234', name: '김철수', dept: '비즈니스 사업부', rank: '부장', loginAt: '2025-11-05', state: '승인완료' },
-      { id: 2, index: 2, loginId: 'ksis2', password: 'test5678', name: '김영희', dept: '소프트웨어 사업부', rank: '대리', loginAt: '2025-11-06', state: '승인완료' },
-      { id: 3, index: 3, loginId: 'ksis3', password: 'test0000', name: '홍길동', dept: '경영지원부', rank: '과장', loginAt: '2024-04-24', state: '승인대기' },
+      { id: 1, settingName: '창원시청 공지사항 수집', url: 'https://...', userAgent: 'Windows / Edge', rate: 1000, state: '수집대기',  },
+      { id: 2, settingName: '경상남도 보도자료 수집', url: 'https://...', userAgent: 'Windows / Chrome', rate: 1000, state: '진행중', },
+      { id: 3, settingName: '창원관광 관광지자료 수집', url: 'https://...', userAgent: 'Windows / Chrome', rate: 1000, state: '수집완료', },
     ];
 
     setBaseRows(data)
@@ -35,12 +34,11 @@ function UserManagement() {
   }, [])
 
   /**  Table  =========================================== */
-  const handleEditOpen = (row: UserTableRows) => {
+  const handleEditOpen = (row: SettingTableRows) => {
     setSelectedRow(row)
     setOpenEdit(true)
   }
   const handleEdit = () => {
-    console.log("본문 Edit")
     // 테이블 새로고침 로직 들어가야함
 
     handleCloseEdit()
@@ -50,7 +48,7 @@ function UserManagement() {
     setOpenEdit(false)
   }
 
-  const handleDeleteOpen = (row: UserTableRows) => {
+  const handleDeleteOpen = (row: SettingTableRows) => {
     setSelectedRow(row)
     setOpenDelete(true)
   }
@@ -59,7 +57,7 @@ function UserManagement() {
     setOpenDelete(false)
   }
 
-  const handleShowLogOpen = (row: UserTableRows) => {
+  const handleRunCrawl = (row: SettingTableRows) => {
     setSelectedRow(row)
     setOpenLog(true)
   }
@@ -67,7 +65,7 @@ function UserManagement() {
     setSelectedRow(null)
       setOpenLog(false)
   }
-  const columns = getColumns({ handleEditOpen, handleDeleteOpen, handleShowLogOpen });
+  const columns = getColumns({ handleEditOpen, handleDeleteOpen, handleRunCrawl });
 
   /**  등록 페이지  =========================================== */
   const handleOpenReg = () => {
@@ -85,14 +83,14 @@ function UserManagement() {
   return (
     <Box sx={{ height: '97%'}}>
         <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, marginTop: 5}}>
-          유저관리
+          데이터 수집 설정
         </Typography>
         <SearchHeader
           baseRows={baseRows}                 // 전체 데이터 원본
           setFilteredRows={setFilteredRows}   // 필터링된 데이터 상태 setter
-          getSearchCategory={getUserSearchCategory} // 검색 카테고리 목록
+          getSearchCategory={getSettingSearchCategory} // 검색 카테고리 목록
           onClick={handleOpenReg}             // 등록 버튼 클릭 시 실행할 함수
-          btnName="유저 등록"
+          btnName="설정 등록"
         />
 
         {/* 테이블 영역 */}
@@ -106,7 +104,7 @@ function UserManagement() {
         </Dialog>
         {/* 수정 페이지 */}
         <Dialog open={openEdit} onClose={handleCloseEdit} maxWidth={false} disableEnforceFocus disableRestoreFocus>
-            <EditPage row={selectedRow} handleDone={handleEdit} handleCancle={handleCloseEdit} />
+            {/* <EditPage row={selectedRow} handleDone={handleEdit} handleCancle={handleCloseEdit} /> */}
         </Dialog>
         {/* 삭제 팝업 */}
         <Dialog open={openDelete} onClose={handleCloseDelete} maxWidth={false} disableEnforceFocus disableRestoreFocus>
@@ -120,4 +118,4 @@ function UserManagement() {
   )
 }
 
-export default UserManagement
+export default Setting

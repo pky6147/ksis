@@ -1,16 +1,45 @@
-//import React, { useState } from 'react'
-import { Routes, Route, Navigate, useLocation   } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, Navigate, useLocation, useNavigate   } from "react-router-dom";
 import {Box} from '@mui/material'
 import Side from "./layout/Side";
 import Content from "./layout/Content";
 import Menu from "./component/Menu";
+import ProtectedRoute from "./component/ProtectedRoute";
 
 import LoginPage from './page/00_Login'
 import TestPage from './page/99_Test'
 import UserManagement from "./page/01_UserManagement/UserManagement";
+import Setting from "./page/02_Setting/Setting"
+
+import { type User_Type } from "./Types/Components";
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // ✅ 로그인 유저 정보 전역 상태
+  const [userInfo, setUserInfo] = useState<User_Type | null>(null);
+
+   // ✅ localStorage에 로그인 정보 유지
+  useEffect(() => {
+    const savedUser = localStorage.getItem("userInfo");
+    if (savedUser) setUserInfo(JSON.parse(savedUser));
+  }, []);
+
+  // ✅ 로그인 후 상태 업데이트
+  const handleLoginSuccess = (user: User_Type | null) => {
+    setUserInfo(user);
+    localStorage.setItem("userInfo", JSON.stringify(user));
+    navigate("/user");
+  };
+
+  // ✅ 로그아웃 처리
+  const handleLogout = () => {
+    console.log("로그아웃 클릭")
+    setUserInfo(null);
+    localStorage.removeItem("userInfo");
+    navigate("/login");
+  };
 
   // 사이드바/콘텐츠를 숨길 경로 목록
   const hideLayoutPaths = ["/login", "/test"];
@@ -22,7 +51,8 @@ function App() {
         // 로그인, 테스트 페이지는 단독 표시
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/login" element={<LoginPage />} />
+          {/* <Route path="/login" element={<LoginPage />} /> */}
+          <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/test" element={<TestPage />} />
         </Routes>
       ) : (
@@ -30,13 +60,27 @@ function App() {
         <>
           <Box sx={{width: '14.5vw', padding: 1}}>
             <Side>
-              <Menu />
+              {/* <Menu /> */}
+              <ProtectedRoute userInfo={userInfo}>
+                <Menu userInfo={userInfo} onLogout={handleLogout} />
+              </ProtectedRoute>
             </Side>
           </Box>
           <Box sx={{width: '84.5vw', padding: 1}}>
             <Content>
               <Routes>
-                <Route path="/user" element={<UserManagement />} />
+                <Route path="/user" element={
+                  <ProtectedRoute userInfo={userInfo} requiredRole="admin">
+                    <UserManagement />
+                  </ProtectedRoute>
+                  } 
+                />
+                <Route path="/setting" element={
+                  <ProtectedRoute userInfo={userInfo}>
+                    <Setting />
+                  </ProtectedRoute>
+                  } 
+                />
               </Routes>
             </Content>
           </Box>

@@ -1,5 +1,6 @@
 import { type TestRows } from '../Types/TableHeaders/TestHeaders'
 import { type UserTableRows } from "./TableHeaders/UserManageHeader"
+import { type SettingTableRows } from './TableHeaders/SettingHeader'
 
 export type SearchCategory<K extends string | number | symbol> = {
   id: number
@@ -18,4 +19,11 @@ export const getUserSearchCategory = (): SearchCategory<keyof UserTableRows>[] =
     {id: 3, name: '부서', value: 'dept'},
     {id: 4, name: '직위', value: 'rank'},
     {id: 5, name: '접속일', value: 'loginAt'},
+]
+
+export const getSettingSearchCategory = (): SearchCategory<keyof SettingTableRows>[] => [
+    {id: 1, name: '데이터수집명', value: 'settingName'},
+    {id: 2, name: 'URL', value: 'url'},
+    {id: 3, name: 'USER-AGENT', value: 'userAgent'},
+    {id: 4, name: '진행상태', value: 'state'},
 ]

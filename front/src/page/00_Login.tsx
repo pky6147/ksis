@@ -5,8 +5,12 @@ import CustomButton from "../component/CustomButton"
 import CustomIconButton from '../component/CustomIconButton'
 import CustomTextField from "../component/CustomTextField"
 
+import { type User_Type } from "../Types/Components"
+interface LoginProps {
+  onLoginSuccess: (user: User_Type) => void;
+}
 
-function Login() {
+function Login({onLoginSuccess}: LoginProps) {
   const [loginInfo, setLoginInfo] = useState<{loginId: string, password: string}>({loginId: "", password: ""})
   const [isVisible, setIsVisible] = useState(false)
 
@@ -15,8 +19,10 @@ function Login() {
   };
 
   const handleLogin = () => {
-    alert('버튼 클릭')
     console.log('loginInfo', loginInfo)
+
+    const user = { name: "홍길동", loginId: loginInfo.loginId, id:0, role:'admin' };
+    onLoginSuccess(user);
   }
 
   const handleShowPassword = () => {
@@ -25,17 +31,22 @@ function Login() {
 
   return (
     <Box sx={{ width: '100vw', height: '100vh', backgroundColor: '#fff', display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
-      <Box sx={{}}>
-        {<img src={logo} alt="company logo" style={{ height: '100%', width: '100%' }} />}
-        <Typography sx={{ fontSize: 50, fontWeight: 'bold', color: 'black'}}>KSIS 데이터 수집 시스템</Typography>
+      <Box>
+        <Box sx={{display: 'flex', alignItems: 'center', gap:1}}>
+          <Box>
+            {<img src={logo} alt="company logo" style={{ height: '100%', width: '100%' }} />}
+          </Box>
+          <Box sx={{width: '75%'}}>
+            <Typography sx={{ fontSize: 40, fontWeight: 'bold', color: 'black'}}>데이터 수집 시스템</Typography>
+          </Box>
+        </Box>
         <Box sx={{border: '5px solid black', marginTop: 3, padding: 2, borderRadius: 3}}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3}}>
             <Box>
-              <Typography sx={{ fontSize: 20, fontWeight: 'bold', color: 'black'}}>아이디</Typography>
+              {/* <Typography sx={{ fontSize: 20, fontWeight: 'bold', color: 'black'}}>아이디</Typography> */}
               <CustomTextField 
                 inputWidth="330px"
-                // label="ID"
-                variant="standard"
+                radius={20}
                 value={loginInfo?.loginId}
                 disabled={false}
                 readOnly={false}
@@ -45,11 +56,10 @@ function Login() {
               />
             </Box>
             <Box>
-              <Typography sx={{ fontSize: 20, fontWeight: 'bold', color: 'black'}}>비밀번호</Typography>
+              {/* <Typography sx={{ fontSize: 20, fontWeight: 'bold', color: 'black'}}>비밀번호</Typography> */}
               <CustomTextField 
                 inputWidth="330px"
-                // label="비밀번호"
-                variant="standard"
+                radius={20}
                 value={loginInfo?.password}
                 disabled={false}
                 readOnly={false}
@@ -66,7 +76,11 @@ function Login() {
                 }
               />
             </Box>
-            <CustomButton text="로그인" onClick={handleLogin} />
+            <CustomButton 
+              text="로그인" width="330px" radius={20} 
+              backgroundColor="#F5A623" color='black'
+              onClick={handleLogin} 
+            />
           </Box>
         </Box>
       </Box>
