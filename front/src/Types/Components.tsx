@@ -6,12 +6,15 @@ export interface TextField_Type {
     label?: string;
     variant?: 'outlined' | 'filled' | 'standard' | undefined;
     border?: string;
+    radius?: number | string;
     inputWidth?: string;
+    height?: string;
     disabled?: boolean;
     // required?: boolean;
     placeholder?: string;
     readOnly?: boolean;
     type?: 'text' | 'number' | 'password';
+    step?: number;
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     startAdornment?: React.ReactNode; 
     endAdornment?: React.ReactNode;
@@ -25,10 +28,12 @@ export interface Button_Type {
     fontWeight? : string;
     backgroundColor? : string;
     border? : string;
+    radius? : number | string;
     onClick? : React.MouseEventHandler<HTMLButtonElement>,
     text? : string;
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
+    disabled?: boolean;
 }
 export interface IconButton_Type {
     width? : string;
@@ -39,7 +44,7 @@ export interface IconButton_Type {
     backgroundColor? : string;
     border? : string;
     onClick? : React.MouseEventHandler<HTMLButtonElement>,
-    icon?: 'search' | 'reset' | 'visible' | 'invisible' | 'edit' | 'delete' | 'log'
+    icon?: 'search' | 'reset' | 'visible' | 'invisible' | 'edit' | 'delete' | 'log' | 'run' | 'stop' | 'close'
 }
 
 export interface SearchBar_Type {
@@ -72,6 +77,19 @@ export interface Select_Type {
     value?: number | string;
     listItem: SelectItem[],
     inputWidth?: string;
+    height?: string;
     border?: string;
     onChange: (event: SelectChangeEvent<string | number>) => void;
+}
+
+export interface User_Type {
+    id? : number;
+    loginId? : string;
+    name? : string;
+    role? : string;
+}
+
+export interface Menu_Type {
+    userInfo?: User_Type | null;
+    onLogout: () => void;
 }

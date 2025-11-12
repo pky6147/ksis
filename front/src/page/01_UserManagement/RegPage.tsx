@@ -14,6 +14,8 @@ interface RegPageProps {
 
 export default function RegPage(props: RegPageProps) {
     const {handleDone, handleCancle} = props
+    const [isValid_id, setIsValid_id] = useState<boolean | null>(null);
+    const [isValidPassword, setIsValidPassword] = useState<boolean | null>(null);
     const [isVisible, setIsVisible] = useState(false)
     const [isPasswordMismatch, setIsPasswordMismatch] = useState(false);
     const [newData, setNewData] = useState({
@@ -37,6 +39,22 @@ export default function RegPage(props: RegPageProps) {
     const handleInputChange = (key: keyof typeof newData, value: string) => {
         setNewData((prev) => {
             const updated = { ...prev, [key]: value };
+
+            if (key === 'loginId') {
+                if (value === '') {
+                    setIsValid_id(null); // 입력이 없으면 검사 안함
+                } else {
+                    setIsValid_id(validateLoginId(value));
+                }
+            }
+
+            if (key === 'password') {
+              if (value === '') {
+                setIsValidPassword(null);
+              } else {
+                setIsValidPassword(validatePassword(value));
+              }
+            }
             
             if (key === 'passwordConfirm' || key === 'password') {
                 const mismatch = updated.password !== updated.passwordConfirm;
@@ -50,6 +68,22 @@ export default function RegPage(props: RegPageProps) {
     const handleSelectChange = (key: keyof typeof newData) => 
     (event: SelectChangeEvent<string | number>) => {
       setNewData((prev) => ({ ...prev, [key]: event.target.value }));
+    };
+
+    const validateLoginId = (id: string): boolean => {
+      const regex = /^[a-z0-9]{6,20}$/;
+      return regex.test(id);
+    };
+    const validatePassword = (password: string): boolean => {
+      if (password.length < 9) return false;
+
+      let count = 0;
+      if (/[A-Z]/.test(password)) count++;    // 영대문자
+      if (/[a-z]/.test(password)) count++;    // 영소문자
+      if (/[0-9]/.test(password)) count++;    // 숫자
+      if (/[^A-Za-z0-9]/.test(password)) count++;  // 특수문자
+
+      return count >= 3;
     };
 
     const handleRegist = () => {
@@ -67,13 +101,13 @@ export default function RegPage(props: RegPageProps) {
             return;
         }
 
-        // handleDone()
+        handleDone()
     }
 
 
     return (
         <Box sx={{
-            width: '50vw',
+            width: '600px',
             height: '65vh',
             backgroundColor: 'white',
             display: 'flex',
@@ -109,8 +143,12 @@ export default function RegPage(props: RegPageProps) {
                           onChange={(e) => handleInputChange('loginId', e.target.value)}
                         />
                         <Box sx={{ backgroundColor: '#c5c4c7', border: '3px solid #757575', borderRadius:1, width: '300px'}}>
-                            <Typography>∴ 여기는 중복 여부 표시</Typography>
-                            <Typography>∴ 여기는 아이디 설정 조건</Typography>
+                            <Typography>∴ 영문 소문자(a-z), 숫자(0~9) 조합으로 6자 이상 20자 이하 이어야 합니다.</Typography>
+                            {isValid_id ? (
+                                <Typography sx={{ color: 'green' }}>사용 가능한 아이디 형식입니다.</Typography>
+                            ) : (
+                              <Typography sx={{ color: 'red' }}>사용 불가능한 아이디 형식입니다.</Typography>
+                            )}
                         </Box>
                     </Box>
                 </Box>
@@ -141,8 +179,12 @@ export default function RegPage(props: RegPageProps) {
                             }
                         />
                         <Box sx={{ backgroundColor: '#c5c4c7', border: '3px solid #757575', borderRadius:1, width: '300px'}}>
-                            <Typography>∴ 비밀번호 사용 가능 확인 메시지</Typography>
-                            <Typography>∴ 여기는 비밀번호 설정 조건</Typography>
+                            <Typography>∴ 9자 이상의 영대문자, 영소문자, 숫자, 특수문자 중 3종류 이상의 조합만 가능합니다.</Typography>
+                            {isValidPassword ? (
+                                <Typography sx={{ color: 'green' }}>사용 가능한 비밀번호 형식입니다.</Typography>
+                            ) : (
+                                <Typography sx={{ color: 'red' }}>사용 불가능한 비밀번호 형식입니다.</Typography>
+                            )}
                         </Box>
                     </Box>
                 </Box>

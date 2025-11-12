@@ -4,12 +4,18 @@ import {Box, TextField} from '@mui/material'
 import {type TextField_Type} from '../Types/Components'
 
 export default function CustomTextField(props: TextField_Type) {
-    const {value, label, variant, border, inputWidth, disabled, placeholder, readOnly, type, 
+    const {value, label, variant, border, radius, inputWidth, height, 
+        disabled, placeholder, readOnly, type, step, 
         onChange, startAdornment, endAdornment} = props
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: '320px'}}>
             <TextField 
-                sx={{backgroundColor: 'white', borderRadius: 1, border: border || '1px solid', width: inputWidth || '246px', minWidth: '246px' }}
+                sx={{
+                    backgroundColor: 'white', 
+                    border: border || '', 
+                    width: inputWidth || '246px', 
+                    minWidth: '246px',
+                }}
                 size= "small"
                 value={value || ''}
                 label={label || ''}
@@ -17,12 +23,19 @@ export default function CustomTextField(props: TextField_Type) {
                 onChange={onChange}
                 disabled={disabled || false}
                 placeholder={placeholder || ''}
-                inputProps={{ autoFocus: true }}
+                // inputProps={{ autoFocus: true, }}
                 slotProps={{
                     input: {
-                      readOnly: readOnly || false,
-                      startAdornment: startAdornment,
-                      endAdornment: endAdornment,
+                        readOnly: readOnly || false,
+                        startAdornment: startAdornment,
+                        endAdornment: endAdornment,
+                        inputProps: {
+                            step: step || 1,
+                        },
+                        sx: {
+                            borderRadius: radius || 1, 
+                            height: height || '40px'
+                        }, 
                     },
                 }}
                 type={type || 'text'}

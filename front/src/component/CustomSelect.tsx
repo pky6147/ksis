@@ -3,7 +3,7 @@ import { Box, MenuItem, FormControl, Select } from '@mui/material'
 import { type Select_Type } from '../Types/Components';
 
 export default function CustomSelect(props: Select_Type) {
-    const { value, listItem, onChange, inputWidth, border } = props;
+    const { value, listItem, onChange, inputWidth, height, border } = props;
 
     useEffect(() => {
       if (!value && listItem.length > 0) {
@@ -19,6 +19,7 @@ export default function CustomSelect(props: Select_Type) {
         <Select
           value={value}
           onChange={onChange}
+          sx={{height: height || '40px'}}
         >
             {listItem.map((item, index) => (
                 <MenuItem 

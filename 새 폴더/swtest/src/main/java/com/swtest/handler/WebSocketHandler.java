@@ -21,33 +21,32 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     private final WebSocketSessionManager sessionManager;
 
+
+    // 크롤링 상태 전송 예시 메서드
+    public void sendCrawlingStatus(String userId, String url, String status, String title) {
+        log.info("Attempting send to user {}, url {}, status {}, title {}", userId, url, status, title);
+        sessionManager.getSession(userId).ifPresentOrElse(session -> {
+            try {
+                String message = String.format(
+                        "{\"url\":\"%s\", \"status\":\"%s\", \"title\":\"%s\"}", url, status, title);
+                session.sendMessage(new TextMessage(message));
+                log.info("Message sent to user {}", userId);
+            } catch (Exception e) {
+                log.error("Error sending message", e);
+            }
+        }, () -> {
+            log.warn("No session found for user {}", userId);
+        });
+    }
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         String userId = getUserId(session);
+        log.info("WebSocket connection established, URI: {}, userId: {}", session.getUri(), userId);
         if (userId != null) {
             sessionManager.addSession(userId, session);
-            log.info("WebSocket connection established for user: {}", userId);
-
-            // 1초 간격으로 10번 메시지 전송
-            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-            final int[] counter = {0}; // 전송 횟수 카운터
-
-            executor.scheduleAtFixedRate(() -> {
-                try {
-                    if (counter[0] >= 10 || !session.isOpen()) {
-                        executor.shutdown(); // 종료
-                        return;
-                    }
-                    String message = "Hello " + userId + ", message " + (counter[0] + 1);
-                    session.sendMessage(new TextMessage(message));
-                    counter[0]++;
-                } catch (Exception e) {
-                    log.error("Error sending WebSocket message", e);
-                    executor.shutdown();
-                }
-            }, 0, 1, TimeUnit.SECONDS);
+            log.info("Session added for user: {}", userId);
         }
-
     }
 
     @Override

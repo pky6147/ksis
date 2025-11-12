@@ -4,20 +4,21 @@ import {Button} from '@mui/material'
 import {type Button_Type} from '../Types/Components'
 
 export default function CustomButton(props: Button_Type) {
-    const {width, height, fontSize, color, fontWeight, backgroundColor, border, onClick, text, startIcon, endIcon} = props
+    const {width, height, fontSize, color, fontWeight, backgroundColor, border, radius, onClick, text, startIcon, endIcon, disabled} = props
     return (
         <Button 
             sx={{
-                width: width || '80px',
+                width: width || '90px',
                 height: height || '35px',
-                color: color || 'white',
+                color: color || 'black',
                 fontWeight: fontWeight || 'bold',
                 fontSize: fontSize || '16px',
-                backgroundColor: backgroundColor || 'blue',
+                backgroundColor: backgroundColor || '#F5A623',
                 border: border || '',
-                // borderRadius: 3,
+                borderRadius: radius || 0,
                 // boxShadow: '0px 3px 0px black'
             }}
+            disabled={disabled || false}
             onClick={onClick? onClick : ()=>{}}
             startIcon={startIcon}
             endIcon={endIcon}

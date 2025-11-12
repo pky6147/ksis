@@ -9,6 +9,7 @@ interface SearchHeaderProps<T> {
   setFilteredRows: React.Dispatch<React.SetStateAction<T[]>>
   getSearchCategory: () => SearchCategory<keyof T>[]
   onClick: () => void
+  btnName: string;
 }
 
 export default function SearchHeader<T>({
@@ -16,6 +17,7 @@ export default function SearchHeader<T>({
   setFilteredRows,
   getSearchCategory,
   onClick,
+  btnName,
 }: SearchHeaderProps<T>) {
   const [searchList, setSearchList] = useState<SearchCategory<keyof T | "all">[]>([])
   const [searchCount, setSearchCount] = useState<number | undefined>()
@@ -79,6 +81,7 @@ export default function SearchHeader<T>({
           options={searchList}
           onSearch={handleSearch}
           onClick={onClick}
+          btnName={btnName}
         />
       </Box>
     </Box>
