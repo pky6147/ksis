@@ -84,9 +84,11 @@ function UserManagement() {
 
   return (
     <Box sx={{ height: '97%'}}>
-        <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, marginTop: 5}}>
-          유저관리
-        </Typography>
+        <Box sx={{ bgcolor: '#FFC98B', height: '120px', borderRadius: '10px 10px 0px 0px', display: 'flex', alignItems: 'center'}}>
+            <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 10, }}>
+              유저관리
+            </Typography>
+        </Box>
         <SearchHeader
           baseRows={baseRows}                 // 전체 데이터 원본
           setFilteredRows={setFilteredRows}   // 필터링된 데이터 상태 setter

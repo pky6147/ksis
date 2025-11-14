@@ -8,17 +8,15 @@ import {
     ListItemText,
     ListItemIcon,
     Divider,
-    ListSubheader,
-    // Avatar,
     Typography
 } from '@mui/material';
-import CustomButton from './CustomButton';
+import CustomIconButton from './CustomIconButton';
 import {
     ManageAccounts,
     Settings,
     Monitor,
     AlarmAdd,
-    Logout
+    PlayArrow
 } from '@mui/icons-material';
 import { type Menu_Type } from '../Types/Components';
 
@@ -42,52 +40,85 @@ function Menu(props: Menu_Type) {
             flexDirection: 'column',
             justifyContent: 'space-between',  // ✅ 상단(로고+메뉴)과 하단(유저영역) 분리
             height: '98vh',
-            width: '100%',
-            minWidth: '180px',
+            minWidth: '260px',
+            // width: '260px',
             boxSizing: 'border-box'
         }}>
             {/* --- 상단 영역 (로고 + 메뉴) --- */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
                 {/* 로고 */}
-                <Box sx={{ textAlign: 'center', marginTop: '10px' }}>
+                <Box sx={{ textAlign: 'center', marginTop: '30px', marginRight: '10px' }}>
                 <img
                     src={logo}
                     alt="company logo"
-                    style={{ width: '90%', height: 'auto', margin: '0 auto' }}
+                    style={{ width: '80%', height: 'auto' }}
                 />
                 </Box>
 
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    bgcolor: '#F8F8F5',
+                    color: 'black',
+                    borderRadius: '0 0 10px 10px',
+                    p: 1,
+                    marginLeft: 1,
+                    marginRight: 2,
+                    boxShadow: 1,
+                    height: 100
+                  }}
+                >
+                  <Box sx={{paddingLeft: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                    <Typography variant="subtitle1" fontWeight="bold" fontSize={25} >
+                      {userInfo?.name + ' 님'|| '게스트'}
+                    </Typography>
+                    <Typography variant="body2" sx={{ opacity: 0.8 }} fontSize={15}>
+                      환영합니다.
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'column-reverse'}}>
+                    <CustomIconButton
+                        icon="logout"
+                        backgroundColor='#F8F8F5'
+                        onClick={onLogout}
+                    />
+                  </Box>
+            </Box>
+
                 {/* 메뉴 */}
-                <Paper sx={{ width: '100%'}}>
+                <Paper sx={{ 
+                    // width: '100%',
+                    marginLeft: 1,
+                    marginRight: 2,
+                    minWidth: '240px',
+                }}>
                     {/* ✅ 관리자 전용 메뉴 */}
                     {userInfo?.role === 'admin' && (
                         <>
-                            <ListSubheader sx={{ backgroundColor: 'black', color: 'white' }}>
-                                사용자 관리
-                            </ListSubheader>
                             <MenuList>
                                 {userMenu.map((item, index) => (
                                     <MenuItem
                                         key={index}
                                         onClick={() => navigate(item.path)}
                                         sx={{
-                                            borderTop: index > 0 ? '0.5px solid' : undefined,
-                                            backgroundColor: location.pathname === item.path ? 'primary.light' : 'inherit',
-                                            color: location.pathname === item.path ? 'primary.contrastText' : 'inherit',
+                                            height: '60px',
+                                            backgroundColor: location.pathname === item.path ? '#FFE6C5' : 'inherit',
+                                            color: location.pathname === item.path ? '#BB510C' : 'inherit',
                                             '&:hover': {
-                                              backgroundColor: location.pathname === item.path ? 'primary.dark' : 'action.hover',
+                                              backgroundColor: location.pathname === item.path ? '#FEC88B' : '#FFE6C5',
+                                              color: location.pathname === item.path ? '#BB510C' : '#BB510C',
                                             },
-                                            marginTop: -1,
-                                            marginBottom: -1.05,
                                         }}
                                     >
                                         <ListItemIcon 
                                             sx={{ 
-                                                color: location.pathname === item.path ? 'primary.contrastText' : 'inherit',
+                                                color: location.pathname === item.path ? '#BB510C' : 'black',
                                         }}>
                                             {item.icon}
                                         </ListItemIcon>
                                         <ListItemText primary={item.title} />
+                                        <PlayArrow fontSize="small" />
                                     </MenuItem>
                                 ))}
                             </MenuList>
@@ -95,41 +126,28 @@ function Menu(props: Menu_Type) {
                         </>
                     )}
                     {/* ✅ 일반 메뉴 (모든 사용자 접근 가능) */}
-                    <ListSubheader sx={{backgroundColor:'black', color: 'white'}}>데이터 수집</ListSubheader>
-                    <MenuList
-                        sx={{
-                            
-                        }}
-                    >
+                    <MenuList>
                         { settingMenu.map((item, index) => (
                             <MenuItem
                                 key={index}  
                                 onClick={() => navigate(item.path)}
                                 sx={{
-                                    borderTop: index > 0 ? '0.5px solid' : undefined,
-                                    backgroundColor: location.pathname === item.path ? 'primary.light' : 'inherit',
-                                    color: location.pathname === item.path ? 'primary.contrastText' : 'inherit',
-                                    // 첫번째 메뉴 아이템 선택시
-                                    '&:first-of-type': {
-                                      ...(location.pathname === item.path && {
-                                        marginTop: -1,
-                                      }),
-                                    },
-                                    // 마지막 메뉴 아이템 선택시
-                                    '&:last-of-type': {
-                                      ...(location.pathname === item.path && {
-                                        marginBottom: -1.05,
-                                      }),
-                                    },
+                                    height: '60px',
+                                    backgroundColor: location.pathname === item.path ? '#FFE6C5' : 'inherit',
+                                    color: location.pathname === item.path ? '#BB510C' : 'inherit',
                                     '&:hover': {
-                                      backgroundColor: location.pathname === item.path ? 'primary.dark' : 'action.hover',
+                                        backgroundColor: location.pathname === item.path ? '#FEC88B' : '#FFE6C5',
+                                        color: location.pathname === item.path ? '#BB510C' : '#BB510C',
                                     },
-                                }} 
+                                }}
                             >
-                                <ListItemIcon sx={{color: location.pathname === item.path ? 'primary.contrastText' : 'inherit',}}>
+                                <ListItemIcon sx={{
+                                    color: location.pathname === item.path ? '#BB510C' : 'inherit',
+                                }}>
                                     {item.icon}
                                 </ListItemIcon>
                                 <ListItemText primary={item.title} />
+                                <PlayArrow fontSize="small" />
                             </MenuItem>
 
                         ))}
@@ -137,37 +155,6 @@ function Menu(props: Menu_Type) {
                     <Divider />
                 </Paper>
             </Box>
-
-            {/* --- 하단 사용자 정보 영역 (고정) --- */}
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                bgcolor: 'primary.main',
-                color: 'white',
-                borderRadius: '0 0 10px 10px',
-                p: 2,
-                boxShadow: 1,
-              }}
-            >
-              <Box>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  {userInfo?.name || '게스트'}
-                </Typography>
-                <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  환영합니다.
-                </Typography>
-              </Box>
-              <CustomButton
-                text="로그아웃"
-                width="120px"
-                startIcon={<Logout />}
-                onClick={onLogout}
-              />
-            </Box>
-
-            
         </Box>
     )
 }

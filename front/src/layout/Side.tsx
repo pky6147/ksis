@@ -9,7 +9,7 @@ function Side({children}:LayoutProps) {
         sx={{
             backgroundColor: '#fff',
             height: '98vh',
-            border: '3px solid #3c3c3cff', 
+            border: '3px solid #CDBAA6', 
             borderRadius: 3,
         }}
     >

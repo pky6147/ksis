@@ -46,7 +46,7 @@ function App() {
   const shouldHideLayout = hideLayoutPaths.includes(location.pathname);
 
   return (
-    <Box sx={{ width: '100vw', display: 'flex', backgroundColor: '#f6e473ff' }}>
+    <Box sx={{ width: '100vw', display: 'flex', backgroundColor: '#FEF4EA' }}>
       {shouldHideLayout ? (
         // 로그인, 테스트 페이지는 단독 표시
         <Routes>
@@ -58,7 +58,7 @@ function App() {
       ) : (
         // 나머지 페이지는 Side + Content 포함
         <>
-          <Box sx={{width: '14.5vw', padding: 1}}>
+          <Box sx={{width: '14.5vw', padding: 1, minWidth: '260px'}}>
             <Side>
               {/* <Menu /> */}
               <ProtectedRoute userInfo={userInfo}>

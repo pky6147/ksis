@@ -31,8 +31,9 @@ function CommonTable(props: CommonTableProps) {
             params.row.state === '승인대기' ? 'row-inactive' : '' // User 페이지 승인대기일 때
           }
           sx={{
+              border: '1px solid #CDBAA6',
               '&': {
-                  '--DataGrid-t-header-background-base': '#F5A623 !important' // 헤더색 변경
+                  '--DataGrid-t-header-background-base': '#FCF7F2 !important' // 헤더색 변경
               },
               '& .MuiDataGrid-columnHeaders': { 
                   color: 'black', // 헤더 글자색 
