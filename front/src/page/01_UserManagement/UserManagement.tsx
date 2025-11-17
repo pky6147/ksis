@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect} from "react"
+import { useNavigate } from 'react-router-dom';
 // Mui
 import { Box, Dialog, Typography } from '@mui/material'
 // Table
@@ -21,7 +22,9 @@ function UserManagement() {
   const [openReg, setOpenReg] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
-  const [openLog, setOpenLog] = useState(false)
+
+  // LogPage
+  const navigate = useNavigate();
 
   useEffect(()=> {
     const data = [
@@ -62,12 +65,11 @@ function UserManagement() {
 
   const handleShowLogOpen = (row: UserTableRows) => {
     setSelectedRow(row)
-    setOpenLog(true)
+    // 로그 페이지로 이동
+    navigate('/user/log', {state: {userId: row.id, loginId: row.loginId} })
+    
   }
-  const handleCloseLog = () => {
-    setSelectedRow(null)
-      setOpenLog(false)
-  }
+  
   const columns = getColumns({ handleEditOpen, handleDeleteOpen, handleShowLogOpen });
 
   /**  등록 페이지  =========================================== */
@@ -105,20 +107,17 @@ function UserManagement() {
 
         {/* 등록 페이지 */}
         <Dialog open={openReg} onClose={handleCloseReg} maxWidth={false} disableEnforceFocus disableRestoreFocus>
-            <RegPage handleDone={handleReg} handleCancle={handleCloseReg} />
+            <RegPage handleDone={handleReg} handleCancel={handleCloseReg} />
         </Dialog>
         {/* 수정 페이지 */}
         <Dialog open={openEdit} onClose={handleCloseEdit} maxWidth={false} disableEnforceFocus disableRestoreFocus>
-            <EditPage row={selectedRow} handleDone={handleEdit} handleCancle={handleCloseEdit} />
+            <EditPage row={selectedRow} handleDone={handleEdit} handleCancel={handleCloseEdit} />
         </Dialog>
         {/* 삭제 팝업 */}
         <Dialog open={openDelete} onClose={handleCloseDelete} maxWidth={false} disableEnforceFocus disableRestoreFocus>
             {/* <MaterialReg doFinish={handleRegDone} doCancle={handleCloseReg} /> */}
         </Dialog>
-        {/* 이력 조회 화면 */}
-        <Dialog open={openLog} onClose={handleCloseLog} maxWidth={false} disableEnforceFocus disableRestoreFocus>
-            {/* <MaterialReg doFinish={handleRegDone} doCancle={handleCloseReg} /> */}
-        </Dialog>
+
     </Box>
   )
 }
