@@ -28,6 +28,7 @@ function UserManagement() {
       { id: 1, index: 1, loginId: 'ksis1', password: 'test1234', name: '김철수', dept: '비즈니스 사업부', rank: '부장', loginAt: '2025-11-05', state: '승인완료' },
       { id: 2, index: 2, loginId: 'ksis2', password: 'test5678', name: '김영희', dept: '소프트웨어 사업부', rank: '대리', loginAt: '2025-11-06', state: '승인완료' },
       { id: 3, index: 3, loginId: 'ksis3', password: 'test0000', name: '홍길동', dept: '경영지원부', rank: '과장', loginAt: '2024-04-24', state: '승인대기' },
+      { id: 4, index: 4, loginId: 'ksis4', password: 'test0000', name: '테스트', dept: '경영지원부', rank: '과장', loginAt: '2024-04-24', state: '승인대기' },
     ];
 
     setBaseRows(data)
