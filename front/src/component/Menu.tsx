@@ -17,7 +17,8 @@ import {
     Settings,
     Monitor,
     AlarmAdd,
-    PlayArrow
+    PlayArrow,
+    Notifications
 } from '@mui/icons-material';
 import { type Menu_Type } from '../Types/Components';
 
@@ -30,9 +31,10 @@ function Menu(props: Menu_Type) {
         {title: '유저목록', path: '/user', icon: <ManageAccounts fontSize="small" />},
     ]
     const settingMenu = [
+        {title: '데이터 수집 현황', path: '/cursituation', icon: <Notifications fontSize="small" />},
         {title: '데이터 수집 설정', path: '/setting', icon: <Settings fontSize="small" />},
-        {title: '데이터 수집 현황', path: '/cursituation', icon: <Monitor fontSize="small" />},
         {title: '스케쥴러', path: '/scheduler', icon: <AlarmAdd fontSize="small" />},
+        {title: '데이터 수집 이력', path: '/history', icon: <Monitor fontSize="small" />},
     ]
 
     return (
@@ -104,18 +106,18 @@ function Menu(props: Menu_Type) {
                                         onClick={() => navigate(item.path)}
                                         sx={{
                                             height: 80,
-                                            backgroundColor: location.pathname === item.path ? '#FFE6C5' : 'inherit',
-                                            color: location.pathname === item.path ? '#BB510C' : 'inherit',
+                                            backgroundColor: location.pathname.includes(item.path) ? '#FFE6C5' : 'inherit',
+                                            color: location.pathname.includes(item.path) ? '#BB510C' : 'inherit',
                                             '&:hover': {
-                                              backgroundColor: location.pathname === item.path ? '#FEC88B' : '#FFE6C5',
-                                              color: location.pathname === item.path ? '#BB510C' : '#BB510C',
+                                              backgroundColor: location.pathname.includes(item.path) ? '#FEC88B' : '#FFE6C5',
+                                              color: location.pathname.includes(item.path) ? '#BB510C' : '#BB510C',
                                             },
                                         }}
                                     >
                                         <ListItemIcon 
                                             sx={{ 
                                                 minWidth: 40,
-                                                color: location.pathname === item.path ? '#BB510C' : 'black',
+                                                color: location.pathname.includes(item.path) ? '#BB510C' : 'black',
                                         }}>
                                             {/* {item.icon} */}
                                             {React.cloneElement(item.icon as React.ReactElement<any>, {
@@ -128,7 +130,7 @@ function Menu(props: Menu_Type) {
                                                 primary: {
                                                     sx: {
                                                         fontSize: 20,
-                                                        fontWeight: location.pathname === item.path ? 700 : 400,
+                                                        fontWeight: location.pathname.includes(item.path) ? 700 : 400,
                                                     }
                                                 }
                                             }}
@@ -148,16 +150,16 @@ function Menu(props: Menu_Type) {
                                 onClick={() => navigate(item.path)}
                                 sx={{
                                     height: 80,
-                                    backgroundColor: location.pathname === item.path ? '#FFE6C5' : 'inherit',
-                                    color: location.pathname === item.path ? '#BB510C' : 'inherit',
+                                    backgroundColor: location.pathname.includes(item.path) ? '#FFE6C5' : 'inherit',
+                                    color: location.pathname.includes(item.path) ? '#BB510C' : 'inherit',
                                     '&:hover': {
-                                        backgroundColor: location.pathname === item.path ? '#FEC88B' : '#FFE6C5',
-                                        color: location.pathname === item.path ? '#BB510C' : '#BB510C',
+                                        backgroundColor: location.pathname.includes(item.path) ? '#FEC88B' : '#FFE6C5',
+                                        color: location.pathname.includes(item.path) ? '#BB510C' : '#BB510C',
                                     },
                                 }}
                             >
                                 <ListItemIcon sx={{
-                                    color: location.pathname === item.path ? '#BB510C' : 'inherit',
+                                    color: location.pathname.includes(item.path) ? '#BB510C' : 'inherit',
                                 }}>
                                     {/* {item.icon} */}
                                     {React.cloneElement(item.icon as React.ReactElement<any>, {
@@ -170,7 +172,7 @@ function Menu(props: Menu_Type) {
                                         primary: {
                                             sx: {
                                                 fontSize: 20,
-                                                fontWeight: location.pathname === item.path ? 700 : 400,
+                                                fontWeight: location.pathname.includes(item.path) ? 700 : 400,
                                             }
                                         }
                                     }}
