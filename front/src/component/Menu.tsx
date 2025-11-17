@@ -1,3 +1,4 @@
+import React from 'react'
 import { useNavigate, useLocation  } from 'react-router-dom';
 import logo from '../assets/ksisLogo.png'
 import { 
@@ -102,7 +103,7 @@ function Menu(props: Menu_Type) {
                                         key={index}
                                         onClick={() => navigate(item.path)}
                                         sx={{
-                                            height: '60px',
+                                            height: 80,
                                             backgroundColor: location.pathname === item.path ? '#FFE6C5' : 'inherit',
                                             color: location.pathname === item.path ? '#BB510C' : 'inherit',
                                             '&:hover': {
@@ -113,12 +114,26 @@ function Menu(props: Menu_Type) {
                                     >
                                         <ListItemIcon 
                                             sx={{ 
+                                                minWidth: 40,
                                                 color: location.pathname === item.path ? '#BB510C' : 'black',
                                         }}>
-                                            {item.icon}
+                                            {/* {item.icon} */}
+                                            {React.cloneElement(item.icon as React.ReactElement<any>, {
+                                                sx: { fontSize: 28 }
+                                            })}
                                         </ListItemIcon>
-                                        <ListItemText primary={item.title} />
-                                        <PlayArrow fontSize="small" />
+                                        <ListItemText 
+                                            primary={item.title} 
+                                            slotProps={{
+                                                primary: {
+                                                    sx: {
+                                                        fontSize: 20,
+                                                        fontWeight: location.pathname === item.path ? 700 : 400,
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                        <PlayArrow sx={{fontSize: 26}} />
                                     </MenuItem>
                                 ))}
                             </MenuList>
@@ -132,7 +147,7 @@ function Menu(props: Menu_Type) {
                                 key={index}  
                                 onClick={() => navigate(item.path)}
                                 sx={{
-                                    height: '60px',
+                                    height: 80,
                                     backgroundColor: location.pathname === item.path ? '#FFE6C5' : 'inherit',
                                     color: location.pathname === item.path ? '#BB510C' : 'inherit',
                                     '&:hover': {
@@ -144,10 +159,23 @@ function Menu(props: Menu_Type) {
                                 <ListItemIcon sx={{
                                     color: location.pathname === item.path ? '#BB510C' : 'inherit',
                                 }}>
-                                    {item.icon}
+                                    {/* {item.icon} */}
+                                    {React.cloneElement(item.icon as React.ReactElement<any>, {
+                                        sx: { fontSize: 28 }
+                                    })}
                                 </ListItemIcon>
-                                <ListItemText primary={item.title} />
-                                <PlayArrow fontSize="small" />
+                                <ListItemText 
+                                    primary={item.title} 
+                                    slotProps={{
+                                        primary: {
+                                            sx: {
+                                                fontSize: 20,
+                                                fontWeight: location.pathname === item.path ? 700 : 400,
+                                            }
+                                        }
+                                    }}
+                                />
+                                <PlayArrow sx={{fontSize: 26}} />
                             </MenuItem>
 
                         ))}
