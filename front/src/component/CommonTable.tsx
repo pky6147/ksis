@@ -5,7 +5,7 @@ import {type CommonTableProps } from '../Types/Table'
 function CommonTable(props: CommonTableProps) {
     const {columns, rows, selectedRows, pageSize, height, width, check, onRowClick, onRowSelectionChange} = props
 
-    const paginationModel = { page: 0, pageSize: pageSize || 5 };
+    const paginationModel = { page: 0, pageSize: pageSize || 10 };
 
      // ✅ v8 기준: rowSelectionModel은 객체 구조 ({ type, ids })
     const rowSelectionModel: GridRowSelectionModel = {
@@ -13,7 +13,7 @@ function CommonTable(props: CommonTableProps) {
       ids: new Set(selectedRows?.map((r) => r.id) ?? []),
   }
     return (
-      <Paper sx={{ height: height || 400, width: width || '100%' }}>
+      <Paper sx={{ height: height || 630, width: width || '100%' }}>
         <DataGrid
           rows={rows}
           columns={columns}
