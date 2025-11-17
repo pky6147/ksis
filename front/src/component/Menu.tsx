@@ -30,7 +30,7 @@ function Menu(props: Menu_Type) {
     ]
     const settingMenu = [
         {title: '데이터 수집 설정', path: '/setting', icon: <Settings fontSize="small" />},
-        {title: '데이터 수집 현황', path: '/cursituation', icon: <Monitor fontSize="small" />},
+        {title: '데이터 수집 현황', path: '/status', icon: <Monitor fontSize="small" />},
         {title: '스케쥴러', path: '/scheduler', icon: <AlarmAdd fontSize="small" />},
     ]
 

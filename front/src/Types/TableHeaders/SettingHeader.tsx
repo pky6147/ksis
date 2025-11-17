@@ -4,7 +4,7 @@ import CustomIconButton from '../../component/CustomIconButton'
 export interface SettingTableRows {
     id: number,
     SettingId?: number,
-    userId?: number,
+    userId?: string,
     // index?: number,
     settingName?: string,
     url?: string,

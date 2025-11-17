@@ -10,6 +10,8 @@ import LoginPage from './page/00_Login'
 import TestPage from './page/99_Test'
 import UserManagement from "./page/01_UserManagement/UserManagement";
 import Setting from "./page/02_Setting/Setting"
+import Status from "./page/03_Status/Status"
+import StatusDetail from "./page/03_Status/StatusDetail"
 
 import { type User_Type } from "./Types/Components";
 
@@ -80,6 +82,18 @@ function App() {
                     <Setting />
                   </ProtectedRoute>
                   } 
+                />
+                <Route path="/status" element={
+                  <ProtectedRoute userInfo={userInfo}>
+                    <Status />
+                  </ProtectedRoute>
+                  }
+                />
+                <Route path="/status/detail/:id" element={
+                  <ProtectedRoute userInfo={userInfo}>
+                    <StatusDetail />
+                  </ProtectedRoute>
+                  }
                 />
               </Routes>
             </Content>
