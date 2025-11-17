@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation, Link as RouterLink } from 'react-router-dom';
 import { Box, Typography, Breadcrumbs, Link,
-    Radio, RadioGroup, FormControl, FormControlLabel
+    Radio, RadioGroup, FormControl, FormControlLabel, InputAdornment
  } from '@mui/material'
 import CommonTable from '../../component/CommonTable'
 import { getColumns, type UserLogTableRows } from '../../Types/TableHeaders/UserManageLogHeader'
 import CustomButton from '../../component/CustomButton';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Dayjs } from 'dayjs';
+import CustomTextField from '../../component/CustomTextField';
+import CustomIconButton from '../../component/CustomIconButton';
 
 export default function LogPage () {
     const location = useLocation();
@@ -17,6 +22,10 @@ export default function LogPage () {
     const columns = getColumns();
 
     const [filterType, setFilterType] = useState('all');  // 라디오 선택값 상태
+    const [searchStartAt, setSearchStartAt] = useState<Dayjs | null>(null);
+    const [searchEndAt, setSearchEndAt] = useState<Dayjs | null>(null);
+    const [searchName, setSearchName] = useState('')
+    const [searchCount, setSearchCount] = useState(0)
 
     useEffect(()=> {
         getTableDatas()
@@ -40,23 +49,76 @@ export default function LogPage () {
         navigate('/user')
     }
 
+    const handleInputChange = (value: string) => {
+        setSearchName(value)
+    }
+
+    const handleSearch = (forceType?: string) => {
+        let filtered = [...baseRows]
+
+        const typeToUse = forceType ?? filterType;
+
+        if(searchStartAt && (searchEndAt === null)) {
+            filtered = filtered.filter(row => {
+                const startDate = searchStartAt?.format("YYYY-MM-DD");
+                const rowStartDate = row.startAt.slice(0, 10);
+                return rowStartDate >= startDate
+            })
+        } 
+        else if(searchEndAt && (searchStartAt === null)) {
+            filtered = filtered.filter(row => {
+                const endDate = searchEndAt?.format("YYYY-MM-DD");
+                const rowEndDate = row.endAt? row.endAt.slice(0, 10) : null;
+                if(rowEndDate) return rowEndDate <= endDate
+            })
+        } else if(searchStartAt && searchEndAt) {
+            filtered = filtered.filter(row => {
+                const startDate = searchStartAt?.format("YYYY-MM-DD");
+                const rowStartDate = row.startAt.slice(0, 10);
+                const endDate = searchEndAt?.format("YYYY-MM-DD");
+                const rowEndDate = row.endAt? row.endAt.slice(0, 10) : null;
+
+                if(rowEndDate) {
+                    return rowStartDate >= startDate && rowEndDate <= endDate
+                }
+            })
+        }
+
+        if(searchName.trim() !== '') {
+            filtered = filtered.filter(row =>
+                row.settingName?.includes(searchName.trimEnd())
+            )
+        }
+
+        if(typeToUse !== 'all') {
+            filtered = filtered.filter(row => row.type === typeToUse);
+        }
+
+        setFilteredRows(filtered)
+        setSearchCount(filtered.length)
+
+    }
+    const handleReset = () => {
+        setSearchStartAt(null)
+        setSearchEndAt(null)
+        setSearchName('')
+        setFilteredRows(baseRows)
+        setFilterType('all')
+        setSearchCount(0)
+    }
+
     // 라디오 선택 변경시 호출될 함수
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setFilterType(value);
 
-        // 필터링 처리
-        if (value === 'all') {
-          setFilteredRows(baseRows);
-        } else {
-          setFilteredRows(baseRows.filter(row => row.type === value));
-        }
+        handleSearch(value)
     };
 
     return (
         <Box sx={{ height: '97%'}}>
             <Box sx={{ bgcolor: '#FFC98B', height: '120px', borderRadius: '10px 10px 0px 0px', display: 'flex', alignItems: 'center'}}>
-                <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 5, }}>
+                <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, }}>
                   데이터 수집 요청 로그
                 </Typography>
             </Box>
@@ -78,53 +140,102 @@ export default function LogPage () {
                     </Breadcrumbs>
                 </Box>
                 {/* Search */}
-                {/* RadioBtn */}
-                <Box sx={{display: 'flex', justifyContent: 'flex-end', padding: 2}}>
-                    <FormControl>
-                        <RadioGroup
-                            row
-                            value={filterType} 
-                            onChange={handleFilterChange} 
-                            sx={{color: 'black'}}
-                        >
-                            <FormControlLabel 
-                                value="all" 
-                                control={
-                                    <Radio sx={{
-                                        color: 'gray',
-                                        '&.Mui-checked': {
-                                            color: '#BB510C', 
-                                        }
-                                    }}/>
-                                } 
-                                label="전체" 
-                            />
-                            <FormControlLabel 
-                                value="스케줄링" 
-                                control={
-                                    <Radio sx={{
-                                        color: 'gray',
-                                        '&.Mui-checked': {
-                                            color: '#BB510C', 
-                                        }
-                                    }}/>
-                                } 
-                                label="스케줄링" 
-                            />
-                            <FormControlLabel 
-                                value="수동실행" 
-                                control={
-                                    <Radio sx={{
-                                        color: 'gray',
-                                        '&.Mui-checked': {
-                                            color: '#BB510C', 
-                                        }
-                                    }}/>
-                                } 
-                                label="수동실행" 
-                            />
-                        </RadioGroup>
-                    </FormControl>
+                <Box sx={{
+                    bgcolor: '#f0f0f0', display: 'flex', justifyContent: 'space-between', height: 80
+                }}>
+                    <Box sx={{display: 'flex', alignItems: 'center', padding:2, gap: 1}}>
+                        <Typography sx={{color: 'black'}}>User ID: </Typography>
+                        <Typography sx={{color: 'black', fontWeight: 600}}>{loginId}</Typography>
+                    </Box>
+                    {/*  */}
+                    <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label="시작일자"
+                            format="YYYY-MM-DD"
+                            value={searchStartAt}
+                            onChange={(newValue) => setSearchStartAt(newValue)}
+                          />
+                          <DatePicker
+                            label="종료일자"
+                            format="YYYY-MM-DD"
+                            value={searchEndAt}
+                            onChange={(newValue) => setSearchEndAt(newValue)}
+                          />
+                        </LocalizationProvider>
+                        <CustomTextField
+                            value={searchName} 
+                            height='56px'
+                            inputWidth='300px' 
+                            placeholder="수집명"
+                            type="text"
+                            onChange={(e) => handleInputChange(e.target.value)}
+                            endAdornment={
+                              <InputAdornment position="end">
+                                    <CustomIconButton icon="search" width='20px' height='20px' color="gray" onClick={() => handleSearch()} />
+                                    <CustomIconButton icon="reset"   width='20px' height='20px' color="gray" onClick={handleReset} />
+                              </InputAdornment>
+                            }
+                        />
+                    </Box>
+                </Box>
+                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                    {/* Search Count */}
+                    <Box sx={{display: 'flex', alignItems: 'center', padding: 2}}>
+                        {searchCount > 0? 
+                            (<Typography sx={{color: 'black', fontWeight: 700}}>검색결과 : {searchCount} 건 입니다.</Typography>) : (
+                                <></>
+                            )
+                        }
+                    </Box>
+                    {/* RadioBtn */}
+                    <Box sx={{display: 'flex', justifyContent: 'flex-end', paddingRight: 1}}>
+                        <FormControl>
+                            <RadioGroup
+                                row
+                                value={filterType} 
+                                onChange={handleFilterChange} 
+                                sx={{color: 'black'}}
+                            >
+                                <FormControlLabel 
+                                    value="all" 
+                                    control={
+                                        <Radio sx={{
+                                            color: 'gray',
+                                            '&.Mui-checked': {
+                                                color: '#BB510C', 
+                                            }
+                                        }}/>
+                                    } 
+                                    label="전체" 
+                                />
+                                <FormControlLabel 
+                                    value="스케줄링" 
+                                    control={
+                                        <Radio sx={{
+                                            color: 'gray',
+                                            '&.Mui-checked': {
+                                                color: '#BB510C', 
+                                            }
+                                        }}/>
+                                    } 
+                                    label="스케줄링" 
+                                />
+                                <FormControlLabel 
+                                    value="수동실행" 
+                                    control={
+                                        <Radio sx={{
+                                            color: 'gray',
+                                            '&.Mui-checked': {
+                                                color: '#BB510C', 
+                                            }
+                                        }}/>
+                                    } 
+                                    label="수동실행" 
+                                />
+                            </RadioGroup>
+                        </FormControl>
+                    </Box>
                 </Box>
                 {/* 테이블 영역 */}
                 <Box sx={{padding: 2}}>

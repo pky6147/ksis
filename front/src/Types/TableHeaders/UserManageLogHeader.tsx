@@ -10,7 +10,7 @@ export interface UserLogTableRows {
     loginId?: string,
     type?: string,
     state?: string,
-    startAt?: string,
+    startAt: string,
     endAt?: string,
 }
 

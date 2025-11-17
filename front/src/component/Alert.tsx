@@ -7,7 +7,12 @@ export default function Alert (props: Alert_Type) {
     const {open, text, onConfirm, onCancel} = props
 
     return (
-        <Dialog open={open} onClose={onCancel}>
+        <Dialog 
+            open={open} 
+            onClose={onCancel} 
+            disableAutoFocus
+            disableRestoreFocus
+        >
             <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1, backgroundColor: '#FFF4E5' }}>
                 <WarningAmberIcon color="warning" fontSize="large" />
                 <Typography variant="h6" component="div">

@@ -88,7 +88,7 @@ function UserManagement() {
   return (
     <Box sx={{ height: '97%'}}>
         <Box sx={{ bgcolor: '#FFC98B', height: '120px', borderRadius: '10px 10px 0px 0px', display: 'flex', alignItems: 'center'}}>
-            <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 10, }}>
+            <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, }}>
               유저관리
             </Typography>
         </Box>
