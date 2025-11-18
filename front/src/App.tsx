@@ -6,15 +6,19 @@ import Content from "./layout/Content";
 import Menu from "./component/Menu";
 import ProtectedRoute from "./component/ProtectedRoute";
 
+import { type User_Type } from "./Types/Components";
 import LoginPage from './page/00_Login'
 import TestPage from './page/99_Test'
+//** 유저관리 */
 import UserManagement from "./page/01_UserManagement/UserManagement";
 import UserLog from "./page/01_UserManagement/LogPage"
+//** 수집설정 */
 import Setting from "./page/02_Setting/Setting"
+import SettingReg from "./page/02_Setting/RegPage"
+//** 수집현황 */
 import Status from "./page/03_Status/Status"
 import StatusDetail from "./page/03_Status/StatusDetail"
 
-import { type User_Type } from "./Types/Components";
 
 function App() {
   const location = useLocation();
@@ -72,6 +76,7 @@ function App() {
           <Box sx={{width: '84.5vw', padding: 1}}>
             <Content>
               <Routes>
+                {/* 유저관리 */}
                 <Route path="/user" element={
                   <ProtectedRoute userInfo={userInfo} requiredRole="admin">
                     <UserManagement />
@@ -84,12 +89,20 @@ function App() {
                   </ProtectedRoute>
                   } 
                 />
+                {/* 수집설정 */}
                 <Route path="/setting" element={
                   <ProtectedRoute userInfo={userInfo}>
                     <Setting />
                   </ProtectedRoute>
                   } 
                 />
+                <Route path="/setting/reg" element={
+                  <ProtectedRoute userInfo={userInfo}>
+                    <SettingReg />
+                  </ProtectedRoute>
+                  } 
+                />
+                {/* 수집현황 */}
                 <Route path="/status" element={
                   <ProtectedRoute userInfo={userInfo}>
                     <Status />

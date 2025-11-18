@@ -1,26 +1,22 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from 'react-router-dom';
 // Mui
-import { Box, Dialog, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 // Table
 import CommonTable from "../../component/CommonTable"
 import { getColumns, type SettingTableRows } from '../../Types/TableHeaders/SettingHeader'
 // Search
 import SearchHeader from "../../component/SearchHeader"
 import { getSettingSearchCategory } from "../../Types/Search"
-// Pages
-import RegPage from "./RegPage"
 // Comp
 import Alert from "../../component/Alert"
 
 function Setting() {
+  const navigate = useNavigate();
   // Table
   const [baseRows, setBaseRows] = useState<SettingTableRows[]>([])
   const [filteredRows, setFilteredRows] = useState<SettingTableRows[]>([]);
   const [selectedRow, setSelectedRow] = useState<SettingTableRows | null>(null)
-
-  // Dialog
-  const [openReg, setOpenReg] = useState(false)
-  const [openEdit, setOpenEdit] = useState(false)
   
   // Alert
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false)
@@ -30,9 +26,9 @@ function Setting() {
 
   useEffect(()=> {
     const data = [
-      { id: 1, settingName: '창원시청 공지사항 수집', url: 'https://...', userAgent: 'Windows / Edge', rate: 1000  },
-      { id: 2, settingName: '경상남도 보도자료 수집', url: 'https://...', userAgent: 'Windows / Chrome', rate: 1000 },
-      { id: 3, settingName: '창원관광 관광지자료 수집', url: 'https://...', userAgent: 'Windows / Chrome', rate: 1000 },
+      { id: 1, settingName: '창원시청 공지사항 수집', url: 'https://...', userAgent: 'Windows / Edge', rate: 10  },
+      { id: 2, settingName: '경상남도 보도자료 수집', url: 'https://...', userAgent: 'Windows / Chrome', rate: 10 },
+      { id: 3, settingName: '창원관광 관광지자료 수집', url: 'https://...', userAgent: 'Windows / Chrome', rate: 10 },
     ];
 
     setBaseRows(data)
@@ -42,29 +38,12 @@ function Setting() {
   /**  Table  =========================================== */
   /**  등록 페이지  =========================================== */
   const handleOpenReg = () => {
-      setOpenReg(true)
-  }
-  const handleCloseReg = () => {
-    setSelectedRow(null)
-      setOpenReg(false)
-  }
-  const handleReg = () => {
-      // BoardRefresh()
-      handleCloseReg()
+      navigate('/setting/reg')
   }
   /**  수정 페이지  =========================================== */
   const handleEditOpen = (row: SettingTableRows) => {
     setSelectedRow(row)
-    setOpenEdit(true)
-  }
-  const handleCloseEdit = () => {
-    setSelectedRow(null)
-    setOpenEdit(false)
-  }
-  const handleEdit = () => {
-    // 테이블 새로고침 로직 들어가야함
-
-    handleCloseEdit()
+    navigate('/setting/edit', {state: {row: selectedRow} })
   }
   /**  삭제 팝업  =========================================== */
   const handleDeleteOpen = (row: SettingTableRows) => {
@@ -111,14 +90,6 @@ function Setting() {
             <CommonTable columns={columns} rows={filteredRows} /> {/* ✅ 변경 */}
         </Box>
 
-        {/* 등록 페이지 */}
-        <Dialog open={openReg} onClose={handleCloseReg} maxWidth={false} disableEnforceFocus disableRestoreFocus>
-            <RegPage handleDone={handleReg} handleCancle={handleCloseReg} />
-        </Dialog>
-        {/* 수정 페이지 */}
-        <Dialog open={openEdit} onClose={handleCloseEdit} maxWidth={false} disableEnforceFocus disableRestoreFocus>
-            {/* <EditPage row={selectedRow} handleDone={handleEdit} handleCancle={handleCloseEdit} /> */}
-        </Dialog>
         {/* 삭제 팝업 */}
         <Alert
             open={openDeleteAlert}
