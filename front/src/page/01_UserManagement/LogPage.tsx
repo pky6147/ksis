@@ -117,13 +117,10 @@ export default function LogPage () {
 
     return (
         <Box sx={{ height: '97%'}}>
-            <Box sx={{ bgcolor: '#FFC98B', height: '120px', borderRadius: '10px 10px 0px 0px', display: 'flex', alignItems: 'center'}}>
-                <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, }}>
-                  데이터 수집 요청 로그
-                </Typography>
-            </Box>
+            {/* <Box sx={{ bgcolor: '#FFC98B', height: '120px', borderRadius: '10px 10px 0px 0px', display: 'flex', alignItems: 'center'}}>
+            </Box> */}
                 {/* BreadCrumbs */}
-                <Box sx={{padding: 2}}>
+                <Box sx={{paddingLeft: 2, marginTop: 1}}>
                     <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 1 }}>
                         <Link
                             component={RouterLink}
@@ -139,6 +136,9 @@ export default function LogPage () {
                         </Typography>
                     </Breadcrumbs>
                 </Box>
+                <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, marginTop: -1}}>
+                  데이터 수집 요청 로그
+                </Typography>
                 {/* Search */}
                 <Box sx={{
                     bgcolor: '#f0f0f0', display: 'flex', justifyContent: 'space-between', height: 80

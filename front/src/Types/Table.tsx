@@ -15,6 +15,19 @@ export interface CommonTableProps {
   onRowSelectionChange?: (ids: GridRowId[]) => void;
 }
 
+export interface ScrollTableProps {
+  columns: GridColDef[];
+  rows: GridRowsProp;
+  selectedRows?: { id: GridRowId }[];  
+  height?: number | string; 
+  width? : number | string;
+  check?: boolean;
+  onRowClick?: (params: GridRowParams) => void;
+  onRowSelectionChange?: (ids: GridRowId[]) => void;
+  // 🔥 무한 스크롤용 콜백
+  onLoadMore?: () => void;
+}
+
 export interface test {
     a: string
 }
