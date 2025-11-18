@@ -31,8 +31,8 @@ function Menu(props: Menu_Type) {
         {title: '유저목록', path: '/user', icon: <ManageAccounts fontSize="small" />},
     ]
     const settingMenu = [
+        {title: '데이터 수집 현황', path: '/status', icon: <Notifications fontSize="small" />},
         {title: '데이터 수집 설정', path: '/setting', icon: <Settings fontSize="small" />},
-        {title: '데이터 수집 현황', path: '/status', icon: <Monitor fontSize="small" />},
         {title: '스케쥴러', path: '/scheduler', icon: <AlarmAdd fontSize="small" />},
         {title: '데이터 수집 이력', path: '/history', icon: <Monitor fontSize="small" />},
     ]

@@ -11,6 +11,8 @@ import { getUserSearchCategory } from "../../Types/Search"
 // Pages
 import EditPage from "./EditPage"
 import RegPage from "./RegPage"
+// Comp
+import Alert from "../../component/Alert";
 
 function UserManagement() {
   // Table
@@ -21,10 +23,15 @@ function UserManagement() {
   // Dialog
   const [openReg, setOpenReg] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
-  const [openDelete, setOpenDelete] = useState(false)
 
   // LogPage
   const navigate = useNavigate();
+
+  // Alert
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false)
+  const [openDelDoneAlert, setOpenDelDoneAlert] = useState(false)
+  const [openRegDoneAlert, setOpenRegDoneAlert] = useState(false)
+  const [openEditDoneAlert, setOpenEditDoneAlert] = useState(false)
 
   useEffect(()=> {
     const data = [
@@ -37,52 +44,51 @@ function UserManagement() {
     setFilteredRows(data)
   }, [])
 
-  /**  Table  =========================================== */
+  /**  등록 페이지  =========================================== */
+  const handleOpenReg = () => {
+    setOpenReg(true)
+  }
+  const handleCloseReg = () => {
+    setOpenReg(false)
+  }
+  const handleReg = () => {
+    handleCloseReg() // 등록 다이얼로그 닫기
+    setOpenRegDoneAlert(true) // 등록 완료 팝업 띄우기
+  }
+  /**  수정 페이지  =========================================== */
   const handleEditOpen = (row: UserTableRows) => {
     setSelectedRow(row)
     setOpenEdit(true)
-  }
-  const handleEdit = () => {
-    console.log("본문 Edit")
-    // 테이블 새로고침 로직 들어가야함
-
-    handleCloseEdit()
   }
   const handleCloseEdit = () => {
     setSelectedRow(null)
     setOpenEdit(false)
   }
-
+  const handleEdit = () => {
+    handleCloseEdit() // 수정 다이얼로그 닫기
+    setOpenEditDoneAlert(true) // 수정완료팝업
+  }
+  /**  삭제 팝업  =========================================== */
   const handleDeleteOpen = (row: UserTableRows) => {
     setSelectedRow(row)
-    setOpenDelete(true)
+    setOpenDeleteAlert(true)
   }
-  const handleCloseDelete = () => {
-    setSelectedRow(null)
-    setOpenDelete(false)
-  }
+  const handleDelete = () => {
+    console.log('Row', selectedRow)
+    // delete api 연결
 
+    // 삭제완료 팝업
+    setOpenDelDoneAlert(true);
+  }
+  /**  이력조회 페이지  =========================================== */
   const handleShowLogOpen = (row: UserTableRows) => {
     setSelectedRow(row)
     // 로그 페이지로 이동
     navigate('/user/log', {state: {userId: row.id, loginId: row.loginId} })
     
   }
-  
-  const columns = getColumns({ handleEditOpen, handleDeleteOpen, handleShowLogOpen });
 
-  /**  등록 페이지  =========================================== */
-  const handleOpenReg = () => {
-      setOpenReg(true)
-  }
-  const handleCloseReg = () => {
-    setSelectedRow(null)
-      setOpenReg(false)
-  }
-  const handleReg = () => {
-      // BoardRefresh()
-      handleCloseReg()
-  }
+  const columns = getColumns({ handleEditOpen, handleDeleteOpen, handleShowLogOpen });
 
   return (
     <Box sx={{ height: '97%'}}>
@@ -108,15 +114,50 @@ function UserManagement() {
         <Dialog open={openReg} onClose={handleCloseReg} maxWidth={false} disableEnforceFocus disableRestoreFocus>
             <RegPage handleDone={handleReg} handleCancel={handleCloseReg} />
         </Dialog>
+        <Alert
+            open={openRegDoneAlert}
+            text="등록 되었습니다."
+            type='success'
+            onConfirm={() => {
+              setOpenRegDoneAlert(false);
+              // 테이블 Refresh 함수 추가해야함
+            }}
+        />
         {/* 수정 페이지 */}
         <Dialog open={openEdit} onClose={handleCloseEdit} maxWidth={false} disableEnforceFocus disableRestoreFocus>
             <EditPage row={selectedRow} handleDone={handleEdit} handleCancel={handleCloseEdit} />
         </Dialog>
+        <Alert
+            open={openEditDoneAlert}
+            text="수정 되었습니다."
+            type='success'
+            onConfirm={() => {
+              setOpenEditDoneAlert(false);
+              // 테이블 Refresh 함수 추가해야함
+            }}
+        />
         {/* 삭제 팝업 */}
-        <Dialog open={openDelete} onClose={handleCloseDelete} maxWidth={false} disableEnforceFocus disableRestoreFocus>
-            {/* <MaterialReg doFinish={handleRegDone} doCancle={handleCloseReg} /> */}
-        </Dialog>
-
+        <Alert
+            open={openDeleteAlert}
+            text="정말로 삭제하시겠습니까?"
+            type='delete'
+            onConfirm={() => {
+              setOpenDeleteAlert(false);
+              handleDelete()
+            }}
+            onCancel={() => {
+              setOpenDeleteAlert(false);
+            }}
+        />
+        <Alert
+            open={openDelDoneAlert}
+            text="삭제 완료되었습니다."
+            type='success'
+            onConfirm={() => {
+              setOpenDelDoneAlert(false);
+              // 테이블 Refresh 함수 추가해야함
+            }}
+        />
     </Box>
   )
 }

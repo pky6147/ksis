@@ -41,7 +41,8 @@ export default function EditPage(props: EditPageProps) {
         rank: row?.rank || '',
         state: mapStateValue(row?.state),
     })
-    const [openAlert, setOpenAlert] = useState(false)
+    const [openCancelAlert, setOpenCancelAlert] = useState(false)
+    const [openEditAlert, setOpenEditAlert] = useState(false)
     const stateList = [
         { value: 'Y', name: '승인' },
         { value: 'N', name: '대기중' },
@@ -131,7 +132,7 @@ export default function EditPage(props: EditPageProps) {
         }}>
             <Box sx={{bgcolor: '#FFC98B', display: 'flex', justifyContent: 'space-between'}}>
                 <Typography sx={{fontSize: 48, fontWeight: 'bold', marginLeft: '20px'}}>사용자 등록</Typography>
-                <CustomIconButton icon="close" backgroundColor='#FFC98B' onClick={()=>setOpenAlert(true)}/>
+                <CustomIconButton icon="close" backgroundColor='#FFC98B' onClick={()=>setOpenCancelAlert(true)}/>
             </Box>
             <Box sx={{
                 border: '2px solid #abababff',
@@ -309,19 +310,31 @@ export default function EditPage(props: EditPageProps) {
                 </Box>
             </Box>
             <Box sx={{display: 'flex', justifyContent: 'center', gap:2, marginBottom: 2}}>
-                <CustomButton text="수정" onClick={handleEdit} radius={2}/>
-                <CustomButton text="닫기" onClick={()=>setOpenAlert(true)} backgroundColor='#f0f0f0' radius={2}/>
+                <CustomButton text="수정" onClick={()=>setOpenEditAlert(true)} radius={2}/>
+                <CustomButton text="닫기" onClick={()=>setOpenCancelAlert(true)} backgroundColor='#f0f0f0' radius={2}/>
             </Box>
 
             <Alert
-              open={openAlert}
+              open={openCancelAlert}
               text="정말로 닫으시겠습니까?"
               onConfirm={() => {
-                setOpenAlert(false);
+                setOpenCancelAlert(false);
                 handleCancel()
               }}
               onCancel={() => {
-                setOpenAlert(false);
+                setOpenCancelAlert(false);
+              }}
+            />
+            <Alert
+              open={openEditAlert}
+              text="수정 하시겠습니까?"
+              type="question"
+              onConfirm={() => {
+                setOpenEditAlert(false);
+                handleEdit()
+              }}
+              onCancel={() => {
+                setOpenEditAlert(false);
               }}
             />
         </Box>
