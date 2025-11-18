@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo} from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { Box, Typography, Button, Paper } from '@mui/material'
+import { type GridColDef } from '@mui/x-data-grid'
+import CommonTable from '../../component/CommonTable'
 import { type StatusTableRows } from '../../Types/TableHeaders/StatusHeader'
 
 function StatusDetail() {
@@ -25,14 +27,34 @@ function StatusDetail() {
     navigate('/status')
   }
 
-  if (!detailData) {
-    return (
-      <Box sx={{ height: '97%', padding: 2 }}>
-        <Typography>데이터를 불러오는 중...</Typography>
-      </Box>
-    )
-  }
+  const detailColumns: GridColDef[] = useMemo(() => [
+       { field: 'settingName', headerName: '데이터수집명', flex: 1, headerAlign: 'center', align: 'center' },
+       { field: 'state', headerName: '진행상태', flex: 1, headerAlign: 'center', align: 'center' },
+       { field: 'startAt', headerName: '수집시작', flex: 1, headerAlign: 'center', align: 'center' },
+       { field: 'endAt', headerName: '수집완료', flex: 1, headerAlign: 'center', align: 'center' },
+       { field: 'type', headerName: '실행타입', flex: 1, headerAlign: 'center', align: 'center' },
+       { field: 'period', headerName: '수집기간', flex: 1, headerAlign: 'center', align: 'center' },
+       { field: 'cycle', headerName: '수집주기', flex: 1, headerAlign: 'center', align: 'center' },
+       { field: 'userId', headerName: '유저ID', flex: 1, headerAlign: 'center', align: 'center' },
+       ], [])
 
+  const detailRows = useMemo(() => {
+      if (!detailData) return []
+      return [{
+        id: detailData.id,
+        settingName: detailData.settingName,
+        state: detailData.state,
+        startAt: detailData.startAt,
+        endAt: detailData.endAt,
+        type: detailData.type,
+        period: detailData.period,
+        cycle: detailData.cycle,
+        userId: detailData.userId,
+      }]
+    }, [detailData])
+
+
+  
   return (
     <Box sx={{ height: '97%' }}>
       <Typography sx={{ fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, marginTop: 5 }}>
@@ -46,29 +68,31 @@ function StatusDetail() {
               <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
                 기본 정보
               </Typography>
-              <Box sx={{ display: 'flex', width: '915px', flexDirection: 'column', alignItems: 'flex-start', gap: 1 }}>
-                <Typography><strong>데이터수집명:</strong> {detailData.settingName}</Typography>
-                <Typography><strong>진행상태:</strong> {detailData.state}</Typography>
-                <Typography><strong>수집시작:</strong> {detailData.startDate}</Typography>
-                <Typography><strong>수집완료:</strong> {detailData.endDate}</Typography>
-                <Typography><strong>실행타입:</strong> {detailData.type}</Typography>
-                <Typography><strong>유저ID:</strong> {detailData.userId}</Typography>
+              <CommonTable
+                      columns={detailColumns}
+                      rows={detailRows}
+                      pageSize={1}
+                      hideFooter={true} 
 
-              </Box>
+                     />
             </Box>
 
             {/* 추가 정보 섹션 (필요시 확장) */}
             <Box sx={{ marginTop: 2 }}>
               <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
-                수집 상세 정보
+                수집 실패
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, marginLeft: 2 }}>
-                {/* TODO: 추가 상세 정보 표시 */}
-                <Typography>상세 수집 로그 및 결과가 여기에 표시됩니다.</Typography>
-              </Box>
+              
             </Box>
 
-            <Box sx={{ marginTop: 3, display: 'flex', gap: 2 }}>
+            <Box sx={{ marginTop: 2 }}>
+              <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
+                수집 데이터
+              </Typography>
+              
+            </Box>
+
+            <Box sx={{ marginTop: 3, display: 'flex', justifyContent:'flex-end', gap: 2 }}>
               <Button variant="contained" onClick={handleBack}>
                 닫기
               </Button>

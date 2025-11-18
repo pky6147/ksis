@@ -8,6 +8,7 @@ export interface CommonTableProps {
   height?: number | string; // ✅ 선택적 높이
   width? : number | string;
   check?: boolean;
+  hideFooter?: boolean;
   // ✅ 행 클릭 시 자동완성 지원 (params.row 등)
   onRowClick?: (params: GridRowParams) => void;
 

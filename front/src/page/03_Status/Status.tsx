@@ -11,15 +11,14 @@ function Status() {
   const [filteredRows, setFilteredRows] = useState<StatusTableRows[]>([]);
   const [selectedRow, setSelectedRow] = useState<StatusTableRows | null>(null)
 
-  // Dialog
-//   const [openDetail, setOpenDetail] = useState(false)
+
     const navigate = useNavigate();
 
   useEffect(()=> {
     const data = [
-      { id: 1, settingName: '창원시청 공지사항 수집', startAt:'2025-10-24 09:00', type:'스케줄링', startDate:'2025.10.24', endDate:'2025.11.23', cycle:'매주 월요일', userId:'',progress:''},
-      { id: 2, settingName: '경상남도 보도자료 수집', startAt:'2025-10-24 09:00', type:'스케줄링', startDate:'2025.10.24', endDate:'2025.11.23', cycle:'매주 월요일', userId:'',progress:''},
-      { id: 3, settingName: '창원관광', startAt:'2025-10-24 09:00', type:'수동실행', startDate:'', endDate:'', cycle:'', userId:'ksis1',progress:''},
+      { id: 1, settingName: '창원시청 공지사항 수집', startAt:'2025-10-24 09:00', type:'스케줄링', startDate:'2025.10.24', endDate:'2025.11.23', period:'2025.10.24 ~ 2025.11.23', cycle:'매주 월요일', state:'진행중', userId:'',progress:'50%'},
+      { id: 2, settingName: '경상남도 보도자료 수집', startAt:'2025-10-04 09:00', type:'스케줄링', startDate:'2025.10.24', endDate:'2025.11.23', period:'2025.10.24 ~ 2025.11.23', cycle:'매주 월요일', state:'진행중', userId:'',progress:'70%'},
+      { id: 3, settingName: '창원관광', startAt:'2025-11-24 09:00', type:'수동실행', startDate:'', endDate:'', period:'', cycle:'', state:'진행중', userId:'ksis1',progress:'10%'},
 
     ];
 
@@ -27,20 +26,11 @@ function Status() {
     setFilteredRows(data)
   }, [])
 
-  /**  Table Handlers  =========================================== */
-  //모달
-//   const handleDetailOpen = (row: StatusTableRows) => {
-//     setSelectedRow(row)
-//     setOpenDetail(true)
-//   }
+  /**  Table Handlers */
+
     const handleDetailOpen = (row: StatusTableRows) => {
         navigate(`/status/detail/${row.id}`, { state: { rowData: row } })
     }
-
-//   const handleCloseDetail = () => {
-//     setSelectedRow(null)
-//     setOpenDetail(false)
-//   }
 
   const handleStopCrawl = (row: StatusTableRows) => {
     console.log('수집 중지:', row.settingName)
