@@ -84,8 +84,7 @@ export const getColumns = ({
                 width: '100%',
                 height: '6px',
                 borderRadius: '3px',
-                background: 'var(--Fills-Primary, rgba(120, 120, 120, 0.20))',
-              
+                background: 'var(--Fills-Primary, rgba(120, 120, 120, 0.20))'
               }}
             />
           </Box>

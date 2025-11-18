@@ -53,6 +53,8 @@ function StatusDetail() {
       }]
     }, [detailData])
 
+
+  
   return (
     <Box sx={{ height: '97%' }}>
       <Typography sx={{ fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, marginTop: 5 }}>
@@ -70,7 +72,8 @@ function StatusDetail() {
                       columns={detailColumns}
                       rows={detailRows}
                       pageSize={1}
-                      hideFooter={true}
+                      hideFooter={true} 
+
                      />
             </Box>
 

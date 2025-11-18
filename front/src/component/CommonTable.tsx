@@ -14,15 +14,12 @@ function CommonTable(props: CommonTableProps) {
   }
     return (
 
-
-
       <Paper sx={{ height: height , width: width || '100%' }}>
         <DataGrid
           rows={rows}
           columns={columns}
           {...(!height && { autoHeight: true })} //height 지정 없으면 autoHeight
           hideFooter={hideFooter}
-
           onRowClick={onRowClick}
           rowSelectionModel={rowSelectionModel}
           onRowSelectionModelChange={(model: GridRowSelectionModel) => {
