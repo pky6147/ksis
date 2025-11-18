@@ -17,9 +17,9 @@ function Status() {
 
   useEffect(()=> {
     const data = [
-      { id: 1, settingName: '창원시청 공지사항 수집', startDate:'2025-10-24 09:00', type:'스케줄링', period:'2025.10.24-2025.11.23', cycle:'매주 월요일', userId:'',progress:''},
-      { id: 2, settingName: '경상남도 보도자료 수집', startDate:'2025-10-24 09:00', type:'스케줄링', period:'2025.10.24-2025.11.23', cycle:'매주 월요일', userId:'',progress:''},
-      { id: 3, settingName: '창원관광', startDate:'2025-10-24 09:00', type:'수동실행', period:'', cycle:'', userId:'ksis1',progress:''},
+      { id: 1, settingName: '창원시청 공지사항 수집', startAt:'2025-10-24 09:00', type:'스케줄링', startDate:'2025.10.24', endDate:'2025.11.23', cycle:'매주 월요일', userId:'',progress:''},
+      { id: 2, settingName: '경상남도 보도자료 수집', startAt:'2025-10-24 09:00', type:'스케줄링', startDate:'2025.10.24', endDate:'2025.11.23', cycle:'매주 월요일', userId:'',progress:''},
+      { id: 3, settingName: '창원관광', startAt:'2025-10-24 09:00', type:'수동실행', startDate:'', endDate:'', cycle:'', userId:'ksis1',progress:''},
 
     ];
 
