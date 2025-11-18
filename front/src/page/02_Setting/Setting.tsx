@@ -9,6 +9,8 @@ import SearchHeader from "../../component/SearchHeader"
 import { getSettingSearchCategory } from "../../Types/Search"
 // Pages
 import RegPage from "./RegPage"
+// Comp
+import Alert from "../../component/Alert"
 
 function Setting() {
   // Table
@@ -19,14 +21,18 @@ function Setting() {
   // Dialog
   const [openReg, setOpenReg] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
-  const [openDelete, setOpenDelete] = useState(false)
-  const [openLog, setOpenLog] = useState(false)
+  
+  // Alert
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false)
+  const [openDelDoneAlert, setOpenDelDoneAlert] = useState(false)
+  const [openRunAlert, setOpenRunAlert] = useState(false)
+  const [openRunDoneAlert, setOpenRunDoneAlert] = useState(false)
 
   useEffect(()=> {
     const data = [
-      { id: 1, settingName: '창원시청 공지사항 수집', url: 'https://...', userAgent: 'Windows / Edge', rate: 1000, state: '수집대기',  },
-      { id: 2, settingName: '경상남도 보도자료 수집', url: 'https://...', userAgent: 'Windows / Chrome', rate: 1000, state: '진행중', },
-      { id: 3, settingName: '창원관광 관광지자료 수집', url: 'https://...', userAgent: 'Windows / Chrome', rate: 1000, state: '수집완료', },
+      { id: 1, settingName: '창원시청 공지사항 수집', url: 'https://...', userAgent: 'Windows / Edge', rate: 1000  },
+      { id: 2, settingName: '경상남도 보도자료 수집', url: 'https://...', userAgent: 'Windows / Chrome', rate: 1000 },
+      { id: 3, settingName: '창원관광 관광지자료 수집', url: 'https://...', userAgent: 'Windows / Chrome', rate: 1000 },
     ];
 
     setBaseRows(data)
@@ -34,39 +40,6 @@ function Setting() {
   }, [])
 
   /**  Table  =========================================== */
-  const handleEditOpen = (row: SettingTableRows) => {
-    setSelectedRow(row)
-    setOpenEdit(true)
-  }
-  const handleEdit = () => {
-    // 테이블 새로고침 로직 들어가야함
-
-    handleCloseEdit()
-  }
-  const handleCloseEdit = () => {
-    setSelectedRow(null)
-    setOpenEdit(false)
-  }
-
-  const handleDeleteOpen = (row: SettingTableRows) => {
-    setSelectedRow(row)
-    setOpenDelete(true)
-  }
-  const handleCloseDelete = () => {
-    setSelectedRow(null)
-    setOpenDelete(false)
-  }
-
-  const handleRunCrawl = (row: SettingTableRows) => {
-    setSelectedRow(row)
-    setOpenLog(true)
-  }
-  const handleCloseLog = () => {
-    setSelectedRow(null)
-      setOpenLog(false)
-  }
-  const columns = getColumns({ handleEditOpen, handleDeleteOpen, handleRunCrawl });
-
   /**  등록 페이지  =========================================== */
   const handleOpenReg = () => {
       setOpenReg(true)
@@ -79,6 +52,46 @@ function Setting() {
       // BoardRefresh()
       handleCloseReg()
   }
+  /**  수정 페이지  =========================================== */
+  const handleEditOpen = (row: SettingTableRows) => {
+    setSelectedRow(row)
+    setOpenEdit(true)
+  }
+  const handleCloseEdit = () => {
+    setSelectedRow(null)
+    setOpenEdit(false)
+  }
+  const handleEdit = () => {
+    // 테이블 새로고침 로직 들어가야함
+
+    handleCloseEdit()
+  }
+  /**  삭제 팝업  =========================================== */
+  const handleDeleteOpen = (row: SettingTableRows) => {
+    setSelectedRow(row)
+    setOpenDeleteAlert(true)
+  }
+  const handleDelete = () => {
+    console.log('Row', selectedRow)
+    // delete api 연결
+
+    // 삭제완료 팝업
+    setOpenDelDoneAlert(true);
+  }
+  /**  수동실행  =========================================== */
+  const handleRunCrawl = (row: SettingTableRows) => { // 수동실행 버튼 클릭시 팝업
+    setSelectedRow(row)
+    setOpenRunAlert(true)
+  }
+  const handleCrawl = () => {
+    console.log('Row', selectedRow)
+    // 수동실행 크롤링 API 호출
+
+    // 실행완료 팝업
+    setOpenRunDoneAlert(true);
+    
+  }
+  const columns = getColumns({ handleEditOpen, handleDeleteOpen, handleRunCrawl });
 
   return (
     <Box sx={{ height: '97%'}}>
@@ -107,13 +120,48 @@ function Setting() {
             {/* <EditPage row={selectedRow} handleDone={handleEdit} handleCancle={handleCloseEdit} /> */}
         </Dialog>
         {/* 삭제 팝업 */}
-        <Dialog open={openDelete} onClose={handleCloseDelete} maxWidth={false} disableEnforceFocus disableRestoreFocus>
-            {/* <MaterialReg doFinish={handleRegDone} doCancle={handleCloseReg} /> */}
-        </Dialog>
-        {/* 이력 조회 화면 */}
-        <Dialog open={openLog} onClose={handleCloseLog} maxWidth={false} disableEnforceFocus disableRestoreFocus>
-            {/* <MaterialReg doFinish={handleRegDone} doCancle={handleCloseReg} /> */}
-        </Dialog>
+        <Alert
+            open={openDeleteAlert}
+            text="정말로 삭제하시겠습니까?"
+            type='delete'
+            onConfirm={() => {
+              setOpenDeleteAlert(false);
+              handleDelete()
+            }}
+            onCancel={() => {
+              setOpenDeleteAlert(false);
+            }}
+        />
+        <Alert
+            open={openDelDoneAlert}
+            text="삭제 완료되었습니다."
+            type='success'
+            onConfirm={() => {
+              setOpenDelDoneAlert(false);
+              // 테이블 Refresh 함수 추가해야함
+            }}
+        />
+        {/* 수동 실행 */}
+        <Alert
+            open={openRunAlert}
+            text="선택하신 설정을 수동실행 하시겠습니까?"
+            type='question'
+            onConfirm={() => {
+              setOpenRunAlert(false);
+              handleCrawl()
+            }}
+            onCancel={() => {
+              setOpenRunAlert(false);
+            }}
+        />
+        <Alert
+            open={openRunDoneAlert}
+            text="선택하신 설정으로 수동실행 되었습니다."
+            type='success'
+            onConfirm={() => {
+              setOpenRunDoneAlert(false);
+            }}
+        />
     </Box>
   )
 }

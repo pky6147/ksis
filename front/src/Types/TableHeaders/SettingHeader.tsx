@@ -11,7 +11,7 @@ export interface SettingTableRows {
     type?: string,
     userAgent?: string,
     rate?: number,
-    state?: string,
+    // state?: string,
     listArea?: string,
     pagingArea?: string,
     maxPage?: number,
@@ -35,8 +35,7 @@ export const getColumns = ({
   { field: 'settingName',   headerName: '데이터수집명',       flex: 1,    headerAlign: 'center',  align: 'center' },
   { field: 'url',           headerName: 'URL',              flex: 1,    headerAlign: 'center',  align: 'center' },
   { field: 'userAgent',     headerName: 'USER_AGENT',       flex: 1,    headerAlign: 'center',  align: 'center' },
-  { field: 'rate',          headerName: '수집간격(ms)',       flex: 1,    headerAlign: 'center',  align: 'center' },
-  { field: 'state',         headerName: '진행상태',           flex: 1,    headerAlign: 'center',  align: 'center' },
+  { field: 'rate',          headerName: '수집간격(s)',       flex: 1,    headerAlign: 'center',  align: 'center' },
   {
     field: 'edit', headerName: '수정', width: 70, headerAlign: 'center', align: 'center',
     renderCell: (params) => ( <CustomIconButton icon="edit" onClick={() => handleEditOpen(params.row)} /> ),

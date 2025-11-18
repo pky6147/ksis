@@ -25,5 +25,4 @@ export const getSettingSearchCategory = (): SearchCategory<keyof SettingTableRow
     {id: 1, name: '데이터수집명', value: 'settingName'},
     {id: 2, name: 'URL', value: 'url'},
     {id: 3, name: 'USER-AGENT', value: 'userAgent'},
-    {id: 4, name: '진행상태', value: 'state'},
 ]
