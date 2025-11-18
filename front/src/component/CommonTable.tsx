@@ -3,7 +3,7 @@ import { DataGrid, type GridRowId, type GridRowSelectionModel} from '@mui/x-data
 import {type CommonTableProps } from '../Types/Table'
 
 function CommonTable(props: CommonTableProps) {
-    const {columns, rows, selectedRows, pageSize, height, width, check, onRowClick, onRowSelectionChange} = props
+    const {columns, rows, selectedRows, pageSize, height, width, check, hideFooter, onRowClick, onRowSelectionChange} = props
 
     const paginationModel = { page: 0, pageSize: pageSize || 10 };
 
@@ -13,11 +13,16 @@ function CommonTable(props: CommonTableProps) {
       ids: new Set(selectedRows?.map((r) => r.id) ?? []),
   }
     return (
-      <Paper sx={{ height: height || 'auto', width: width || '100%' }}>
+
+
+
+      <Paper sx={{ height: height , width: width || '100%' }}>
         <DataGrid
           rows={rows}
           columns={columns}
-          autoHeight={!height}
+          {...(!height && { autoHeight: true })} //height 지정 없으면 autoHeight
+          hideFooter={hideFooter}
+
           onRowClick={onRowClick}
           rowSelectionModel={rowSelectionModel}
           onRowSelectionModelChange={(model: GridRowSelectionModel) => {

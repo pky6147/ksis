@@ -69,23 +69,27 @@ function StatusDetail() {
               <CommonTable
                       columns={detailColumns}
                       rows={detailRows}
-                      // height={150}
                       pageSize={1}
+                      hideFooter={true}
                      />
             </Box>
 
             {/* 추가 정보 섹션 (필요시 확장) */}
             <Box sx={{ marginTop: 2 }}>
               <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
-                수집 상세 정보
+                수집 실패
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, marginLeft: 2 }}>
-                {/* TODO: 추가 상세 정보 표시 */}
-                <Typography>상세 수집 로그 및 결과가 여기에 표시됩니다.</Typography>
-              </Box>
+              
             </Box>
 
-            <Box sx={{ marginTop: 3, display: 'flex', gap: 2 }}>
+            <Box sx={{ marginTop: 2 }}>
+              <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
+                수집 데이터
+              </Typography>
+              
+            </Box>
+
+            <Box sx={{ marginTop: 3, display: 'flex', justifyContent:'flex-end', gap: 2 }}>
               <Button variant="contained" onClick={handleBack}>
                 닫기
               </Button>
