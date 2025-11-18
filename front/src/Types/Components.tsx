@@ -97,6 +97,7 @@ export interface Menu_Type {
 export interface Alert_Type {
     open: boolean;
     text?: string;
-    onConfirm: () => void;
-    onCancel: () => void;
+    type?: string;
+    onConfirm?: () => void;
+    onCancel?: () => void;
 }
