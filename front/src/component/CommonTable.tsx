@@ -5,7 +5,7 @@ import {type CommonTableProps } from '../Types/Table'
 function CommonTable(props: CommonTableProps) {
     const {columns, rows, selectedRows, pageSize, height, width, check, onRowClick, onRowSelectionChange} = props
 
-    const paginationModel = { page: 0, pageSize: pageSize || 5 };
+    const paginationModel = { page: 0, pageSize: pageSize || 10 };
 
      // ✅ v8 기준: rowSelectionModel은 객체 구조 ({ type, ids })
     const rowSelectionModel: GridRowSelectionModel = {
@@ -13,7 +13,7 @@ function CommonTable(props: CommonTableProps) {
       ids: new Set(selectedRows?.map((r) => r.id) ?? []),
   }
     return (
-      <Paper sx={{ height: height || 400, width: width || '100%' }}>
+      <Paper sx={{ height: height || 630, width: width || '100%' }}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -27,41 +27,58 @@ function CommonTable(props: CommonTableProps) {
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           checkboxSelection={check || false}
-          getRowClassName={(params) =>
-            params.row.state === '승인대기' ? 'row-inactive' : '' // User 페이지 승인대기일 때
-          }
+          getRowClassName={(params) => {
+            const classes = [];
+
+            // 1) 짝수 행 스타일 적용 (checkbox 없어도 동작)
+            if(params.indexRelativeToCurrentPage % 2 === 0) {
+              classes.push("evem-row")
+            }
+            // 2) 비활성화 row
+            if(params.row.state === '승인대기') {
+              classes.push('row-inactive')
+            }
+            
+            return classes.join(" ");
+          }}
           sx={{
               border: '1px solid #CDBAA6',
+              // 헤더 배경색
               '&': {
-                  '--DataGrid-t-header-background-base': '#FCF7F2 !important' // 헤더색 변경
+                  '--DataGrid-t-header-background-base': '#FCF7F2 !important'
               },
+              // 헤더 스타일
               '& .MuiDataGrid-columnHeaders': { 
-                  color: 'black', // 헤더 글자색 
-                  fontSize: 20, // 글자 크기 
-                  fontWeight: 'bold', // 굵기 
+                  color: 'black', 
+                  fontSize: 20, 
+                  fontWeight: 'bold', 
               }, 
-              '& .row-inactive': {
-                backgroundColor: '#f5f5f5',  // 회색 배경
-                color: '#999',               // 글자색
-                fontStyle: 'italic',
-              },
+              // 셀 폰트
               '& .MuiDataGrid-cell': {
-                fontSize: 16, // ✅ 데이터 셀 폰트 크기
+                fontSize: 16,
                 fontWeight: 'Normal'
               },
-              // 셀 포커스(보더) 제거
-              '& .MuiDataGrid-cell:focus': {
+              // 비활성화 row
+              '& .row-inactive': {
+                backgroundColor: '#f5f5f5 !important',  
+                color: '#999',               
+                fontStyle: 'italic',
+              },
+              // 짝수행 색변경
+              '& .even-row': { 
+                backgroundColor: '#FCF7F2',
+              },
+              // 마우스오버 색변경
+              '& .MuiDataGrid-row:hover': {
+                backgroundColor: '#FFEFD6 !important',
+              },
+              // 포커스 제거
+              '& .MuiDataGrid-cell:focus, & .MuiDataGrid-cell:focus-within': {
                 outline: 'none !important',
               },
-              '& .MuiDataGrid-cell:focus-within': {
+              '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-columnHeader:focus-within': {
                 outline: 'none !important',
               },
-              '& .MuiDataGrid-columnHeader:focus': {
-                outline: 'none !important',
-              },
-              '& .MuiDataGrid-columnHeader:focus-within': {
-                outline: 'none !important',
-    },
           }}
         />
       </Paper>

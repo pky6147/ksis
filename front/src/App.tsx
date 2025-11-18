@@ -9,6 +9,7 @@ import ProtectedRoute from "./component/ProtectedRoute";
 import LoginPage from './page/00_Login'
 import TestPage from './page/99_Test'
 import UserManagement from "./page/01_UserManagement/UserManagement";
+import UserLog from "./page/01_UserManagement/LogPage"
 import Setting from "./page/02_Setting/Setting"
 import Status from "./page/03_Status/Status"
 import StatusDetail from "./page/03_Status/StatusDetail"
@@ -74,6 +75,12 @@ function App() {
                 <Route path="/user" element={
                   <ProtectedRoute userInfo={userInfo} requiredRole="admin">
                     <UserManagement />
+                  </ProtectedRoute>
+                  } 
+                />
+                <Route path="/user/log" element={
+                  <ProtectedRoute userInfo={userInfo} requiredRole="admin">
+                    <UserLog />
                   </ProtectedRoute>
                   } 
                 />
