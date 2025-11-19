@@ -27,7 +27,7 @@ function StatusDetail() {
     navigate('/status')
   }
 
-  const detailColumns: GridColDef[] = useMemo(() => [
+  const detailSettingColumns: GridColDef[] = useMemo(() => [
        { field: 'settingName', headerName: '데이터수집명', flex: 1, headerAlign: 'center', align: 'center' },
        { field: 'state', headerName: '진행상태', flex: 1, headerAlign: 'center', align: 'center' },
        { field: 'startAt', headerName: '수집시작', flex: 1, headerAlign: 'center', align: 'center' },
@@ -38,7 +38,7 @@ function StatusDetail() {
        { field: 'userId', headerName: '유저ID', flex: 1, headerAlign: 'center', align: 'center' },
        ], [])
 
-  const detailRows = useMemo(() => {
+  const detailSettingRows = useMemo(() => {
       if (!detailData) return []
       return [{
         id: detailData.id,
@@ -52,6 +52,39 @@ function StatusDetail() {
         userId: detailData.userId,
       }]
     }, [detailData])
+
+     // 수집실패 테이블 컬럼
+  const failureColumns: GridColDef[] = useMemo(() => [
+    { field: 'progressNo', headerName: '진행번호', flex: 1, headerAlign: 'center', align: 'center' },
+    { field: 'url', headerName: 'URL', flex: 3, headerAlign: 'center', align: 'left' },
+  ], [])
+
+  // 수집실패 테이블 데이터 (TODO: API에서 가져오기)
+  const failureRows = useMemo(() => {
+    // 임시 더미 데이터
+    return [
+      { id: 1, progressNo: '001', url: 'https://example.com/page1' },
+      { id: 2, progressNo: '002', url: 'https://example.com/page2' },
+    ]
+  }, [])
+
+  // 수집데이터 테이블 컬럼
+  const collectionColumns: GridColDef[] = useMemo(() => [
+    { field: 'progressNo', headerName: '진행번호', flex: 1, headerAlign: 'center', align: 'center' },
+    { field: 'key1', headerName: 'key1', flex: 1, headerAlign: 'center', align: 'center' },
+    { field: 'key2', headerName: 'key2', flex: 1, headerAlign: 'center', align: 'center' },
+    // TODO: 동적으로 key 컬럼 생성
+  ], [])
+
+  // 수집데이터 테이블 데이터 (TODO: API에서 가져오기)
+  const collectionRows = useMemo(() => {
+    // 임시 더미 데이터
+    return [
+      { id: 1, progressNo: '001', key1: 'value1', key2: 'value2' },
+      { id: 2, progressNo: '002', key1: 'value3', key2: 'value4' },
+    ]
+  }, [])
+
 
 
   
@@ -69,8 +102,8 @@ function StatusDetail() {
                 기본 정보
               </Typography>
               <CommonTable
-                      columns={detailColumns}
-                      rows={detailRows}
+                      columns={detailSettingColumns}
+                      rows={detailSettingRows}
                       pageSize={1}
                       hideFooter={true} 
 
@@ -82,6 +115,12 @@ function StatusDetail() {
               <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
                 수집 실패
               </Typography>
+              <CommonTable
+                columns={failureColumns}
+                rows={failureRows}
+                pageSize={5}
+                // hideFooter={false}
+              />
               
             </Box>
 
@@ -89,7 +128,12 @@ function StatusDetail() {
               <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
                 수집 데이터
               </Typography>
-              
+              <CommonTable
+                columns={collectionColumns}
+                rows={collectionRows}
+                pageSize={5}
+                hideFooter={false}
+                />
             </Box>
 
             <Box sx={{ marginTop: 3, display: 'flex', justifyContent:'flex-end', gap: 2 }}>
