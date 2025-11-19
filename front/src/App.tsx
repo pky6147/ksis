@@ -19,6 +19,8 @@ import SettingEdit from "./page/02_Setting/EditPage"
 //** 수집현황 */
 import Status from "./page/03_Status/Status"
 import StatusDetail from "./page/03_Status/StatusDetail"
+//** 수집이력 */
+import History from "./page/05_History/History"
 
 
 function App() {
@@ -119,6 +121,13 @@ function App() {
                 <Route path="/status/detail/:id" element={
                   <ProtectedRoute userInfo={userInfo}>
                     <StatusDetail />
+                  </ProtectedRoute>
+                  }
+                />
+                {/* 수집이력 */}
+                <Route path="/history" element={
+                  <ProtectedRoute userInfo={userInfo}>
+                    <History />
                   </ProtectedRoute>
                   }
                 />
