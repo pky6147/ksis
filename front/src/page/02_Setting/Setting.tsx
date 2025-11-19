@@ -42,8 +42,7 @@ function Setting() {
   }
   /**  수정 페이지  =========================================== */
   const handleEditOpen = (row: SettingTableRows) => {
-    setSelectedRow(row)
-    navigate('/setting/edit', {state: {row: selectedRow} })
+    navigate('/setting/edit', {state: {row} })
   }
   /**  삭제 팝업  =========================================== */
   const handleDeleteOpen = (row: SettingTableRows) => {

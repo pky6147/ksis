@@ -3,7 +3,7 @@ import CustomIconButton from '../../component/CustomIconButton'
 
 export interface SettingTableRows {
     id: number,
-    SettingId?: number,
+    settingId?: number,
     userId?: string,
     // index?: number,
     settingName?: string,
@@ -16,7 +16,7 @@ export interface SettingTableRows {
     pagingArea?: string,
     maxPage?: number,
     linkArea?: string,
-    condition?: JSON,
+    // condition?: JSON,
 }
 
 // 외부에서 받을 핸들러들을 타입으로 정의

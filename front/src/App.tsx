@@ -15,6 +15,7 @@ import UserLog from "./page/01_UserManagement/LogPage"
 //** 수집설정 */
 import Setting from "./page/02_Setting/Setting"
 import SettingReg from "./page/02_Setting/RegPage"
+import SettingEdit from "./page/02_Setting/EditPage"
 //** 수집현황 */
 import Status from "./page/03_Status/Status"
 import StatusDetail from "./page/03_Status/StatusDetail"
@@ -99,6 +100,12 @@ function App() {
                 <Route path="/setting/reg" element={
                   <ProtectedRoute userInfo={userInfo}>
                     <SettingReg />
+                  </ProtectedRoute>
+                  } 
+                />
+                <Route path="/setting/edit" element={
+                  <ProtectedRoute userInfo={userInfo}>
+                    <SettingEdit />
                   </ProtectedRoute>
                   } 
                 />
