@@ -13,13 +13,11 @@ function StatusDetail() {
   const location = useLocation()
 
   const [detailData, setDetailData] = useState<StatusTableRows | null>(null)
-<<<<<<< Updated upstream
-  const [failureRows, setFailureRows] = useState<Array<{ id: number; progressNo: string; url: string }>>([])
-=======
+
   const [failureRows, setFailureRows] = useState<Array<{ id: number; progressNo: string; url: string }>>([
     { id: 1, progressNo: '1', url: 'https://example.com/failed-page' },
   ])
->>>>>>> Stashed changes
+
   const [collectionRows, setCollectionRows] = useState<Array<{ id: number; progressNo: string; [key: string]: any }>>([])
   const [collectionColumns, setCollectionColumns] = useState<GridColDef[]>([
     { field: 'progressNo', headerName: '진행번호', flex: 1, headerAlign: 'center', align: 'center' },
@@ -40,8 +38,6 @@ function StatusDetail() {
     navigate('/status')
   }
 
-<<<<<<< Updated upstream
-=======
 
   // 재수집 버튼 클릭 핸들러
   const handleRecollect = async (progressNo: string, url: string) => {
@@ -74,7 +70,6 @@ function StatusDetail() {
     }
   }
 
->>>>>>> Stashed changes
   const detailSettingColumns: GridColDef[] = useMemo(() => [
        { field: 'settingName', headerName: '데이터수집명', flex: 1, headerAlign: 'center', align: 'center' },
        { field: 'state', headerName: '진행상태', flex: 1, headerAlign: 'center', align: 'center' },
@@ -104,9 +99,7 @@ function StatusDetail() {
   // 수집실패 테이블 컬럼 (고정)
   const failureColumns: GridColDef[] = useMemo(() => [
     { field: 'progressNo', headerName: '진행번호', flex: 1, headerAlign: 'center', align: 'center' },
-<<<<<<< Updated upstream
-    { field: 'url', headerName: 'URL', flex: 3, headerAlign: 'center', align: 'left' },
-=======
+
     { field: 'url', headerName: 'URL', flex: 6, headerAlign: 'center', align: 'left' },
     { field: 'recollect', 
       headerName: '재수집',       flex: 1,       headerAlign: 'center',       align: 'center',
@@ -120,7 +113,7 @@ function StatusDetail() {
           <RefreshIcon />
         </IconButton>
       ), },
->>>>>>> Stashed changes
+
   ], [])
 
   // WebSocket 연결 및 실시간 데이터 수신
@@ -194,10 +187,7 @@ function StatusDetail() {
               <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
                 수집 데이터
               </Typography>
-<<<<<<< Updated upstream
-=======
-              
->>>>>>> Stashed changes
+
               <CommonTable
                 columns={collectionColumns}
                 rows={collectionRows}
