@@ -14,6 +14,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
+import DownloadIcon from '@mui/icons-material/Download';
 
 export default function CustomIconButton(props: IconButton_Type) {
     const {width, height, fontSize, color, fontWeight, backgroundColor, border, onClick, icon} = props
@@ -226,6 +227,25 @@ export default function CustomIconButton(props: IconButton_Type) {
                     onClick={onClick? onClick : ()=>{}}
                 >
                     <LogoutIcon />
+                </IconButton>
+            )
+        case 'export':
+            return (
+                <IconButton 
+                    sx={{
+                        width: width || '30px',
+                        height: height || '30px',
+                        color: color || 'black',
+                        fontWeight: fontWeight || 'bold',
+                        fontSize: fontSize || '16px',
+                        backgroundColor: backgroundColor || '#fff',
+                        border: border || '',
+                        // borderRadius: 3,
+                        // boxShadow: '0px 3px 0px black'
+                    }}
+                    onClick={onClick? onClick : ()=>{}}
+                >
+                    <DownloadIcon />
                 </IconButton>
             )
     }

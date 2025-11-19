@@ -66,6 +66,6 @@ export const getColumns = ({
   { field: 'loginId',   headerName: '유저ID',       flex: 1,    headerAlign: 'center',  align: 'center' },
   {
     field: 'export', headerName: '내보내기', width: 100, headerAlign: 'center', align: 'center',
-    renderCell: (params) => ( <CustomIconButton icon="edit" onClick={() => handleExport(params.row)} /> ),
+    renderCell: (params) => ( <CustomIconButton icon="export" onClick={() => handleExport(params.row)} /> ),
   },
 ];
