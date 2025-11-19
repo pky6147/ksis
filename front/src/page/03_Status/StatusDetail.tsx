@@ -11,6 +11,11 @@ function StatusDetail() {
   const location = useLocation()
 
   const [detailData, setDetailData] = useState<StatusTableRows | null>(null)
+  const [failureRows, setFailureRows] = useState<Array<{ id: number; progressNo: string; url: string }>>([])
+  const [collectionRows, setCollectionRows] = useState<Array<{ id: number; progressNo: string; [key: string]: any }>>([])
+  const [collectionColumns, setCollectionColumns] = useState<GridColDef[]>([
+    { field: 'progressNo', headerName: '진행번호', flex: 1, headerAlign: 'center', align: 'center' },
+  ])
 
   useEffect(() => {
     // location.state로 전달된 데이터가 있으면 사용
@@ -53,37 +58,39 @@ function StatusDetail() {
       }]
     }, [detailData])
 
-     // 수집실패 테이블 컬럼
+  // 수집실패 테이블 컬럼 (고정)
   const failureColumns: GridColDef[] = useMemo(() => [
     { field: 'progressNo', headerName: '진행번호', flex: 1, headerAlign: 'center', align: 'center' },
     { field: 'url', headerName: 'URL', flex: 3, headerAlign: 'center', align: 'left' },
   ], [])
 
-  // 수집실패 테이블 데이터 (TODO: API에서 가져오기)
-  const failureRows = useMemo(() => {
-    // 임시 더미 데이터
-    return [
-      { id: 1, progressNo: '001', url: 'https://example.com/page1' },
-      { id: 2, progressNo: '002', url: 'https://example.com/page2' },
-    ]
-  }, [])
-
-  // 수집데이터 테이블 컬럼
-  const collectionColumns: GridColDef[] = useMemo(() => [
-    { field: 'progressNo', headerName: '진행번호', flex: 1, headerAlign: 'center', align: 'center' },
-    { field: 'key1', headerName: 'key1', flex: 1, headerAlign: 'center', align: 'center' },
-    { field: 'key2', headerName: 'key2', flex: 1, headerAlign: 'center', align: 'center' },
-    // TODO: 동적으로 key 컬럼 생성
-  ], [])
-
-  // 수집데이터 테이블 데이터 (TODO: API에서 가져오기)
-  const collectionRows = useMemo(() => {
-    // 임시 더미 데이터
-    return [
-      { id: 1, progressNo: '001', key1: 'value1', key2: 'value2' },
-      { id: 2, progressNo: '002', key1: 'value3', key2: 'value4' },
-    ]
-  }, [])
+  // WebSocket 연결 및 실시간 데이터 수신
+  useEffect(() => {
+    // TODO: WebSocket 연결 및 데이터 수신
+    // const ws = new WebSocket('ws://...')
+    // ws.onmessage = (event) => {
+    //   const data = JSON.parse(event.data)
+    //   if (data.type === 'failure') {
+    //     setFailureRows(data.rows)
+    //   } else if (data.type === 'collection') {
+    //     setCollectionRows(data.rows)
+    //     // 동적으로 컬럼 생성
+    //     const keys = Object.keys(data.rows[0] || {}).filter(k => k !== 'id' && k !== 'progressNo')
+    //     const dynamicColumns = keys.map(key => ({
+    //       field: key,
+    //       headerName: key,
+    //       flex: 1,
+    //       headerAlign: 'center' as const,
+    //       align: 'center' as const,
+    //     }))
+    //     setCollectionColumns([
+    //       { field: 'progressNo', headerName: '진행번호', flex: 1, headerAlign: 'center', align: 'center' },
+    //       ...dynamicColumns
+    //     ])
+    //   }
+    // }
+    // return () => ws.close()
+  }, [id])
 
 
 
@@ -132,7 +139,7 @@ function StatusDetail() {
                 columns={collectionColumns}
                 rows={collectionRows}
                 pageSize={5}
-                hideFooter={false}
+                //hideFooter={false}
                 />
             </Box>
 
