@@ -73,6 +73,7 @@ export const getColumns = ({
               height: '6px',
               paddingRight: '21.186px',
               alignItems: 'center',
+              justifyContent:'center',
               flexShrink: 0,
               width: '100px',
             }}
