@@ -1,12 +1,12 @@
 import { useEffect, useState, useMemo} from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { Box, Typography, Button, Paper, IconButton } from '@mui/material'
+import { Box, Typography, Button, Paper, IconButton} from '@mui/material'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import { type GridColDef } from '@mui/x-data-grid'
 import CommonTable from '../../component/CommonTable'
 import { type StatusTableRows } from '../../Types/TableHeaders/StatusHeader'
 import CustomButton from '../../component/CustomButton'
-
+import Alert from '../../component/Alert'
 
 function StatusDetail() {
   const { id } = useParams<{ id: string }>()
@@ -39,21 +39,26 @@ function StatusDetail() {
     { field: 'context', headerName: '본문', flex: 1, headerAlign: 'center', align: 'center' },
   ])
 
-  useEffect(() => {
-    // location.state로 전달된 데이터가 있으면 사용
-    if (location.state && location.state.rowData) {
-      setDetailData(location.state.rowData)
-    } else if (id) {
-      // state가 없으면 id로 데이터를 가져옴 (API 호출 등)
-      // TODO: API 호출로 데이터 가져오기
-      console.log('Fetching data for id:', id)
-    }
-  }, [id, location.state])
+    useEffect(() => {
+      // location.state로 전달된 데이터가 있으면 사용
+      if (location.state && location.state.rowData) {
+        setDetailData(location.state.rowData)
+      } else if (id) {
+        // state가 없으면 id로 데이터를 가져옴 (API 호출 등)
+        // TODO: API 호출로 데이터 가져오기
+        console.log('Fetching data for id:', id)
+      }
+    }, [id, location.state])
 
   const handleBack = () => {
     navigate('/status')
   }
 
+  const [alertOpen, setAlertOpen] = useState(false)
+  const [alertType, setAlertType] = useState<'single' | 'batch'>('single')
+  const [selectedRecollect, setSelectedRecollect] = useState<{ progressNo : String; url:string} | null> (null)
+
+ 
 
   // 재수집 버튼 클릭 핸들러
   const handleRecollect = async (progressNo: string, url: string) => {
@@ -86,6 +91,72 @@ function StatusDetail() {
     }
   }
 
+  //
+  const handleBatchRecollect = async () => {
+    try {
+      // TODO: API 엔드포인트 URL을 실제 백엔드 주소로 변경
+      const response = await fetch('/api/recollect/batch', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          settingId: id,
+          items : failureRows.map(row => ({
+            progressNo: row.progressNo,
+            url: row.url,
+          }))
+        }),
+      })
+
+      if (response.ok) {
+        console.log('일괄 재수집 요청 성공')
+        // 성공 메시지 표시 (옵션)
+        // alert('재수집 요청이 완료되었습니다.')
+      } else {
+        console.error('일괄 재수집 요청 실패')
+        // 에러 메시지 표시 (옵션)
+        // alert('재수집 요청에 실패했습니다.')
+      }
+    } catch (error) {
+      console.error('일괄 재수집 요청 중 오류:', error)
+      // alert('재수집 요청 중 오류가 발생했습니다.')
+    }
+  }
+
+
+   //개별 재수집버튼 클릭
+  const handleRecollectClick = (progressNo: string, url:string) => {
+    setSelectedRecollect({progressNo, url}) //클릭한 row 정보 저장
+    setAlertType('single') //타입 'single' 설정
+    setAlertOpen(true) //Alert열기
+  }
+
+  //일괄 재수집버튼 클릭
+  const handleBatchRecollectClick = () => {
+    setAlertType('batch')
+    setAlertOpen(true)
+  }
+
+  //확인버튼 클릭
+  const handleConfirm = async () => {
+    setAlertOpen(false) //Alert닫기
+
+    if (alertType === 'single' && selectedRecollect) {
+      //개별 재수집 : 저장된 row 1개만 전송
+      await handleRecollect(selectedRecollect?.progressNo, selectedRecollect.url)
+    } else if (alertType == 'batch') {
+      //일괄재수집 : failureRows 전체 전송
+      await handleBatchRecollect()
+    }
+  }
+
+  //취소버튼 클릭
+  const handleCancel = () => {
+    setAlertOpen(false)
+    setSelectedRecollect(null)
+  }
+
   const detailSettingColumns: GridColDef[] = useMemo(() => [
        { field: 'settingName', headerName: '데이터수집명', flex: 1, headerAlign: 'center', align: 'center' },
        { field: 'state', headerName: '진행상태', flex: 1, headerAlign: 'center', align: 'center' },
@@ -112,6 +183,15 @@ function StatusDetail() {
       }]
     }, [detailData])
 
+
+    // 전체 개수 state (또는 API에서 받아오기)
+  const [totalCount, setTotalCount] = useState(10)
+  // 수집 실패 개수
+  const failureCount = failureRows.length  // 1
+  // 수집 데이터 개수
+  const collectionCount = collectionRows.length  // 5
+
+
   // 수집실패 테이블 컬럼 (고정)
   const failureColumns: GridColDef[] = useMemo(() => [
     { field: 'progressNo', headerName: '진행번호', flex: 1, headerAlign: 'center', align: 'center' },
@@ -123,7 +203,7 @@ function StatusDetail() {
         <IconButton
           color="primary"
           size="small"
-          onClick={() => handleRecollect(params.row.progressNo, params.row.url)}
+          onClick={() => handleRecollectClick(params.row.progressNo, params.row.url)}
           title="재수집"
         >
           <RefreshIcon />
@@ -195,6 +275,8 @@ function StatusDetail() {
     // return () => ws.close()
   }, [id])
 
+   
+
 
 
   
@@ -225,14 +307,15 @@ function StatusDetail() {
             {/* 추가 정보 섹션 (필요시 확장) */}
             <Box sx={{ marginTop: 2 }}>
               <Box sx={{ display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                <Box sx={{ display: 'flex', flexDirection:'row'}}>
                 <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
-                수집 실패
+                수집 실패     
                 </Typography>
                 <Typography>
-                  1/10
+                  {failureCount}/{totalCount}
                 </Typography>
-                  
-                <CustomButton text='일괄 재수집' />
+                  </Box>
+                <CustomButton text='일괄 재수집' onClick={handleBatchRecollectClick} radius={2} />
               </Box>
               <CommonTable
                 columns={failureColumns}
@@ -245,12 +328,17 @@ function StatusDetail() {
 
             <Box sx={{ marginTop: 'auto'}}>
               <Box sx={{ display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                <Box sx={{ display: 'flex', flexDirection:'row'}}>
                 <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
-                  수집 데이터
+                  수집 데이터     
+
+
+
                 </Typography>
                 <Typography>
-                  1/10
+                  {collectionCount}/{totalCount}
                 </Typography>
+                </Box>
                 <Typography>
                   수집완료 예상시간 : 2025-11-13 16:00:31
                 </Typography>
@@ -274,6 +362,14 @@ function StatusDetail() {
           </Box>
         </Paper>
       </Box>
+
+      <Alert 
+        open={alertOpen}
+        type="question"
+        text={alertType === 'single' ? '재수집하시겠습니까?' : '모든 실패 항목을 재수집하시겠습니까?'}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+      />
     </Box>
   )
 }
