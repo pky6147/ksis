@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react'
+<<<<<<< Updated upstream
+=======
+import { useNavigate } from 'react-router-dom'
+>>>>>>> Stashed changes
 import { Box, Typography, 
     Radio, RadioGroup, FormControl, FormControlLabel, InputAdornment,
     Menu,
@@ -12,6 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
 import CustomTextField from '../../component/CustomTextField';
 import CustomIconButton from '../../component/CustomIconButton';
+<<<<<<< Updated upstream
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
@@ -130,6 +135,11 @@ const flattenResult = (rows: any[]) => {
 };
 
 export default function History () {
+=======
+
+export default function History () {
+    const navigate = useNavigate();
+>>>>>>> Stashed changes
     const [baseRows, setBaseRows] = useState<HistoryTableRows[]>([])
     const [filteredRows, setFilteredRows] = useState<HistoryTableRows[]>([]);
 
@@ -144,7 +154,10 @@ export default function History () {
     // 내보내기 대상 row
     const [exportRow, setExportRow] = useState<HistoryTableRows | null>(null);
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     useEffect(()=> {
         getTableDatas()
     }, [])
@@ -289,8 +302,45 @@ const getTableDatas = () => {
   setFilteredRows(res);
 };
 
+<<<<<<< Updated upstream
     const handleDetailView = (row: HistoryTableRows) => {
         console.log('row', row)
+=======
+//  /**  Table Handlers */
+
+//     const handleDetailOpen = (row: StatusTableRows) => {
+//         navigate(`/status/detail/${row.id}`, { state: { rowData: row } })
+//     }
+
+//   const handleStopCrawl = (row: StatusTableRows) => {
+//     console.log('수집 중지:', row.settingName)
+//     // TODO: 실제 수집 중지 API 호출
+//     alert(`${row.settingName} 수집을 중지합니다.`)
+//   }
+
+//   const columns = getColumns({ handleDetailOpen, handleStopCrawl });
+
+//   return (
+//     <Box sx={{ height: '97%'}}>
+//         <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, marginTop: 5}}>
+//           수집 현황
+//         </Typography>
+
+//         {/* 테이블 영역 */}
+//         <Box sx={{padding: 2}}>
+//             <CommonTable columns={columns} rows={filteredRows} />
+//         </Box>
+
+//     </Box>
+//   )
+// }
+
+
+
+    const handleDetailView = (row: HistoryTableRows) => {
+        console.log('row', row)
+        navigate(`/history/detail/${row.id}`, { state: { rowData: row } })
+>>>>>>> Stashed changes
         // 현재 행의 상세조회
     }
     const handleExport = (row: HistoryTableRows, event?: any) => {
@@ -366,6 +416,7 @@ const getTableDatas = () => {
         handleSearch(value)
     };
 
+<<<<<<< Updated upstream
     const getExportData = () => {
       if (!exportRow) return [];
       const targets = dummyResults.filter(r => r.parentId === exportRow.id);
@@ -386,6 +437,16 @@ const getTableDatas = () => {
       if (!exportRow) return;
       const exportData = getExportData();
       exportJSON(exportData, `${exportRow.settingName}(${new Date().toLocaleString().slice(0,12)})_수집이력`);
+=======
+    const handleExport_Excel = () => {
+      console.log('엑셀로 내보내기', exportRow)
+    }
+    const handleExport_CSV = () => {
+      console.log('CSV로 내보내기')
+    }
+    const handleExport_Json = () => {
+      console.log('Json로 내보내기')
+>>>>>>> Stashed changes
     }
 
     return (
