@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Box, Typography, 
-    Radio, RadioGroup, FormControl, FormControlLabel, InputAdornment
+    Radio, RadioGroup, FormControl, FormControlLabel, InputAdornment,
+    Menu,
+    MenuItem,
+    ListItemText
  } from '@mui/material'
 import CommonTable from '../../component/CommonTable'
 import { getColumns, type HistoryTableRows } from '../../Types/TableHeaders/HistoryHeader'
@@ -19,6 +22,11 @@ export default function History () {
     const [searchEndAt, setSearchEndAt] = useState<Dayjs | null>(null);
     const [searchName, setSearchName] = useState('')
     const [searchCount, setSearchCount] = useState(0)
+
+    // 메뉴 anchor
+    const [exportAnchor, setExportAnchor] = useState<null | HTMLElement>(null);
+    // 내보내기 대상 row
+    const [exportRow, setExportRow] = useState<HistoryTableRows | null>(null);
 
     useEffect(()=> {
         getTableDatas()
@@ -168,9 +176,9 @@ const getTableDatas = () => {
         console.log('row', row)
         // 현재 행의 상세조회
     }
-    const handleExport = (row: HistoryTableRows) => {
-        console.log('row', row)
-        // 현재 행을 부모로하는 crawl_result_item 들 가져오기 + 내보내기 형식지정
+    const handleExport = (row: HistoryTableRows, event?: any) => {
+        setExportRow(row)
+        setExportAnchor(event.currentTarget); // 클릭한 아이콘 위치에 메뉴 뜨게
     }
 
     const columns = getColumns({ handleDetailView, handleExport });
@@ -240,6 +248,16 @@ const getTableDatas = () => {
 
         handleSearch(value)
     };
+
+    const handleExport_Excel = () => {
+      console.log('엑셀로 내보내기', exportRow)
+    }
+    const handleExport_CSV = () => {
+      console.log('CSV로 내보내기')
+    }
+    const handleExport_Json = () => {
+      console.log('Json로 내보내기')
+    }
 
     return (
         <Box sx={{ height: '97%'}}>
@@ -346,6 +364,40 @@ const getTableDatas = () => {
             <Box sx={{padding: 2}}>
                 <CommonTable columns={columns} rows={filteredRows} />
             </Box>
+
+            {/* 내보내기 */}
+            <Menu
+              anchorEl={exportAnchor}
+              open={Boolean(exportAnchor)}
+              onClose={() => setExportAnchor(null)}
+            >
+              <MenuItem 
+                onClick={() => {
+                  setExportAnchor(null);
+                  handleExport_Excel()
+                }}
+              >
+                <ListItemText>엑셀(xlsx)</ListItemText>
+              </MenuItem>
+              
+              <MenuItem
+                onClick={() => {
+                  setExportAnchor(null);
+                  handleExport_CSV()
+                }}
+              >
+                <ListItemText>CSV</ListItemText>
+              </MenuItem>
+              
+              <MenuItem
+                onClick={() => {
+                  setExportAnchor(null);
+                  handleExport_Json()
+                }}
+              >
+                <ListItemText>JSON</ListItemText>
+              </MenuItem>
+            </Menu>
         </Box>
     )
 }
