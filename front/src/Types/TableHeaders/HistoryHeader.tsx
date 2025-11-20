@@ -23,7 +23,7 @@ export interface HistoryTableRows {
 // 외부에서 받을 핸들러들을 타입으로 정의
 export interface HistoryTableColumnHandlers {
   handleDetailView: (row: HistoryTableRows) => void;
-  handleExport: (row: HistoryTableRows) => void;
+  handleExport: (row: HistoryTableRows, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 
@@ -66,6 +66,6 @@ export const getColumns = ({
   { field: 'loginId',   headerName: '유저ID',       flex: 1,    headerAlign: 'center',  align: 'center' },
   {
     field: 'export', headerName: '내보내기', width: 100, headerAlign: 'center', align: 'center',
-    renderCell: (params) => ( <CustomIconButton icon="export" onClick={() => handleExport(params.row)} /> ),
+    renderCell: (params) => ( <CustomIconButton icon="export" onClick={(e: any) => handleExport(params.row, e)} /> ),
   },
 ];
