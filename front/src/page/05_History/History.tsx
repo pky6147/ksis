@@ -12,6 +12,122 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
 import CustomTextField from '../../component/CustomTextField';
 import CustomIconButton from '../../component/CustomIconButton';
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+
+// =========================
+// 공통 다운로드 함수
+// =========================
+const downloadFile = (data: BlobPart, filename: string, type: string) => {
+  const blob = new Blob([data], { type });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+
+  URL.revokeObjectURL(url);
+};
+
+// =========================
+// JSON 내보내기
+// =========================
+const exportJSON = (jsonData: any, filename: string) => {
+  const jsonString = JSON.stringify(jsonData, null, 2);
+  downloadFile(jsonString, filename + ".json", "application/json");
+};
+
+// =========================
+// CSV 내보내기
+// =========================
+const exportCSV = (jsonData: any, filename: string) => {
+  const arr = Array.isArray(jsonData) ? jsonData : [jsonData];
+  const headers = Object.keys(arr[0]).join(",");
+
+  const rows = arr
+    .map((row) => Object.values(row).join(","))
+    .join("\n");
+
+  const csv = headers + "\n" + rows;
+  downloadFile(csv, filename + ".csv", "text/csv;charset=utf-8;");
+};
+
+// =========================
+// Excel(xlsx) 내보내기
+// =========================
+
+const exportExcel = (jsonData: any, filename: string) => {
+  const arr = Array.isArray(jsonData) ? jsonData : [jsonData];
+  const worksheet = XLSX.utils.json_to_sheet(arr);
+  const workbook = XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+  const excelBuffer = XLSX.write(workbook, {
+    bookType: "xlsx",
+    type: "array",
+  });
+
+  const blob = new Blob([excelBuffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+
+  saveAs(blob, filename + ".xlsx");
+};
+
+// =========================
+// 실제 result table 형태와 유사한 더미데이터
+// =========================
+const dummyResults = [
+  {
+    parentId: 1,
+    seq: 1,
+    page_url: "https://test.com?page=1",
+    value: [
+      { "제목": "창원시 공지사항" },
+      { "작성일": "2025-11-10" }
+    ]
+  },
+  {
+    parentId: 1,
+    seq: 2,
+    page_url: "https://test.com?page=2",
+    value: [
+      { "제목": "마산시 공지사항" },
+      { "작성일": "2025-11-11" }
+    ]
+  },
+
+  {
+    parentId: 2,
+    seq: 1,
+    page_url: "https://test.com/ann?page=1",
+    value: [
+      { "제목": "공지 1" },
+      { "작성일": "2024-12-01" }
+    ]
+  }
+];
+
+// =========================
+// value 배열을 단일 객체로 평탄화
+// =========================
+const flattenResult = (rows: any[]) => {
+  return rows.map((item) => {
+    const flat = item.value.reduce((acc: any, obj: any) => {
+      const key = Object.keys(obj)[0];
+      acc[key] = obj[key];
+      return acc;
+    }, {});
+
+    return {
+      seq: item.seq,
+      page_url: item.page_url,
+      ...flat
+    };
+  });
+};
 
 export default function History () {
     const [baseRows, setBaseRows] = useState<HistoryTableRows[]>([])
@@ -27,6 +143,7 @@ export default function History () {
     const [exportAnchor, setExportAnchor] = useState<null | HTMLElement>(null);
     // 내보내기 대상 row
     const [exportRow, setExportRow] = useState<HistoryTableRows | null>(null);
+
 
     useEffect(()=> {
         getTableDatas()
@@ -249,14 +366,26 @@ const getTableDatas = () => {
         handleSearch(value)
     };
 
+    const getExportData = () => {
+      if (!exportRow) return [];
+      const targets = dummyResults.filter(r => r.parentId === exportRow.id);
+      return flattenResult(targets); // 평탄화된 형태로 반환
+    };
+
     const handleExport_Excel = () => {
-      console.log('엑셀로 내보내기', exportRow)
+      if (!exportRow) return;
+      const exportData = getExportData();
+      exportExcel(exportData, `${exportRow.settingName}(${new Date().toLocaleString().slice(0,12)})_수집이력`);
     }
     const handleExport_CSV = () => {
-      console.log('CSV로 내보내기')
+      if (!exportRow) return;
+      const exportData = getExportData();
+      exportCSV(exportData, `${exportRow.settingName}(${new Date().toLocaleString().slice(0,12)})_수집이력`);
     }
     const handleExport_Json = () => {
-      console.log('Json로 내보내기')
+      if (!exportRow) return;
+      const exportData = getExportData();
+      exportJSON(exportData, `${exportRow.settingName}(${new Date().toLocaleString().slice(0,12)})_수집이력`);
     }
 
     return (
