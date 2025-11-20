@@ -58,7 +58,7 @@ function StatusDetail() {
   const [alertType, setAlertType] = useState<'single' | 'batch'>('single')
   const [selectedRecollect, setSelectedRecollect] = useState<{ progressNo : String; url:string} | null> (null)
 
- 
+  const [estimatedTime, setEstimatedTime] = useState('2025-11-13 16:00:00')
 
   // 재수집 버튼 클릭 핸들러
   const handleRecollect = async (progressNo: string, url: string) => {
@@ -144,7 +144,7 @@ function StatusDetail() {
 
     if (alertType === 'single' && selectedRecollect) {
       //개별 재수집 : 저장된 row 1개만 전송
-      await handleRecollect(selectedRecollect?.progressNo, selectedRecollect.url)
+      await handleRecollect(selectedRecollect.progressNo, selectedRecollect.url)
     } else if (alertType == 'batch') {
       //일괄재수집 : failureRows 전체 전송
       await handleBatchRecollect()
@@ -340,7 +340,7 @@ function StatusDetail() {
                 </Typography>
                 </Box>
                 <Typography>
-                  수집완료 예상시간 : 2025-11-13 16:00:31
+                  수집완료 예상시간 : {estimatedTime}
                 </Typography>
                   
                 
@@ -366,7 +366,7 @@ function StatusDetail() {
       <Alert 
         open={alertOpen}
         type="question"
-        text={alertType === 'single' ? '재수집하시겠습니까?' : '모든 실패 항목을 재수집하시겠습니까?'}
+        text={alertType === 'single' ? `${selectedRecollect?.progressNo}번 항목을 재수집하시겠습니까?` : '모든 실패 항목을 재수집하시겠습니까?'}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
       />
