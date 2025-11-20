@@ -41,7 +41,11 @@ function CommonTable(props: CommonTableProps) {
             if(params.row.state === '승인대기') {
               classes.push('row-inactive')
             }
-            
+            // 3) 실패 row
+            if(params.row.isFailure) {
+              classes.push('row-failure')
+            }
+
             return classes.join(" ");
           }}
           sx={{
@@ -66,6 +70,10 @@ function CommonTable(props: CommonTableProps) {
                 backgroundColor: '#f5f5f5 !important',  
                 color: '#999',               
                 fontStyle: 'italic',
+              },
+              // 실패 row
+              '& .row-failure':{
+                backgroundColor:'#F1F3F3 !important'
               },
               // 짝수행 색변경
               '& .even-row': { 

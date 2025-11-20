@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 // Mui
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Paper } from '@mui/material'
 // Table
 import CommonTable from "../../component/CommonTable"
 import { getColumns, type StatusTableRows } from '../../Types/TableHeaders/StatusHeader'
@@ -41,16 +41,22 @@ function Status() {
   const columns = getColumns({ handleDetailOpen, handleStopCrawl });
 
   return (
-    <Box sx={{ height: '97%'}}>
-        <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, marginTop: 5}}>
-          수집 현황
-        </Typography>
+    <Box sx={{ height: '97%' ,display: 'flex', flexDirection: 'column' }}>
+      <Typography sx={{ fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 5, marginTop: 5 }}>
+        수집 현황
+      </Typography>
+         <Box sx={{ padding: 2, flex: 1, display: 'flex', flexDirection: 'column' }}> {/*최상위 Box의 남은 공간을 모두 차지하게 */}
+          <Paper elevation={3} sx={{ padding: 4, flex: 1, display: 'flex', flexDirection: 'column' }}>{/*Paper가 감싸는 Box의 높이를 꽉 채우게 */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, height: '100%' }}> {/*Paper 내부 콘텐츠가 Paper의 전체 높이를 사용하게 */}
 
         {/* 테이블 영역 */}
-        <Box sx={{padding: 2}}>
+        <Box sx={{padding: 2, marginTop: 'auto', marginBottom: 'auto'}}>
             <CommonTable columns={columns} rows={filteredRows} />
         </Box>
 
+        </Box>
+        </Paper>
+      </Box>
     </Box>
   )
 }

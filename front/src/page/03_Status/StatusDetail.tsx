@@ -5,6 +5,7 @@ import RefreshIcon from '@mui/icons-material/Refresh'
 import { type GridColDef } from '@mui/x-data-grid'
 import CommonTable from '../../component/CommonTable'
 import { type StatusTableRows } from '../../Types/TableHeaders/StatusHeader'
+import CustomButton from '../../component/CustomButton'
 
 
 function StatusDetail() {
@@ -15,12 +16,27 @@ function StatusDetail() {
   const [detailData, setDetailData] = useState<StatusTableRows | null>(null)
 
   const [failureRows, setFailureRows] = useState<Array<{ id: number; progressNo: string; url: string }>>([
-    { id: 1, progressNo: '1', url: 'https://example.com/failed-page' },
+    { id: 1, progressNo: '4', url: 'https://example.com/failed-page' },
   ])
 
-  const [collectionRows, setCollectionRows] = useState<Array<{ id: number; progressNo: string; [key: string]: any }>>([])
+  // - 빈 값으로 설정: 실패 = 데이터 없음을 명확히 표현
+  // - 값 유지: 부분 수집된 데이터가 있을 수 있는 경우
+  // 일반적으로는 실패 시 빈 값이 자연스럽지만, 실제 백엔드에서 데이터를 받을 때는 서버가 보내주는 대로 표시하면 됩니다
+
+  const [collectionRows, setCollectionRows] = useState<Array<{ id: number; progressNo: string; [key: string]: any }>>([
+    { id: 1, progressNo: '1', title: '2025년 4분기', writer:'항만물류정책과', date:'2025-11-24 14:00',context:'올해 국토부의' },
+    { id: 2, progressNo: '2', title: '2025년 대한민국',  writer:'전략산업과', date:'2025-11-11 13:00',context:'창원특례시는 12일'},
+    { id: 3, progressNo: '3', title: '2025년 4분기',  writer:'농업정책과', date:'2025-11-10 11:30',context:'창원특례시는 2020년'}, 
+    { id: 4, progressNo: '4', title: '창원특례시',  writer:'투자유치단', date:'2025-11-09 12:00',context:'이번 행사는 해외 인사' },
+    { id: 5, progressNo: '5', title: '경상남도',  writer:'전략산업과', date:'2025-11-23 09:10',context:'경상남도는 2024년'},
+  ])
+
   const [collectionColumns, setCollectionColumns] = useState<GridColDef[]>([
     { field: 'progressNo', headerName: '진행번호', flex: 1, headerAlign: 'center', align: 'center' },
+    { field: 'title', headerName: '제목', flex: 2, headerAlign: 'center', align: 'left' },
+    { field: 'writer', headerName: '작성자', flex: 1, headerAlign: 'center', align: 'center' },
+    { field: 'date', headerName: '작성일', flex: 1, headerAlign: 'center', align: 'center' },
+    { field: 'context', headerName: '본문', flex: 1, headerAlign: 'center', align: 'center' },
   ])
 
   useEffect(() => {
@@ -116,6 +132,41 @@ function StatusDetail() {
 
   ], [])
 
+    // 실패한 진행번호 Set 생성
+  const failureProgressNos = useMemo(() =>
+    new Set(failureRows.map(row => row.progressNo)),
+    [failureRows]
+  )
+
+  // // 1. collectionRows에 isFailure 플래그만 추가
+  // const collectionRowsWithFailure = useMemo(() =>
+  //   collectionRows.map(row => ({
+  //     ...row, //기존 row의 모든 필드 복사
+  //     isFailure: failureProgressNos.has(row.progressNo) //해당 progressNo가 실패 Set에 있으면 true
+  //   })),
+  //   [collectionRows, failureProgressNos]
+  // )
+
+  //2. 실패한 row의 데이터 비우기
+    const collectionRowsWithFailure = useMemo(() =>
+    collectionRows.map(row => {
+      const isFailed = failureProgressNos.has(row.progressNo)
+      if (isFailed) {
+        return {
+          id: row.id,
+          progressNo: row.progressNo,
+          title: '',
+          writer: '',
+          date: '',
+          context: '',
+          isFailure: true
+        }
+      }
+      return { ...row, isFailure: false }
+    }),
+    [collectionRows, failureProgressNos]
+  )
+
   // WebSocket 연결 및 실시간 데이터 수신
   useEffect(() => {
     // TODO: WebSocket 연결 및 데이터 수신
@@ -173,9 +224,16 @@ function StatusDetail() {
 
             {/* 추가 정보 섹션 (필요시 확장) */}
             <Box sx={{ marginTop: 2 }}>
-              <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
+              <Box sx={{ display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
                 수집 실패
-              </Typography>
+                </Typography>
+                <Typography>
+                  1/10
+                </Typography>
+                  
+                <CustomButton text='일괄 재수집' />
+              </Box>
               <CommonTable
                 columns={failureColumns}
                 rows={failureRows}
@@ -186,13 +244,23 @@ function StatusDetail() {
             </Box>
 
             <Box sx={{ marginTop: 'auto'}}>
-              <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
-                수집 데이터
-              </Typography>
-
+              <Box sx={{ display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
+                  수집 데이터
+                </Typography>
+                <Typography>
+                  1/10
+                </Typography>
+                <Typography>
+                  수집완료 예상시간 : 2025-11-13 16:00:31
+                </Typography>
+                  
+                
+                
+              </Box>
               <CommonTable
                 columns={collectionColumns}
-                rows={collectionRows}
+                rows={collectionRowsWithFailure}
                 pageSize={5}
                 //hideFooter={false}
                 />
