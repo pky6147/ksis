@@ -11,11 +11,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
 import CustomTextField from '../../component/CustomTextField';
 import CustomIconButton from '../../component/CustomIconButton';
+import { getUserLog } from './Api';
 
 export default function LogPage () {
     const location = useLocation();
     const navigate = useNavigate();
-    const { userId, loginId } = location.state || {}
+    const { userId, username } = location.state || {}
 
     const [baseRows, setBaseRows] = useState<UserLogTableRows[]>([])
     const [filteredRows, setFilteredRows] = useState<UserLogTableRows[]>([]);
@@ -27,23 +28,37 @@ export default function LogPage () {
     const [searchName, setSearchName] = useState('')
     const [searchCount, setSearchCount] = useState(0)
 
-    useEffect(()=> {
-        getTableDatas()
-    }, [])
+    const getTableDatas = async () => {
+        try {
+            const data = await getUserLog(userId);
+            
+            const result = data.map((row: UserLogTableRows, i: number) => ({
+                ...row,
+                id: row.workId,
+                index: i+1,
+            }))
 
-    const getTableDatas = () => {
+            setBaseRows(result)
+            setFilteredRows(result)
+        }
+        catch(err) {
+            console.error(err)
+            alert('getUserLog 실패')
+        }
+    }
+    
+    useEffect(()=> {
         const data = [
-          { workId: 1, id: 1, index: 1, settingId: 1, settingName: '창원시청 공지사항 수집', userId: 1, loginId: 'ksis1', state: '진행중', startAt: '2025-10-24 09:00', type: '스케줄링' },
-          { workId: 2, id: 2, index: 2, settingId: 2, settingName: '창원시청 공지사항 수집', userId: 1, loginId: 'ksis1', state: '수집완료(수집실패: 5건)', startAt: '2025-10-24 09:00', endAt: '2025-10-24 09:43', type: '스케줄링' },
-          { workId: 3, id: 3, index: 3, settingId: 3, settingName: '경상남도 보도자료 수집', userId: 1, loginId: 'ksis1', state: '수집완료', startAt: '2025-10-22 15:23', endAt: '2025-10-22 16:00', type: '수동실행' },
+          { workId: 1, id: 1, index: 1, settingId: 1, settingName: '창원시청 공지사항 수집', userId: 1, username: 'ksis1', state: '진행중', startAt: '2025-10-24 09:00', type: '스케줄링' },
+          { workId: 2, id: 2, index: 2, settingId: 2, settingName: '창원시청 공지사항 수집', userId: 1, username: 'ksis1', state: '수집완료(수집실패: 5건)', startAt: '2025-10-24 09:00', endAt: '2025-10-24 09:43', type: '스케줄링' },
+          { workId: 3, id: 3, index: 3, settingId: 3, settingName: '경상남도 보도자료 수집', userId: 1, username: 'ksis1', state: '수집완료', startAt: '2025-10-22 15:23', endAt: '2025-10-22 16:00', type: '수동실행' },
         ];
     
         setBaseRows(data)
-        console.log('baseRows', baseRows)
-        console.log('userId', userId)
-        console.log('loginId', loginId)
         setFilteredRows(data)
-    }
+
+        // getTableDatas()
+    }, [])
 
     const handleClose = () => {
         navigate('/user')
@@ -145,7 +160,7 @@ export default function LogPage () {
                 }}>
                     <Box sx={{display: 'flex', alignItems: 'center', padding:2, gap: 1}}>
                         <Typography sx={{color: 'black'}}>User ID: </Typography>
-                        <Typography sx={{color: 'black', fontWeight: 600}}>{loginId}</Typography>
+                        <Typography sx={{color: 'black', fontWeight: 600}}>{username}</Typography>
                     </Box>
                     {/*  */}
                     <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>

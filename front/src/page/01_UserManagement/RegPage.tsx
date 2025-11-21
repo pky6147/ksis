@@ -5,8 +5,7 @@ import CustomTextField from '../../component/CustomTextField';
 import CustomIconButton from '../../component/CustomIconButton';
 import CustomSelect from '../../component/CustomSelect';
 import Alert from '../../component/Alert';
-
-// import { type UserTableRows } from '../../Types/TableHeaders/UserManageHeader'
+import { registUser } from './Api';
 
 interface RegPageProps {
     handleDone: () => void;
@@ -20,12 +19,12 @@ export default function RegPage(props: RegPageProps) {
     const [isVisible, setIsVisible] = useState(false)
     const [isPasswordMismatch, setIsPasswordMismatch] = useState(false);
     const [newData, setNewData] = useState({
-        loginId: '',
+        username: '',
         password: '',
         passwordConfirm: '',
         name: '',
         dept: '',
-        rank: '',
+        ranks: '',
         state: '',
     })
     const [openCancelAlert, setOpenCancelAlert] = useState(false)
@@ -34,6 +33,8 @@ export default function RegPage(props: RegPageProps) {
         { value: 'Y', name: '승인' },
         { value: 'N', name: '대기중' },
     ];
+    const [openValidAlert, setOpenValidAlert] = useState(false)
+    const [validateMsg, setValidateMsg] = useState('')
 
     const handleShowPassword = () => {
         setIsVisible(!isVisible);
@@ -43,7 +44,7 @@ export default function RegPage(props: RegPageProps) {
         setNewData((prev) => {
             const updated = { ...prev, [key]: value };
 
-            if (key === 'loginId') {
+            if (key === 'username') {
                 if (value === '') {
                     setIsValid_id(null); // 입력이 없으면 검사 안함
                 } else {
@@ -89,7 +90,7 @@ export default function RegPage(props: RegPageProps) {
       return count >= 3;
     };
 
-    const handleRegist = () => {
+    const handleValidate = () => {
         const password = newData.password;
         const passwordConfirm = newData.passwordConfirm;
 
@@ -98,13 +99,47 @@ export default function RegPage(props: RegPageProps) {
         const hasKoreanC = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(passwordConfirm);
 
         if (hasKorean || hasKoreanC) {
-            console.log('hasKorean', hasKorean)
-            console.log('hasKoreanC', hasKoreanC)
             alert('비밀번호에 한글은 포함될 수 없습니다.');
             return;
         }
 
-        handleDone()
+        const errMsg = []
+        if (!isValid_id || isValid_id === null) errMsg.push('아이디 양식') 
+        if (!isValidPassword || isValidPassword === null) errMsg.push('비밀번호 양식')
+        if (isPasswordMismatch) errMsg.push('비밀번호 불일치')
+        if (newData.name === '') errMsg.push('이름 미입력')
+
+        if(errMsg.length !== 0) {
+            let message = ''
+            for(let i=0; i <= errMsg.length-1; i++) {
+                if(i===0) message = errMsg[i]
+                else message += '\n' + errMsg[i]
+            }
+            setValidateMsg(message)
+            setOpenValidAlert(true)
+        } else {
+            handleRegist()
+        }
+    }
+
+    const handleRegist = async () => {
+        try {
+            await registUser({
+                username: newData.username,
+                password: newData.password,
+                name: newData.name,
+                dept: newData.dept,
+                ranks: newData.ranks,
+                state: newData.state,
+            }).then(()=> {
+                handleDone()
+            })
+        }
+        catch(err) {
+            console.error(err)
+            alert('POST registUser 실패')
+        }
+
     }
 
 
@@ -138,13 +173,13 @@ export default function RegPage(props: RegPageProps) {
                     <Box sx={{display: 'flex', flexDirection: 'column', gap: 1}}>
                         <CustomTextField 
                           variant="outlined"
-                          value={newData.loginId}
+                          value={newData.username}
                           inputWidth="300px"
                           disabled={false}
                           readOnly={false}
                           placeholder="아이디"
                           type="text"
-                          onChange={(e) => handleInputChange('loginId', e.target.value)}
+                          onChange={(e) => handleInputChange('username', e.target.value)}
                         />
                         <Box sx={{ 
                             backgroundColor: '#c5c4c7', 
@@ -277,13 +312,13 @@ export default function RegPage(props: RegPageProps) {
                     <Box>
                         <CustomTextField 
                           variant="outlined"
-                          value={newData.rank}
+                          value={newData.ranks}
                           inputWidth="300px"
                           disabled={false}
                           readOnly={false}
                           placeholder="직위"
                           type="text"
-                          onChange={(e) => handleInputChange('rank', e.target.value)}
+                          onChange={(e) => handleInputChange('ranks', e.target.value)}
                         />
                     </Box>
                 </Box>
@@ -324,10 +359,18 @@ export default function RegPage(props: RegPageProps) {
               type="question"
               onConfirm={() => {
                 setOpenRegAlert(false);
-                handleRegist()
+                handleValidate()
               }}
               onCancel={() => {
                 setOpenRegAlert(false);
+              }}
+            />
+            <Alert
+              open={openValidAlert}
+              text={validateMsg}
+              type="validate"
+              onConfirm={() => {
+                setOpenValidAlert(false);
               }}
             />
         </Box>

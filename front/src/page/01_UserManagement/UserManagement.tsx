@@ -13,6 +13,8 @@ import EditPage from "./EditPage"
 import RegPage from "./RegPage"
 // Comp
 import Alert from "../../component/Alert";
+// API
+import { getUser, deleteUser } from "./Api";
 
 function UserManagement() {
   // Table
@@ -33,16 +35,41 @@ function UserManagement() {
   const [openRegDoneAlert, setOpenRegDoneAlert] = useState(false)
   const [openEditDoneAlert, setOpenEditDoneAlert] = useState(false)
 
+  const getTableDatas = async () => {
+      try {
+          const data = await getUser();
+
+          const result = data.map((row: UserTableRows, i: number) => ({
+              ...row,
+              id: row.userId,
+              index: i+1,
+          }))
+        
+          setBaseRows(result)
+          setFilteredRows(result)
+      }
+      catch(err) {
+          console.error(err)
+          alert('getUser 실패')
+      }
+  }
+
   useEffect(()=> {
     const data = [
-      { id: 1, index: 1, loginId: 'ksis1', password: 'test1234', name: '김철수', dept: '비즈니스 사업부', rank: '부장', loginAt: '2025-11-05', state: '승인완료' },
-      { id: 2, index: 2, loginId: 'ksis2', password: 'test5678', name: '김영희', dept: '소프트웨어 사업부', rank: '대리', loginAt: '2025-11-06', state: '승인완료' },
-      { id: 3, index: 3, loginId: 'ksis3', password: 'test0000', name: '홍길동', dept: '경영지원부', rank: '과장', loginAt: '2024-04-24', state: '승인대기' },
+      { userId: 1, id: 1, index: 1, username: 'ksis1', password: 'test1234', name: '김철수', dept: '비즈니스 사업부', ranks: '부장', loginAt: '2025-11-05', state: '승인완료' },
+      { userId: 2, id: 2, index: 2, username: 'ksis2', password: 'test5678', name: '김영희', dept: '소프트웨어 사업부', ranks: '대리', loginAt: '2025-11-06', state: '승인완료' },
+      { userId: 3, id: 3, index: 3, username: 'ksis3', password: 'test0000', name: '홍길동', dept: '경영지원부', ranks: '과장', loginAt: '2024-04-24', state: '승인대기' },
     ];
 
     setBaseRows(data)
     setFilteredRows(data)
+
+    // getTableDatas();
   }, [])
+
+  const BoardRefresh = () => {
+        // getTableDatas();
+    }
 
   /**  등록 페이지  =========================================== */
   const handleOpenReg = () => {
@@ -73,18 +100,28 @@ function UserManagement() {
     setSelectedRow(row)
     setOpenDeleteAlert(true)
   }
-  const handleDelete = () => {
-    console.log('Row', selectedRow)
+  const handleDelete = async () => {
     // delete api 연결
-
-    // 삭제완료 팝업
-    setOpenDelDoneAlert(true);
+    try {
+      if(!selectedRow) {
+        alert('deleteUser 실패 - selectedRow is Null')
+        return
+      };
+      await deleteUser(selectedRow.userId).then(()=>{
+        // 삭제완료 팝업
+        setOpenDelDoneAlert(true);
+      })
+    }
+    catch(err) {
+      console.error(err)
+      alert('deleteUser 실패')
+    }
   }
   /**  이력조회 페이지  =========================================== */
   const handleShowLogOpen = (row: UserTableRows) => {
     setSelectedRow(row)
     // 로그 페이지로 이동
-    navigate('/user/log', {state: {userId: row.id, loginId: row.loginId} })
+    navigate('/user/log', {state: {userId: row.userId, username: row.username} })
     
   }
 
@@ -120,7 +157,7 @@ function UserManagement() {
             type='success'
             onConfirm={() => {
               setOpenRegDoneAlert(false);
-              // 테이블 Refresh 함수 추가해야함
+              BoardRefresh()
             }}
         />
         {/* 수정 페이지 */}
@@ -133,7 +170,7 @@ function UserManagement() {
             type='success'
             onConfirm={() => {
               setOpenEditDoneAlert(false);
-              // 테이블 Refresh 함수 추가해야함
+              BoardRefresh()
             }}
         />
         {/* 삭제 팝업 */}
@@ -155,7 +192,7 @@ function UserManagement() {
             type='success'
             onConfirm={() => {
               setOpenDelDoneAlert(false);
-              // 테이블 Refresh 함수 추가해야함
+              BoardRefresh()
             }}
         />
     </Box>
