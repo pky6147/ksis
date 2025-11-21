@@ -21,6 +21,7 @@ import Status from "./page/03_Status/Status"
 import StatusDetail from "./page/03_Status/StatusDetail"
 //** 수집이력 */
 import History from "./page/05_History/History"
+import HistoryDetail from "./page/05_History/HistoryDetail";
 
 
 function App() {
@@ -60,7 +61,7 @@ function App() {
       {shouldHideLayout ? (
         // 로그인, 테스트 페이지는 단독 표시
         <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route index element={<Navigate to="/login" replace />} />
           {/* <Route path="/login" element={<LoginPage />} /> */}
           <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/test" element={<TestPage />} />
@@ -79,6 +80,14 @@ function App() {
           <Box sx={{width: '84.5vw', padding: 1}}>
             <Content>
               <Routes>
+                <Route
+                  path="/"
+                  element={
+                    userInfo
+                      ? <Navigate to="/status" replace />
+                      : <Navigate to="/login" replace />
+                  }
+                />
                 {/* 유저관리 */}
                 <Route path="/user" element={
                   <ProtectedRoute userInfo={userInfo} requiredRole="admin">
@@ -131,6 +140,12 @@ function App() {
                   </ProtectedRoute>
                   }
                 />
+                <Route path="/history/detail/:id" element={
+                    <ProtectedRoute userInfo={userInfo}>
+                      <HistoryDetail />
+                    </ProtectedRoute>
+                    }
+                  />
               </Routes>
             </Content>
           </Box>

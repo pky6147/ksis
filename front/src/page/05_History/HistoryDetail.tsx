@@ -1,6 +1,8 @@
 import { useEffect, useState, useMemo} from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { Box, Typography, Button, Paper, IconButton} from '@mui/material'
+import { useParams, useNavigate, useLocation, Link as RouterLink } from 'react-router-dom'
+import { Box, Typography, Button, Paper, IconButton,
+  Breadcrumbs, Link,
+} from '@mui/material'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import { type GridColDef } from '@mui/x-data-grid'
 import CommonTable from '../../component/CommonTable'
@@ -282,10 +284,28 @@ export default function HistoryDetail() {
   
   return (
     <Box sx={{ height: '97%' ,display: 'flex', flexDirection: 'column' }}>
-      <Typography sx={{ fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, marginTop: 5 }}>
+      {/* BreadCrumbs */}
+            <Box sx={{paddingLeft: 2, marginTop: 1}}>
+                <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 1 }}>
+                    <Link
+                        component={RouterLink}
+                        to="/setting"
+                        underline="hover"
+                        color="inherit"
+                        sx={{ fontWeight: 'bold', fontSize: 16 }}
+                    >
+                        데이터 수집 이력
+                    </Link>
+                    <Typography color="text.primary" sx={{ fontWeight: 'bold', fontSize: 16 }}>
+                        상세조회
+                    </Typography>
+                </Breadcrumbs>
+            </Box>
+      {/* <Typography sx={{ fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, marginTop: 5 }}> */}
+      <Typography sx={{fontSize: 60, fontWeight: 'bold', color: 'black', paddingLeft: 2, marginTop: -1}}>
         수집 이력 상세
       </Typography>
-         <Box sx={{ padding: 2, flex: 1, display: 'flex', flexDirection: 'column' }}> {/*최상위 Box의 남은 공간을 모두 차지하게 */}
+      <Box sx={{ padding: 2, flex: 1, display: 'flex', flexDirection: 'column' }}> {/*최상위 Box의 남은 공간을 모두 차지하게 */}
           <Paper elevation={3} sx={{ padding: 4, flex: 1, display: 'flex', flexDirection: 'column' }}>{/*Paper가 감싸는 Box의 높이를 꽉 채우게 */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, height: '100%' }}> {/*Paper 내부 콘텐츠가 Paper의 전체 높이를 사용하게 */}
       {/* <Box sx={{ padding: 2 }}>
