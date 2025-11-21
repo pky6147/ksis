@@ -131,6 +131,7 @@ const flattenResult = (rows: any[]) => {
 };
 
 export default function History () {
+    const navigate = useNavigate()
     const [baseRows, setBaseRows] = useState<HistoryTableRows[]>([])
     const [filteredRows, setFilteredRows] = useState<HistoryTableRows[]>([]);
 
