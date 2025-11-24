@@ -79,9 +79,6 @@ function StatusDetail() {
     },
   ]);
 
-  const [collectionRows, setCollectionRows] = useState<
-    Array<{ id: number; progressNo: string; [key: string]: any }>
-  >([]);
   const [collectionColumns, setCollectionColumns] = useState<GridColDef[]>([
     {
       field: "progressNo",
@@ -251,6 +248,7 @@ function StatusDetail() {
     []
   );
 
+  // 실패한 진행번호 Set 생성
   const failureProgressNos = useMemo(
     () => new Set(failureRows.map((row) => row.progressNo)),
     [failureRows]
@@ -386,42 +384,6 @@ function StatusDetail() {
       console.log("Fetching data for id:", id);
     }
   }, [id, location.state]);
-
-  // 실패한 진행번호 Set 생성
-  const failureProgressNos = useMemo(
-    () => new Set(failureRows.map((row) => row.progressNo)),
-    [failureRows]
-  );
-
-  // // 1. collectionRows에 isFailure 플래그만 추가
-  // const collectionRowsWithFailure = useMemo(() =>
-  //   collectionRows.map(row => ({
-  //     ...row, //기존 row의 모든 필드 복사
-  //     isFailure: failureProgressNos.has(row.progressNo) //해당 progressNo가 실패 Set에 있으면 true
-  //   })),
-  //   [collectionRows, failureProgressNos]
-  // )
-
-  //2. 실패한 row의 데이터 비우기
-  const collectionRowsWithFailure = useMemo(
-    () =>
-      collectionRows.map((row) => {
-        const isFailed = failureProgressNos.has(row.progressNo);
-        if (isFailed) {
-          return {
-            id: row.id,
-            progressNo: row.progressNo,
-            title: "",
-            writer: "",
-            date: "",
-            context: "",
-            isFailure: true,
-          };
-        }
-        return { ...row, isFailure: false };
-      }),
-    [collectionRows, failureProgressNos]
-  );
 
   // WebSocket 연결 및 실시간 데이터 수신
   useEffect(() => {
