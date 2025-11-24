@@ -339,11 +339,9 @@ function StatusDetail() {
                   {collectionCount}/{totalCount}
                 </Typography>
                 </Box>
-<<<<<<< Updated upstream
+
                 <Typography>
-=======
-                <Typography >
->>>>>>> Stashed changes
+
                   수집완료 예상시간 : {estimatedTime}
                 </Typography>
                   
