@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36" version="29.2.7">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.9">
   <diagram name="페이지-1" id="bPDU0hAhLai1kHYmlKul">
-    <mxGraphModel dx="2394" dy="979" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3258" dy="1338" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -388,7 +388,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="QjXKOeoJDfNUVYi54Lve-110" parent="1" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;" value="scheduler (스케줄러)" vertex="1">
-          <mxGeometry height="360" width="250" x="-16" y="1587" as="geometry" />
+          <mxGeometry height="570" width="250" x="-17" y="1519" as="geometry" />
         </mxCell>
         <mxCell id="QjXKOeoJDfNUVYi54Lve-111" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" value="" vertex="1">
           <mxGeometry height="30" width="250" y="30" as="geometry" />
@@ -476,26 +476,117 @@
             <mxRectangle height="30" width="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="tt0E6FkNDpRF_4v8Vgme-6" parent="tt0E6FkNDpRF_4v8Vgme-4" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="job_name (배치작업명)" vertex="1">
+        <mxCell id="tt0E6FkNDpRF_4v8Vgme-6" parent="tt0E6FkNDpRF_4v8Vgme-4" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;mso-fareast-font-family:맑은 고딕;mso-font-width:100%;letter-spacing:0pt;mso-text-raise:0pt;&quot;&gt;days_of_week (수집요일)&lt;/span&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="220" x="30" as="geometry">
+            <mxRectangle height="30" width="220" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-1" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
+          <mxGeometry height="30" width="250" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-2" parent="yGWYOGfADsKqwSgCKWym-1" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" as="geometry">
+            <mxRectangle height="30" width="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-3" parent="yGWYOGfADsKqwSgCKWym-1" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8448&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;mso-fareast-font-family:맑은 고딕;mso-font-width:100%;letter-spacing:0pt;mso-text-raise:0pt;&quot;&gt;week_of_month (수집주차)&lt;/span&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="30" width="220" x="30" as="geometry">
             <mxRectangle height="30" width="220" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="tt0E6FkNDpRF_4v8Vgme-7" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
-          <mxGeometry height="30" width="250" y="240" as="geometry" />
+          <mxGeometry height="30" width="250" y="270" as="geometry" />
         </mxCell>
         <mxCell id="tt0E6FkNDpRF_4v8Vgme-8" parent="tt0E6FkNDpRF_4v8Vgme-7" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
           <mxGeometry height="30" width="30" as="geometry">
             <mxRectangle height="30" width="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="tt0E6FkNDpRF_4v8Vgme-9" parent="tt0E6FkNDpRF_4v8Vgme-7" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="job_parameters(배치파라미터)" vertex="1">
+        <mxCell id="tt0E6FkNDpRF_4v8Vgme-9" parent="tt0E6FkNDpRF_4v8Vgme-7" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;mso-fareast-font-family:맑은 고딕;mso-font-width:100%;letter-spacing:0pt;mso-text-raise:0pt;&quot;&gt;execute_hour (실행시)&lt;/span&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="220" x="30" as="geometry">
+            <mxRectangle height="30" width="220" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-4" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
+          <mxGeometry height="30" width="250" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-5" parent="yGWYOGfADsKqwSgCKWym-4" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" as="geometry">
+            <mxRectangle height="30" width="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-6" parent="yGWYOGfADsKqwSgCKWym-4" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8449&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;mso-fareast-font-family:맑은 고딕;mso-font-width:100%;letter-spacing:0pt;mso-text-raise:0pt;&quot;&gt;execute_minute (실행분)&lt;/span&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="220" x="30" as="geometry">
+            <mxRectangle height="30" width="220" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-7" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
+          <mxGeometry height="30" width="250" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-8" parent="yGWYOGfADsKqwSgCKWym-7" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" as="geometry">
+            <mxRectangle height="30" width="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-9" parent="yGWYOGfADsKqwSgCKWym-7" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8449&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8448&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;mso-fareast-font-family:맑은 고딕;mso-font-width:100%;letter-spacing:0pt;mso-text-raise:0pt;&quot;&gt;display_cycle (실행주기)&lt;/span&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="220" x="30" as="geometry">
+            <mxRectangle height="30" width="220" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-10" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
+          <mxGeometry height="30" width="250" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-11" parent="yGWYOGfADsKqwSgCKWym-10" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" as="geometry">
+            <mxRectangle height="30" width="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-12" parent="yGWYOGfADsKqwSgCKWym-10" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8449&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8448&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8456&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;mso-fareast-font-family:맑은 고딕;mso-font-width:100%;letter-spacing:0pt;mso-text-raise:0pt;&quot;&gt;display_cycle_compact (실행주기)&lt;/span&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="220" x="30" as="geometry">
+            <mxRectangle height="30" width="220" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-13" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
+          <mxGeometry height="30" width="250" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-14" parent="yGWYOGfADsKqwSgCKWym-13" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" as="geometry">
+            <mxRectangle height="30" width="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-15" parent="yGWYOGfADsKqwSgCKWym-13" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8449&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8448&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8456&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;mso-fareast-font-family:맑은 고딕;mso-font-width:100%;letter-spacing:0pt;mso-text-raise:0pt;&quot;&gt;display_time (실행시간)&lt;/span&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="220" x="30" as="geometry">
+            <mxRectangle height="30" width="220" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-16" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
+          <mxGeometry height="30" width="250" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-17" parent="yGWYOGfADsKqwSgCKWym-16" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" as="geometry">
+            <mxRectangle height="30" width="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-18" parent="yGWYOGfADsKqwSgCKWym-16" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8449&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8448&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8456&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8455&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;mso-fareast-font-family:맑은 고딕;mso-font-width:100%;letter-spacing:0pt;mso-text-raise:0pt;&quot;&gt;display_time_compact (실행시간)&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="220" x="30" as="geometry">
+            <mxRectangle height="30" width="220" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-19" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
+          <mxGeometry height="30" width="250" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-20" parent="yGWYOGfADsKqwSgCKWym-19" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" as="geometry">
+            <mxRectangle height="30" width="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yGWYOGfADsKqwSgCKWym-21" parent="yGWYOGfADsKqwSgCKWym-19" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8449&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8448&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8456&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8455&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;mso-fareast-font-family:맑은 고딕;mso-font-width:100%;letter-spacing:0pt;mso-text-raise:0pt;&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8446&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p class=&quot;1&quot; style=&quot;text-align:center;mso-pagination:none;text-autospace:none;mso-padding-alt:0pt 0pt 0pt 0pt;&quot;&gt;&lt;span lang=&quot;EN-US&quot; style=&quot;mso-fareast-font-family:맑은 고딕;mso-font-width:100%;letter-spacing:0pt;mso-text-raise:0pt;&quot;&gt;search_text (스케줄러정보문자열)&lt;/span&gt;&lt;/p&gt;&lt;div id=&quot;hwpEditorBoardContent&quot; class=&quot;hwp_editor_board_content&quot; data-hjsonver=&quot;1.0&quot; data-jsonlen=&quot;8447&quot;&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="30" width="220" x="30" as="geometry">
             <mxRectangle height="30" width="220" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="QjXKOeoJDfNUVYi54Lve-138" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
-          <mxGeometry height="30" width="250" y="270" as="geometry" />
+          <mxGeometry height="30" width="250" y="480" as="geometry" />
         </mxCell>
         <mxCell id="QjXKOeoJDfNUVYi54Lve-139" parent="QjXKOeoJDfNUVYi54Lve-138" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
           <mxGeometry height="30" width="30" as="geometry">
@@ -508,7 +599,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="QjXKOeoJDfNUVYi54Lve-144" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
-          <mxGeometry height="30" width="250" y="300" as="geometry" />
+          <mxGeometry height="30" width="250" y="510" as="geometry" />
         </mxCell>
         <mxCell id="QjXKOeoJDfNUVYi54Lve-145" parent="QjXKOeoJDfNUVYi54Lve-144" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
           <mxGeometry height="30" width="30" as="geometry">
@@ -521,7 +612,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="QjXKOeoJDfNUVYi54Lve-147" parent="QjXKOeoJDfNUVYi54Lve-110" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
-          <mxGeometry height="30" width="250" y="330" as="geometry" />
+          <mxGeometry height="30" width="250" y="540" as="geometry" />
         </mxCell>
         <mxCell id="QjXKOeoJDfNUVYi54Lve-148" parent="QjXKOeoJDfNUVYi54Lve-147" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;" value="" vertex="1">
           <mxGeometry height="30" width="30" as="geometry">
